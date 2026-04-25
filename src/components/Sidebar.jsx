@@ -24,9 +24,7 @@ export default function Sidebar({ isOpen, onToggle }) {
   return (
     <aside className={`${isOpen ? 'w-60' : 'w-20'} bg-dark-800 border-r border-dark-600 flex flex-col transition-all duration-300 shrink-0`}>
       <div className="flex items-center gap-3 px-4 h-16 border-b border-dark-600">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-accent to-cyan-400 flex items-center justify-center shrink-0">
-          <span className="text-dark-900 font-bold text-lg">F</span>
-        </div>
+        <img src="/logo.png" alt="Follow for Follow" className="w-10 h-10 rounded-xl object-cover shrink-0" />
         {isOpen && (
           <div className="overflow-hidden">
             <h1 className="text-white font-bold text-lg leading-tight whitespace-nowrap">Follow</h1>
