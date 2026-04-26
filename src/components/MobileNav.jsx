@@ -27,14 +27,14 @@ export default function MobileNav() {
       className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-dark-800/95 backdrop-blur border-t border-dark-600"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <div className="flex overflow-x-auto no-scrollbar">
+      <div className="flex w-full">
         {items.map(({ path, label, icon: Icon }) => (
           <NavLink
             key={path}
             to={path}
             end={path === '/'}
             className={({ isActive }) =>
-              `flex-1 min-w-[64px] flex flex-col items-center justify-center gap-1 py-2 px-1 transition-colors ${
+              `flex-1 basis-0 min-w-0 flex flex-col items-center justify-center gap-0.5 py-1.5 px-0.5 transition-colors ${
                 isActive
                   ? 'text-green-accent'
                   : 'text-gray-400 hover:text-white'
@@ -43,8 +43,8 @@ export default function MobileNav() {
           >
             {({ isActive }) => (
               <>
-                <Icon size={20} className={isActive ? 'drop-shadow-[0_0_6px_var(--color-green-glow)]' : ''} />
-                <span className="text-[10px] font-medium leading-none">{label}</span>
+                <Icon size={18} className={isActive ? 'drop-shadow-[0_0_6px_var(--color-green-glow)]' : ''} />
+                <span className="text-[9px] xs:text-[10px] font-medium leading-none truncate max-w-full">{label}</span>
               </>
             )}
           </NavLink>
