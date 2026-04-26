@@ -20,13 +20,37 @@ A social media growth platform that helps users build genuine, engaged audiences
 - Tailwind CSS v4
 - React Router v7
 - Lucide React icons
+- [Convex](https://www.convex.dev) backend (`convex/` directory)
 
 ## Development
 
 ```bash
 npm install
+cp .env.example .env.local   # then set VITE_CONVEX_URL to your Convex deployment URL
 npm run dev
 ```
+
+The frontend reads `VITE_CONVEX_URL` from `.env.local` and connects to the
+Convex backend defined in `convex/`. If the variable is not set the app falls
+back to the bundled mock data in `src/data/mockData.js` so the UI still
+renders.
+
+## Backend (Convex)
+
+Schema, queries and the seed mutation live under `convex/`. To work against a
+live deployment:
+
+```bash
+# Push functions + schema to your Convex deployment
+npx convex deploy
+
+# Populate the deployment with the bundled sample data
+npx convex run seed:seed
+```
+
+When deploying from CI / a non-interactive shell, set the
+`CONVEX_DEPLOY_KEY` environment variable (from the Convex dashboard) before
+running the commands above.
 
 ## Build
 
@@ -34,4 +58,6 @@ npm run dev
 npm run build
 ```
 
-The production build is output to the `dist/` directory.
+The production build is output to the `dist/` directory. Make sure
+`VITE_CONVEX_URL` is set at build time so the deployed bundle points at the
+correct Convex deployment.
