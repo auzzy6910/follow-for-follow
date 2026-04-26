@@ -4,9 +4,9 @@ import { TRIBES, USERS, NICHES } from '../data/mockData'
 
 function TribeCard({ tribe }) {
   return (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5 card-hover">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ backgroundColor: `${tribe.color}15` }}>
+    <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 card-hover">
+      <div className="flex items-center gap-2.5 sm:gap-3 mb-2.5 sm:mb-3">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-xl sm:text-2xl" style={{ backgroundColor: `${tribe.color}15` }}>
           {tribe.icon}
         </div>
         <div className="flex-1">
@@ -84,17 +84,17 @@ export default function Tribes() {
   const [activeTab, setActiveTab] = useState('browse')
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-            <Users size={24} className="text-green-accent" /> Niche Tribes
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+            <Users size={20} className="text-green-accent sm:w-6 sm:h-6" /> Niche Tribes
           </h2>
-          <p className="text-gray-400 text-sm mt-1">Join micro-communities for relevant, high-value followers</p>
+          <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">Join micro-communities for relevant, high-value followers</p>
         </div>
       </div>
 
-      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-fit">
+      <div className="flex gap-1.5 sm:gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-full sm:w-fit overflow-x-auto scrollbar-hide">
         {[
           { id: 'browse', label: 'Browse Tribes' },
           { id: 'my-tribes', label: 'My Tribes' },

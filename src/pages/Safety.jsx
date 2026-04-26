@@ -8,33 +8,33 @@ export default function Safety() {
   const [cooldownMax, setCooldownMax] = useState(30)
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Shield size={24} className="text-green-accent" /> Safety & Anti-Bot Controls
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+          <Shield size={20} className="text-green-accent sm:w-6 sm:h-6" /> Safety & Anti-Bot Controls
         </h2>
-        <p className="text-gray-400 text-sm mt-1">
+        <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">
           Protect your account from platform bans with smart rate limiting and human-like behavior
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
           <Gauge size={20} className="text-green-accent mb-2" />
           <p className="text-xl font-bold text-white">{USER_STATS.dailyFollowsRemaining}/{USER_STATS.dailyFollowLimit}</p>
           <p className="text-gray-500 text-xs">Daily follows remaining</p>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
           <Clock size={20} className="text-cyan-400 mb-2" />
           <p className="text-xl font-bold text-white">{cooldownMin}-{cooldownMax}s</p>
           <p className="text-gray-500 text-xs">Randomized cooldown</p>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
           <Activity size={20} className="text-amber-400 mb-2" />
           <p className="text-xl font-bold text-white">{USER_STATS.unfollowRate}%</p>
           <p className="text-gray-500 text-xs">Your unfollow rate</p>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
           <Shield size={20} className="text-green-accent mb-2" />
           <p className="text-xl font-bold text-white">{USER_STATS.trustScore}%</p>
           <p className="text-gray-500 text-xs">Trust score</p>
@@ -42,7 +42,7 @@ export default function Safety() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
           <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
             <Lock size={18} /> Action Limits
           </h3>
@@ -105,7 +105,7 @@ export default function Safety() {
           </div>
         </div>
 
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
           <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
             <Activity size={18} /> Account Warming
           </h3>
@@ -144,7 +144,7 @@ export default function Safety() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
           <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
             <UserX size={18} className="text-red-400" /> Unfollow Detection
           </h3>
@@ -173,7 +173,7 @@ export default function Safety() {
           </div>
         </div>
 
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
           <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
             <Eye size={18} className="text-purple-400" /> Shadow Check System
           </h3>
@@ -200,14 +200,14 @@ export default function Safety() {
         </div>
       </div>
 
-      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+      <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
         <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
           <AlertTriangle size={18} className="text-amber-400" /> Report System
         </h3>
         <p className="text-gray-400 text-sm mb-4">
           Report dead accounts, offensive profiles, or suspicious activity.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           {['Dead / Inactive Account', 'Offensive Content', 'Suspicious / Bot Activity'].map((type, i) => (
             <button key={i} className="bg-dark-700 border border-dark-500 rounded-xl p-4 text-left hover:border-amber-400/30 transition-colors">
               <p className="text-white text-sm font-medium mb-1">{type}</p>

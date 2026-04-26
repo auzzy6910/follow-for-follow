@@ -68,24 +68,24 @@ function AuditItem({ icon: Icon, label, status, detail }) {
 
 export default function QualityScore() {
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Sparkles size={24} className="text-green-accent" /> AI Quality Score
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+          <Sparkles size={20} className="text-green-accent sm:w-6 sm:h-6" /> AI Quality Score
         </h2>
-        <p className="text-gray-400 text-sm mt-1">AI-powered profile auditing to ensure high-quality community members</p>
+        <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">AI-powered profile auditing to ensure high-quality community members</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6 flex flex-col items-center justify-center">
           <ScoreGauge score={USER_STATS.qualityScore} label="Overall Quality Score" />
           <p className="text-green-accent text-sm font-medium mt-3">Excellent</p>
           <p className="text-gray-400 text-xs text-center mt-1">Your profile meets all quality criteria</p>
         </div>
 
-        <div className="lg:col-span-2 bg-dark-800 border border-dark-600 rounded-2xl p-6">
+        <div className="lg:col-span-2 bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
           <h3 className="text-white font-semibold mb-4">Score Breakdown</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4">
             <ScoreGauge score={95} label="Profile Photo" size="sm" />
             <ScoreGauge score={82} label="Bio Quality" size="sm" />
             <ScoreGauge score={90} label="Post Activity" size="sm" />
@@ -94,7 +94,7 @@ export default function QualityScore() {
         </div>
       </div>
 
-      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+      <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
           <ShieldCheck size={18} className="text-green-accent" /> Profile Audit Results
         </h3>
@@ -108,7 +108,7 @@ export default function QualityScore() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
           <h3 className="text-white font-semibold mb-4">Rejection Criteria</h3>
           <p className="text-gray-400 text-sm mb-4">Profiles that don't meet these standards are rejected from the platform:</p>
           <div className="space-y-2">
@@ -128,7 +128,7 @@ export default function QualityScore() {
           </div>
         </div>
 
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
           <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
             <MessageSquare size={18} className="text-cyan-400" /> AI Comment Engine
           </h3>

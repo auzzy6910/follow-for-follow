@@ -6,18 +6,18 @@ export default function GoldenHour() {
   const [activeTab, setActiveTab] = useState('sessions')
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Zap size={24} className="text-amber-400" /> Golden Hour Boost
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+          <Zap size={20} className="text-amber-400 sm:w-6 sm:h-6" /> Golden Hour Boost
         </h2>
-        <p className="text-gray-400 text-sm mt-1">
+        <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">
           Schedule posts & join engagement trains to trigger the algorithm within the first 60-90 minutes
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl bg-amber-400/10 flex items-center justify-center">
               <Clock size={20} className="text-amber-400" />
@@ -28,7 +28,7 @@ export default function GoldenHour() {
             </div>
           </div>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl bg-green-accent/10 flex items-center justify-center">
               <Users size={20} className="text-green-accent" />
@@ -39,7 +39,7 @@ export default function GoldenHour() {
             </div>
           </div>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl bg-cyan-400/10 flex items-center justify-center">
               <Timer size={20} className="text-cyan-400" />
@@ -52,7 +52,7 @@ export default function GoldenHour() {
         </div>
       </div>
 
-      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-fit">
+      <div className="flex gap-1.5 sm:gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-full sm:w-fit overflow-x-auto scrollbar-hide">
         {[
           { id: 'sessions', label: 'Scheduled Trains' },
           { id: 'schedule', label: 'Schedule a Post' },
@@ -61,7 +61,7 @@ export default function GoldenHour() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
               activeTab === tab.id ? 'bg-green-accent/10 text-green-accent' : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -121,7 +121,7 @@ export default function GoldenHour() {
       )}
 
       {activeTab === 'schedule' && (
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
           <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
             <Plus size={18} /> Schedule Your Post
           </h3>
@@ -175,7 +175,7 @@ export default function GoldenHour() {
 
       {activeTab === 'dwell' && (
         <div className="space-y-4">
-          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+          <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
             <h3 className="text-white font-semibold mb-2">Dwell Time Tasks</h3>
             <p className="text-gray-400 text-sm mb-4">
               Stay on a post for 15-30 seconds before claiming credits. This ensures genuine engagement that algorithms reward.
@@ -205,7 +205,7 @@ export default function GoldenHour() {
             </div>
           </div>
 
-          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+          <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
             <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
               <MessageSquare size={18} className="text-cyan-400" /> AI Comment Suggestions
             </h3>

@@ -114,3 +114,16 @@ body {
 .tier-rookie { border-color: #888; }
 .tier-influencer { border-color: #39ff14; }
 .tier-legend { border-color: #ffd700; }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}

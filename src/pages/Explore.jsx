@@ -10,8 +10,8 @@ function UserCard({ user, onFollow }) {
   }
 
   return (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl overflow-hidden card-hover">
-      <div className="relative h-32">
+    <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl overflow-hidden card-hover">
+      <div className="relative h-24 sm:h-32">
         <img src={user.cover} alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-dark-800 to-transparent" />
         <div className="absolute top-3 right-3 flex gap-1.5">
@@ -87,24 +87,24 @@ export default function Explore() {
   })
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Explore Users</h2>
-          <p className="text-gray-400 text-sm mt-1">Smart targeting: discover accounts in your niche</p>
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Explore Users</h2>
+          <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">Smart targeting: discover accounts in your niche</p>
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center gap-2 px-4 py-2 bg-dark-700 border border-dark-500 rounded-xl text-gray-300 hover:text-white hover:border-green-accent/50 transition-colors"
+          className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-dark-700 border border-dark-500 rounded-xl text-gray-300 hover:text-white hover:border-green-accent/50 transition-colors"
         >
-          <Filter size={16} />
-          <span className="text-sm">Filters</span>
+          <Filter size={14} />
+          <span className="text-xs sm:text-sm">Filters</span>
           <ChevronDown size={14} className={`transition-transform ${showFilters ? 'rotate-180' : ''}`} />
         </button>
       </div>
 
       {showFilters && (
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5 space-y-4">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 space-y-3 sm:space-y-4">
           <div className="relative">
             <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
             <input
@@ -167,7 +167,7 @@ export default function Explore() {
 
       <p className="text-gray-400 text-sm">{filteredUsers.length} users found</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
         {filteredUsers.map(user => (
           <UserCard key={user.id} user={user} onFollow={(id) => console.log('Follow', id)} />
         ))}
