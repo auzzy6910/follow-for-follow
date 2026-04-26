@@ -3,26 +3,26 @@ import { CREDIT_HISTORY, USER_STATS } from '../data/mockData'
 
 export default function Wallet() {
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <WalletIcon size={24} className="text-green-accent" /> Wallet
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+          <WalletIcon size={20} className="text-green-accent sm:w-6 sm:h-6" /> Wallet
         </h2>
-        <p className="text-gray-400 text-sm mt-1">Manage your credits and transactions</p>
+        <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">Manage your credits and transactions</p>
       </div>
 
-      <div className="bg-gradient-to-r from-dark-800 to-dark-700 border border-green-accent/20 rounded-2xl p-6">
+      <div className="bg-gradient-to-r from-dark-800 to-dark-700 border border-green-accent/20 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-gray-400 text-sm mb-1">Available Balance</p>
-            <p className="text-4xl font-bold text-white">{USER_STATS.totalCredits.toLocaleString()}</p>
+            <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">{USER_STATS.totalCredits.toLocaleString()}</p>
             <p className="text-green-accent text-sm font-medium mt-1">credits</p>
           </div>
-          <div className="w-20 h-20 rounded-2xl bg-green-accent/10 flex items-center justify-center">
-            <Coins size={40} className="text-green-accent" />
+          <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl sm:rounded-2xl bg-green-accent/10 flex items-center justify-center">
+            <Coins size={28} className="text-green-accent sm:w-8 sm:h-8 md:w-10 md:h-10" />
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-3 gap-2.5 sm:gap-3 md:gap-4 mt-4 sm:mt-5 md:mt-6">
           <div className="bg-dark-900/50 rounded-xl p-3 text-center">
             <p className="text-green-accent font-bold text-lg">+8,420</p>
             <p className="text-gray-500 text-xs">Total Earned</p>
@@ -38,8 +38,8 @@ export default function Wallet() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <button className="bg-dark-800 border border-dark-600 rounded-2xl p-5 text-left card-hover">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <button className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 text-left card-hover">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl bg-green-accent/10 flex items-center justify-center">
               <ArrowUpRight size={20} className="text-green-accent" />
@@ -50,7 +50,7 @@ export default function Wallet() {
             </div>
           </div>
         </button>
-        <button className="bg-dark-800 border border-dark-600 rounded-2xl p-5 text-left card-hover">
+        <button className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 text-left card-hover">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl bg-amber-400/10 flex items-center justify-center">
               <CreditCard size={20} className="text-amber-400" />
@@ -63,7 +63,7 @@ export default function Wallet() {
         </button>
       </div>
 
-      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+      <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-white font-semibold flex items-center gap-2">
             <BarChart3 size={18} /> Recent Transactions
@@ -101,12 +101,12 @@ export default function Wallet() {
         </div>
       </div>
 
-      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+      <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6">
         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
           <Gift size={18} className="text-purple-400" /> Premium Membership
         </h3>
         <p className="text-gray-400 text-sm mb-4">Upgrade for faster growth and priority features.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           {[
             { name: 'Free', price: '0', features: ['10 follows/day', 'Standard queue', 'Basic quests'] },
             { name: 'Pro', price: '9.99', features: ['50 follows/day', 'Priority queue', 'All quests + bonuses', 'Collaboration matching'] },
@@ -115,7 +115,7 @@ export default function Wallet() {
             <div key={i} className={`bg-dark-700 border rounded-xl p-5 ${i === 1 ? 'border-green-accent/30' : 'border-dark-500'}`}>
               {i === 1 && <span className="text-xs text-green-accent font-semibold mb-2 block">Most Popular</span>}
               <h4 className="text-white font-bold text-lg">{plan.name}</h4>
-              <p className="text-2xl font-bold text-white mt-1">${plan.price}<span className="text-gray-500 text-sm font-normal">/mo</span></p>
+              <p className="text-lg sm:text-xl md:text-2xl font-bold text-white mt-1">${plan.price}<span className="text-gray-500 text-sm font-normal">/mo</span></p>
               <ul className="mt-3 space-y-1.5">
                 {plan.features.map((f, j) => (
                   <li key={j} className="text-gray-400 text-xs flex items-center gap-1.5">

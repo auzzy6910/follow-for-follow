@@ -23,46 +23,46 @@ export default function Gamification() {
   const [activeTab, setActiveTab] = useState('leaderboard')
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Trophy size={24} className="text-amber-400" /> Gamification
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+          <Trophy size={20} className="text-amber-400 sm:w-6 sm:h-6" /> Gamification
         </h2>
-        <p className="text-gray-400 text-sm mt-1">Compete, earn tiers, and complete quests for bonus credits</p>
+        <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">Compete, earn tiers, and complete quests for bonus credits</p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
-          <div className="flex items-center gap-2 mb-2">
-            <Crown size={18} className="text-green-accent" />
-            <span className="text-gray-400 text-sm">Current Tier</span>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4">
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
+            <Crown size={16} className="text-green-accent sm:w-[18px] sm:h-[18px]" />
+            <span className="text-gray-400 text-xs sm:text-sm">Current Tier</span>
           </div>
           <TierBadge tier={USER_STATS.tier} />
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
-          <div className="flex items-center gap-2 mb-2">
-            <Flame size={18} className="text-orange-400" />
-            <span className="text-gray-400 text-sm">Current Streak</span>
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
+            <Flame size={16} className="text-orange-400 sm:w-[18px] sm:h-[18px]" />
+            <span className="text-gray-400 text-xs sm:text-sm">Current Streak</span>
           </div>
-          <p className="text-2xl font-bold text-white">{USER_STATS.streak} days</p>
+          <p className="text-lg sm:text-xl md:text-2xl font-bold text-white">{USER_STATS.streak} days</p>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
-          <div className="flex items-center gap-2 mb-2">
-            <Target size={18} className="text-cyan-400" />
-            <span className="text-gray-400 text-sm">Quests Done</span>
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
+            <Target size={16} className="text-cyan-400 sm:w-[18px] sm:h-[18px]" />
+            <span className="text-gray-400 text-xs sm:text-sm">Quests Done</span>
           </div>
-          <p className="text-2xl font-bold text-white">18</p>
+          <p className="text-lg sm:text-xl md:text-2xl font-bold text-white">18</p>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
-          <div className="flex items-center gap-2 mb-2">
-            <Gift size={18} className="text-purple-400" />
-            <span className="text-gray-400 text-sm">Bonus Earned</span>
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5">
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
+            <Gift size={16} className="text-purple-400 sm:w-[18px] sm:h-[18px]" />
+            <span className="text-gray-400 text-xs sm:text-sm">Bonus Earned</span>
           </div>
-          <p className="text-2xl font-bold text-white">1,250 cr</p>
+          <p className="text-lg sm:text-xl md:text-2xl font-bold text-white">1,250 cr</p>
         </div>
       </div>
 
-      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-fit">
+      <div className="flex gap-1.5 sm:gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-full sm:w-fit overflow-x-auto scrollbar-hide">
         {[
           { id: 'leaderboard', label: 'Leaderboard' },
           { id: 'quests', label: 'Quests' },
@@ -72,7 +72,7 @@ export default function Gamification() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
               activeTab === tab.id ? 'bg-green-accent/10 text-green-accent' : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -82,15 +82,15 @@ export default function Gamification() {
       </div>
 
       {activeTab === 'leaderboard' && (
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl overflow-hidden">
-          <div className="p-5 border-b border-dark-600">
-            <h3 className="text-white font-semibold flex items-center gap-2">
-              <Medal size={18} className="text-amber-400" /> Weekly Top Gainers
+        <div className="bg-dark-800 border border-dark-600 rounded-xl sm:rounded-2xl overflow-hidden">
+          <div className="p-3 sm:p-4 md:p-5 border-b border-dark-600">
+            <h3 className="text-white font-semibold text-sm sm:text-base flex items-center gap-2">
+              <Medal size={16} className="text-amber-400 sm:w-[18px] sm:h-[18px]" /> Weekly Top Gainers
             </h3>
           </div>
           <div className="divide-y divide-dark-600">
             {LEADERBOARD.map((user, i) => (
-              <div key={user.id} className={`flex items-center gap-4 px-5 py-4 ${i < 3 ? 'bg-dark-700/50' : ''}`}>
+              <div key={user.id} className={`flex items-center gap-2.5 sm:gap-3 md:gap-4 px-3 sm:px-4 md:px-5 py-3 sm:py-4 ${i < 3 ? 'bg-dark-700/50' : ''}`}>
                 <span className={`w-8 text-center font-bold ${
                   i === 0 ? 'text-amber-400 text-lg' : i === 1 ? 'text-gray-300 text-lg' : i === 2 ? 'text-orange-400 text-lg' : 'text-gray-500'
                 }`}>

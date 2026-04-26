@@ -30,18 +30,18 @@ export default function Credits() {
   ]
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-4 sm:space-y-5 md:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white">Credit & Exchange System</h2>
-        <p className="text-gray-400 text-sm mt-1">Earn credits by following, spend to get followers</p>
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Credit & Exchange System</h2>
+        <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">Earn credits by following, spend to get followers</p>
       </div>
 
-      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-fit">
+      <div className="flex gap-1.5 sm:gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-full sm:w-fit overflow-x-auto scrollbar-hide">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
               activeTab === tab.id
                 ? 'bg-green-accent/10 text-green-accent'
                 : 'text-gray-400 hover:text-white'
@@ -54,7 +54,7 @@ export default function Credits() {
 
       {activeTab === 'overview' && (
         <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4">
             <CreditStatCard icon={Coins} label="Available Credits" value={USER_STATS.totalCredits.toLocaleString()} sublabel="Ready to spend" color="bg-green-accent/10 text-green-accent" />
             <CreditStatCard icon={ArrowUpRight} label="Total Earned" value="8,420" sublabel="Lifetime earnings" color="bg-cyan-400/10 text-cyan-400" />
             <CreditStatCard icon={ArrowDownRight} label="Total Spent" value="5,970" sublabel="On listing your profile" color="bg-amber-400/10 text-amber-400" />

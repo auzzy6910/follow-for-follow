@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
+import BottomNav from './components/BottomNav'
 import Dashboard from './pages/Dashboard'
 import Explore from './pages/Explore'
 import Credits from './pages/Credits'
@@ -18,10 +19,12 @@ function App() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-dark-900">
-      <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
+      <div className="hidden md:flex">
+        <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
+      </div>
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 pb-20 md:pb-6">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/explore" element={<Explore />} />
@@ -36,6 +39,7 @@ function App() {
           </Routes>
         </main>
       </div>
+      <BottomNav />
     </div>
   )
 }
