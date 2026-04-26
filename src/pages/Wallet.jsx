@@ -1,7 +1,9 @@
 import { Wallet as WalletIcon, TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight, Coins, Clock, Gift, CreditCard, BarChart3 } from 'lucide-react'
-import { CREDIT_HISTORY, USER_STATS } from '../data/mockData'
+import { useCreditHistory, useUserStats } from '../hooks/useAppData'
 
 export default function Wallet() {
+  const CREDIT_HISTORY = useCreditHistory()
+  const USER_STATS = useUserStats()
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div>

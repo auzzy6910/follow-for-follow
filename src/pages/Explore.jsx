@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Search, Filter, MapPin, Shield, Star, Users, ChevronDown } from 'lucide-react'
-import { USERS, NICHES, PLATFORMS } from '../data/mockData'
+import { useUsers, useNiches, usePlatforms } from '../hooks/useAppData'
 
 function UserCard({ user, onFollow }) {
+  const NICHES = useNiches()
+  const PLATFORMS = usePlatforms()
   const tierColors = {
     rookie: 'border-gray-500 text-gray-400',
     influencer: 'border-green-accent text-green-accent',
@@ -76,6 +78,9 @@ export default function Explore() {
   const [selectedPlatform, setSelectedPlatform] = useState('all')
   const [selectedTier, setSelectedTier] = useState('all')
   const [showFilters, setShowFilters] = useState(true)
+  const USERS = useUsers()
+  const NICHES = useNiches()
+  const PLATFORMS = usePlatforms()
 
   const filteredUsers = USERS.filter(user => {
     const matchesSearch = user.displayName.toLowerCase().includes(searchQuery.toLowerCase()) ||

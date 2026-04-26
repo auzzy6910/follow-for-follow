@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Trophy, Flame, Target, Crown, Star, TrendingUp, Medal, Zap, Gift } from 'lucide-react'
-import { LEADERBOARD, QUESTS, USER_STATS } from '../data/mockData'
+import { useLeaderboard, useQuests, useUserStats } from '../hooks/useAppData'
 
 function TierBadge({ tier }) {
   const tierConfig = {
@@ -21,6 +21,9 @@ function TierBadge({ tier }) {
 
 export default function Gamification() {
   const [activeTab, setActiveTab] = useState('leaderboard')
+  const LEADERBOARD = useLeaderboard()
+  const QUESTS = useQuests()
+  const USER_STATS = useUserStats()
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">

@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import { Clock, Zap, Users, Calendar, Play, Timer, Eye, MessageSquare, Plus } from 'lucide-react'
-import { GOLDEN_HOUR_SESSIONS, PLATFORMS } from '../data/mockData'
+import {
+  useGoldenHourSessions,
+  usePlatforms,
+} from '../hooks/useAppData'
 
 export default function GoldenHour() {
   const [activeTab, setActiveTab] = useState('sessions')
+  const GOLDEN_HOUR_SESSIONS = useGoldenHourSessions()
+  const PLATFORMS = usePlatforms()
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">

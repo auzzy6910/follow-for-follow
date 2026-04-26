@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Shield, Clock, AlertTriangle, Eye, Activity, Lock, UserX, Ban, Info, CheckCircle, Gauge } from 'lucide-react'
-import { USER_STATS } from '../data/mockData'
+import { useUserStats } from '../hooks/useAppData'
 
 export default function Safety() {
   const [actionLimitPerHour, setActionLimitPerHour] = useState(20)
   const [cooldownMin, setCooldownMin] = useState(15)
   const [cooldownMax, setCooldownMax] = useState(30)
+  const USER_STATS = useUserStats()
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">

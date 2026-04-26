@@ -1,7 +1,8 @@
 import { Search, Bell, Menu } from 'lucide-react'
-import { USER_STATS } from '../data/mockData'
+import { useUserStats } from '../hooks/useAppData'
 
 export default function Header({ onMenuToggle }) {
+  const USER_STATS = useUserStats()
   return (
     <header className="h-16 bg-dark-800 border-b border-dark-600 flex items-center px-6 gap-4 shrink-0">
       <button onClick={onMenuToggle} className="lg:hidden text-gray-400 hover:text-white">

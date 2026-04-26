@@ -1,5 +1,5 @@
 import { Sparkles, ShieldCheck, AlertTriangle, CheckCircle, XCircle, User, Image, FileText, BarChart3, MessageSquare } from 'lucide-react'
-import { USER_STATS } from '../data/mockData'
+import { useUserStats } from '../hooks/useAppData'
 
 function ScoreGauge({ score, label, size = 'lg' }) {
   const radius = size === 'lg' ? 60 : 36
@@ -67,6 +67,7 @@ function AuditItem({ icon: Icon, label, status, detail }) {
 }
 
 export default function QualityScore() {
+  const USER_STATS = useUserStats()
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <div>
