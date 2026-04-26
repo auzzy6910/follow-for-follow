@@ -11,53 +11,53 @@ export default function GoldenHour() {
   const PLATFORMS = usePlatforms()
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
           <Zap size={24} className="text-amber-400" /> Golden Hour Boost
         </h2>
-        <p className="text-gray-400 text-sm mt-1">
+        <p className="text-gray-400 text-xs sm:text-sm mt-1">
           Schedule posts & join engagement trains to trigger the algorithm within the first 60-90 minutes
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-amber-400/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-amber-400/10 flex items-center justify-center shrink-0">
               <Clock size={20} className="text-amber-400" />
             </div>
-            <div>
-              <p className="text-xl font-bold text-white">60-90 min</p>
+            <div className="min-w-0">
+              <p className="text-lg sm:text-xl font-bold text-white">60-90 min</p>
               <p className="text-gray-500 text-xs">Critical engagement window</p>
             </div>
           </div>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-green-accent/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-green-accent/10 flex items-center justify-center shrink-0">
               <Users size={20} className="text-green-accent" />
             </div>
-            <div>
-              <p className="text-xl font-bold text-white">50+</p>
+            <div className="min-w-0">
+              <p className="text-lg sm:text-xl font-bold text-white">50+</p>
               <p className="text-gray-500 text-xs">Users per engagement train</p>
             </div>
           </div>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-cyan-400/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-cyan-400/10 flex items-center justify-center shrink-0">
               <Timer size={20} className="text-cyan-400" />
             </div>
-            <div>
-              <p className="text-xl font-bold text-white">15-30 sec</p>
+            <div className="min-w-0">
+              <p className="text-lg sm:text-xl font-bold text-white">15-30 sec</p>
               <p className="text-gray-500 text-xs">Min dwell time per post</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-fit">
+      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 overflow-x-auto no-scrollbar">
         {[
           { id: 'sessions', label: 'Scheduled Trains' },
           { id: 'schedule', label: 'Schedule a Post' },
@@ -66,7 +66,7 @@ export default function GoldenHour() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
               activeTab === tab.id ? 'bg-green-accent/10 text-green-accent' : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -82,22 +82,22 @@ export default function GoldenHour() {
             const time = new Date(session.scheduledTime)
             const isUpcoming = session.status === 'upcoming'
             return (
-              <div key={session.id} className={`bg-dark-800 border rounded-2xl p-5 ${isUpcoming ? 'border-green-accent/30' : 'border-dark-600'}`}>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${isUpcoming ? 'bg-green-accent/10' : 'bg-dark-600'}`}>
+              <div key={session.id} className={`bg-dark-800 border rounded-2xl p-4 sm:p-5 ${isUpcoming ? 'border-green-accent/30' : 'border-dark-600'}`}>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 ${isUpcoming ? 'bg-green-accent/10' : 'bg-dark-600'}`}>
                       {platform?.icon}
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h4 className="text-white font-semibold">{platform?.name} Engagement Train</h4>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4 className="text-white font-semibold text-sm sm:text-base">{platform?.name} Engagement Train</h4>
                         <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                           isUpcoming ? 'bg-green-accent/10 text-green-accent' : 'bg-dark-600 text-gray-400'
                         }`}>
                           {session.status}
                         </span>
                       </div>
-                      <div className="flex items-center gap-4 mt-1">
+                      <div className="flex items-center gap-3 sm:gap-4 mt-1 flex-wrap">
                         <span className="text-gray-400 text-sm flex items-center gap-1">
                           <Calendar size={14} />
                           {time.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
@@ -114,7 +114,7 @@ export default function GoldenHour() {
                     </div>
                   </div>
                   {isUpcoming && (
-                    <button className="px-5 py-2.5 bg-green-accent text-dark-900 font-semibold rounded-xl hover:bg-green-accent/90 transition-colors flex items-center gap-2">
+                    <button className="w-full sm:w-auto px-5 py-2.5 bg-green-accent text-dark-900 font-semibold rounded-xl hover:bg-green-accent/90 transition-colors flex items-center justify-center gap-2 shrink-0">
                       <Play size={16} /> Join Train
                     </button>
                   )}
@@ -126,7 +126,7 @@ export default function GoldenHour() {
       )}
 
       {activeTab === 'schedule' && (
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
           <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
             <Plus size={18} /> Schedule Your Post
           </h3>
@@ -180,7 +180,7 @@ export default function GoldenHour() {
 
       {activeTab === 'dwell' && (
         <div className="space-y-4">
-          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
             <h3 className="text-white font-semibold mb-2">Dwell Time Tasks</h3>
             <p className="text-gray-400 text-sm mb-4">
               Stay on a post for 15-30 seconds before claiming credits. This ensures genuine engagement that algorithms reward.

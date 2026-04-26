@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 
 function StatCard({ icon: Icon, label, value, change, positive }) {
   return (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5 card-hover">
+    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 card-hover">
       <div className="flex items-center justify-between mb-3">
         <div className="w-10 h-10 rounded-xl bg-green-accent/10 flex items-center justify-center">
           <Icon size={20} className="text-green-accent" />
@@ -21,8 +21,8 @@ function StatCard({ icon: Icon, label, value, change, positive }) {
           {change}
         </span>
       </div>
-      <p className="text-2xl font-bold text-white">{value}</p>
-      <p className="text-gray-500 text-sm mt-1">{label}</p>
+      <p className="text-xl sm:text-2xl font-bold text-white">{value}</p>
+      <p className="text-gray-500 text-xs sm:text-sm mt-1">{label}</p>
     </div>
   )
 }
@@ -31,29 +31,29 @@ function FeaturedHero() {
   const FEATURED_USER = useFeaturedUser()
   return (
     <div className="relative rounded-2xl overflow-hidden bg-dark-800 border border-dark-600">
-      <img src={FEATURED_USER.cover} alt="" className="w-full h-72 object-cover" />
+      <img src={FEATURED_USER.cover} alt="" className="w-full h-48 sm:h-72 object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/60 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-6">
-        <div className="flex items-end gap-4">
+      <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+        <div className="flex items-end gap-3 sm:gap-4">
           <img
             src={FEATURED_USER.avatar}
             alt={FEATURED_USER.displayName}
-            className="w-20 h-20 rounded-2xl border-2 border-green-accent object-cover"
+            className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl border-2 border-green-accent object-cover shrink-0"
           />
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-semibold text-dark-900 bg-green-accent px-2 py-0.5 rounded-full">FEATURED</span>
-              <span className="text-xs font-medium text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full flex items-center gap-1">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <span className="text-[10px] sm:text-xs font-semibold text-dark-900 bg-green-accent px-2 py-0.5 rounded-full">FEATURED</span>
+              <span className="text-[10px] sm:text-xs font-medium text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full flex items-center gap-1">
                 <Star size={10} /> Legend
               </span>
             </div>
-            <h2 className="text-xl font-bold text-white">{FEATURED_USER.displayName}</h2>
-            <p className="text-gray-400 text-sm">@{FEATURED_USER.username}</p>
-            <p className="text-gray-300 text-sm mt-1 line-clamp-1">{FEATURED_USER.bio}</p>
+            <h2 className="text-base sm:text-xl font-bold text-white truncate">{FEATURED_USER.displayName}</h2>
+            <p className="text-gray-400 text-xs sm:text-sm truncate">@{FEATURED_USER.username}</p>
+            <p className="hidden sm:block text-gray-300 text-sm mt-1 line-clamp-1">{FEATURED_USER.bio}</p>
           </div>
-          <div className="text-right">
-            <p className="text-2xl font-bold text-white">{(FEATURED_USER.followers / 1000).toFixed(1)}K</p>
-            <p className="text-gray-400 text-sm">followers</p>
+          <div className="text-right shrink-0">
+            <p className="text-lg sm:text-2xl font-bold text-white">{(FEATURED_USER.followers / 1000).toFixed(1)}K</p>
+            <p className="text-gray-400 text-xs sm:text-sm">followers</p>
           </div>
         </div>
       </div>
@@ -151,7 +151,7 @@ function TrendingTribes() {
           See All <ChevronRight size={16} />
         </Link>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {TRIBES.slice(0, 5).map(tribe => (
           <div key={tribe.id} className="bg-dark-800 border border-dark-600 rounded-xl p-4 card-hover cursor-pointer text-center">
             <div className="text-3xl mb-2">{tribe.icon}</div>
@@ -175,7 +175,7 @@ function UserCards() {
           See All <ChevronRight size={16} />
         </Link>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {USERS.slice(0, 8).map(user => (
           <div key={user.id} className="bg-dark-800 border border-dark-600 rounded-2xl overflow-hidden card-hover">
             <div className="relative h-28">
@@ -206,15 +206,15 @@ function UserCards() {
 export default function Dashboard() {
   const USER_STATS = useUserStats()
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="space-y-5 sm:space-y-6 max-w-7xl mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         <StatCard icon={Users} label="Followers Gained" value={USER_STATS.totalFollowersGained.toLocaleString()} change="+12.5%" positive />
         <StatCard icon={Coins} label="Credits Balance" value={USER_STATS.totalCredits.toLocaleString()} change="+340" positive />
         <StatCard icon={Flame} label="Day Streak" value={USER_STATS.streak} change="+1" positive />
         <StatCard icon={Shield} label="Trust Score" value={`${USER_STATS.trustScore}%`} change="-0.5%" positive={false} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="lg:col-span-2">
           <FeaturedHero />
         </div>
@@ -225,7 +225,7 @@ export default function Dashboard() {
       <TrendingTribes />
       <UserCards />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <ActiveQuests />
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
           <h3 className="text-white font-semibold mb-4">Safety Status</h3>

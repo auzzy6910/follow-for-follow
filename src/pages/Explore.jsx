@@ -92,24 +92,24 @@ export default function Explore() {
   })
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-white">Explore Users</h2>
-          <p className="text-gray-400 text-sm mt-1">Smart targeting: discover accounts in your niche</p>
+    <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Explore Users</h2>
+          <p className="text-gray-400 text-xs sm:text-sm mt-1">Smart targeting: discover accounts in your niche</p>
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center gap-2 px-4 py-2 bg-dark-700 border border-dark-500 rounded-xl text-gray-300 hover:text-white hover:border-green-accent/50 transition-colors"
+          className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-dark-700 border border-dark-500 rounded-xl text-gray-300 hover:text-white hover:border-green-accent/50 transition-colors shrink-0"
         >
           <Filter size={16} />
-          <span className="text-sm">Filters</span>
+          <span className="text-sm hidden sm:inline">Filters</span>
           <ChevronDown size={14} className={`transition-transform ${showFilters ? 'rotate-180' : ''}`} />
         </button>
       </div>
 
       {showFilters && (
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5 space-y-4">
+        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 space-y-4">
           <div className="relative">
             <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
             <input
@@ -172,7 +172,7 @@ export default function Explore() {
 
       <p className="text-gray-400 text-sm">{filteredUsers.length} users found</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
         {filteredUsers.map(user => (
           <UserCard key={user.id} user={user} onFollow={(id) => console.log('Follow', id)} />
         ))}
