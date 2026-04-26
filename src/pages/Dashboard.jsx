@@ -1,5 +1,12 @@
 import { TrendingUp, Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight } from 'lucide-react'
-import { FEATURED_USER, USERS, TRIBES, USER_STATS, LEADERBOARD, QUESTS } from '../data/mockData'
+import {
+  useFeaturedUser,
+  useUsers,
+  useTribes,
+  useUserStats,
+  useLeaderboard,
+  useQuests,
+} from '../hooks/useAppData'
 import { Link } from 'react-router-dom'
 
 function StatCard({ icon: Icon, label, value, change, positive }) {
@@ -21,6 +28,7 @@ function StatCard({ icon: Icon, label, value, change, positive }) {
 }
 
 function FeaturedHero() {
+  const FEATURED_USER = useFeaturedUser()
   return (
     <div className="relative rounded-2xl overflow-hidden bg-dark-800 border border-dark-600">
       <img src={FEATURED_USER.cover} alt="" className="w-full h-72 object-cover" />
@@ -54,6 +62,7 @@ function FeaturedHero() {
 }
 
 function TopGainers() {
+  const LEADERBOARD = useLeaderboard()
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-4">
@@ -81,6 +90,7 @@ function TopGainers() {
 }
 
 function SpotlightUsers() {
+  const USERS = useUsers()
   const spotlightUsers = USERS.slice(0, 8)
   return (
     <div>
@@ -106,6 +116,7 @@ function SpotlightUsers() {
 }
 
 function ActiveQuests() {
+  const QUESTS = useQuests()
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-4">
@@ -131,6 +142,7 @@ function ActiveQuests() {
 }
 
 function TrendingTribes() {
+  const TRIBES = useTribes()
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -154,6 +166,7 @@ function TrendingTribes() {
 }
 
 function UserCards() {
+  const USERS = useUsers()
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -191,6 +204,7 @@ function UserCards() {
 }
 
 export default function Dashboard() {
+  const USER_STATS = useUserStats()
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

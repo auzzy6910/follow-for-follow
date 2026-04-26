@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Users, TrendingUp, Crown, Handshake, ChevronRight, Plus, Star } from 'lucide-react'
-import { TRIBES, USERS, NICHES } from '../data/mockData'
+import { useTribes, useUsers } from '../hooks/useAppData'
 
 function TribeCard({ tribe }) {
   return (
@@ -82,6 +82,8 @@ function CollaborationCard({ user1, user2 }) {
 
 export default function Tribes() {
   const [activeTab, setActiveTab] = useState('browse')
+  const TRIBES = useTribes()
+  const USERS = useUsers()
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">

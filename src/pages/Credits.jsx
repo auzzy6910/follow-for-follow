@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { Coins, ArrowUpRight, ArrowDownRight, Clock, Shield, AlertTriangle, CheckCircle, XCircle, Lock } from 'lucide-react'
-import { CREDIT_HISTORY, ESCROW_TRANSACTIONS, USER_STATS } from '../data/mockData'
+import {
+  useCreditHistory,
+  useEscrowTransactions,
+  useUserStats,
+} from '../hooks/useAppData'
 
 function CreditStatCard({ icon: Icon, label, value, sublabel, color }) {
   return (
@@ -21,6 +25,9 @@ function CreditStatCard({ icon: Icon, label, value, sublabel, color }) {
 
 export default function Credits() {
   const [activeTab, setActiveTab] = useState('overview')
+  const CREDIT_HISTORY = useCreditHistory()
+  const ESCROW_TRANSACTIONS = useEscrowTransactions()
+  const USER_STATS = useUserStats()
 
   const tabs = [
     { id: 'overview', label: 'Overview' },

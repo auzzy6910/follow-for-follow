@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Settings as SettingsIcon, User, Bell, Shield, Link, Globe, Eye, Moon, Smartphone } from 'lucide-react'
-import { PLATFORMS, NICHES } from '../data/mockData'
+import { usePlatforms, useNiches } from '../hooks/useAppData'
 
 function ToggleSwitch({ enabled, onChange }) {
   return (
@@ -20,6 +20,8 @@ export default function Settings() {
   const [darkMode, setDarkMode] = useState(true)
   const [proxyProtection, setProxyProtection] = useState(true)
   const [dwellTimeEnabled, setDwellTimeEnabled] = useState(true)
+  const PLATFORMS = usePlatforms()
+  const NICHES = useNiches()
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
