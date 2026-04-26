@@ -16,11 +16,17 @@ export default function Header({ onMenuToggle }) {
 
       <div className="flex-1 min-w-0 max-w-xl">
         <div className="relative">
-          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+          <Search size={16} className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 text-gray-500 sm:hidden" />
+          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 hidden sm:block" />
+          <input
+            type="text"
+            placeholder="Search..."
+            className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-8 pr-2 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/50 transition-colors sm:hidden"
+          />
           <input
             type="text"
             placeholder="Search users, tribes & niches..."
-            className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-10 pr-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/50 transition-colors"
+            className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-10 pr-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/50 transition-colors hidden sm:block"
           />
         </div>
       </div>

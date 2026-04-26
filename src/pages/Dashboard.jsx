@@ -1,4 +1,5 @@
-import { TrendingUp, Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight } from 'lucide-react'
+import { useState } from 'react'
+import { TrendingUp, Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff } from 'lucide-react'
 import {
   useFeaturedUser,
   useUsers,
@@ -8,6 +9,20 @@ import {
   useQuests,
 } from '../hooks/useAppData'
 import { Link } from 'react-router-dom'
+
+function MobileVisibilityToggle({ visible, onToggle, label }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-label={visible ? `Hide ${label}` : `Show ${label}`}
+      aria-pressed={!visible}
+      className="md:hidden text-gray-400 hover:text-white p-1 -m-1 shrink-0"
+    >
+      {visible ? <Eye size={18} /> : <EyeOff size={18} />}
+    </button>
+  )
+}
 
 function StatCard({ icon: Icon, label, value, change, positive }) {
   return (
@@ -63,13 +78,17 @@ function FeaturedHero() {
 
 function TopGainers() {
   const LEADERBOARD = useLeaderboard()
+  const [visible, setVisible] = useState(true)
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold">Top Gainers</h3>
-        <Link to="/gamification" className="text-green-accent text-xs hover:underline">View All</Link>
+        <div className="flex items-center gap-3">
+          <Link to="/gamification" className="text-green-accent text-xs hover:underline">View All</Link>
+          <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="top gainers" />
+        </div>
       </div>
-      <div className="space-y-3">
+      <div className={`space-y-3 ${visible ? 'block' : 'hidden md:block'}`}>
         {LEADERBOARD.slice(0, 5).map((user, i) => (
           <div key={user.id} className="flex items-center gap-3">
             <span className="text-gray-500 text-sm font-medium w-5">{i + 1}</span>
@@ -96,7 +115,7 @@ function SpotlightUsers() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold text-lg">Spotlight Users</h3>
-        <Link to="/explore" className="text-green-accent text-sm hover:underline flex items-center gap-1">
+        <Link to="/explore" className="text-green-accent text-sm hover:underline hidden md:flex items-center gap-1">
           See All <ChevronRight size={16} />
         </Link>
       </div>
@@ -117,13 +136,17 @@ function SpotlightUsers() {
 
 function ActiveQuests() {
   const QUESTS = useQuests()
+  const [visible, setVisible] = useState(true)
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold">Daily Quests</h3>
-        <Link to="/gamification" className="text-green-accent text-xs hover:underline">View All</Link>
+        <div className="flex items-center gap-3">
+          <Link to="/gamification" className="text-green-accent text-xs hover:underline">View All</Link>
+          <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="daily quests" />
+        </div>
       </div>
-      <div className="space-y-3">
+      <div className={`space-y-3 ${visible ? 'block' : 'hidden md:block'}`}>
         {QUESTS.filter(q => q.type === 'daily').slice(0, 3).map(quest => (
           <div key={quest.id} className="bg-dark-700 rounded-xl p-3">
             <div className="flex items-center justify-between mb-2">
@@ -143,15 +166,19 @@ function ActiveQuests() {
 
 function TrendingTribes() {
   const TRIBES = useTribes()
+  const [visible, setVisible] = useState(true)
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold text-lg">Trending Tribes</h3>
-        <Link to="/tribes" className="text-green-accent text-sm hover:underline flex items-center gap-1">
-          See All <ChevronRight size={16} />
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link to="/tribes" className="text-green-accent text-sm hover:underline flex items-center gap-1">
+            See All <ChevronRight size={16} />
+          </Link>
+          <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="trending tribes" />
+        </div>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 ${visible ? '' : 'hidden md:grid'}`}>
         {TRIBES.slice(0, 5).map(tribe => (
           <div key={tribe.id} className="bg-dark-800 border border-dark-600 rounded-xl p-4 card-hover cursor-pointer text-center">
             <div className="text-3xl mb-2">{tribe.icon}</div>
@@ -171,7 +198,7 @@ function UserCards() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold text-lg">Recommended For You</h3>
-        <Link to="/explore" className="text-green-accent text-sm hover:underline flex items-center gap-1">
+        <Link to="/explore" className="text-green-accent text-sm hover:underline hidden md:flex items-center gap-1">
           See All <ChevronRight size={16} />
         </Link>
       </div>
