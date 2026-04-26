@@ -1,0 +1,13 @@
+[project]
+name = "follow-for-follow-backend"
+version = "0.1.0"
+description = "FastAPI backend for Follow-for-Follow social media growth platform"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi[standard]>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
