@@ -26,46 +26,46 @@ export default function Gamification() {
   const USER_STATS = useUserStats()
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
           <Trophy size={24} className="text-amber-400" /> Gamification
         </h2>
-        <p className="text-gray-400 text-sm mt-1">Compete, earn tiers, and complete quests for bonus credits</p>
+        <p className="text-gray-400 text-xs sm:text-sm mt-1">Compete, earn tiers, and complete quests for bonus credits</p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-2 mb-2">
             <Crown size={18} className="text-green-accent" />
-            <span className="text-gray-400 text-sm">Current Tier</span>
+            <span className="text-gray-400 text-xs sm:text-sm">Current Tier</span>
           </div>
           <TierBadge tier={USER_STATS.tier} />
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-2 mb-2">
             <Flame size={18} className="text-orange-400" />
-            <span className="text-gray-400 text-sm">Current Streak</span>
+            <span className="text-gray-400 text-xs sm:text-sm">Current Streak</span>
           </div>
-          <p className="text-2xl font-bold text-white">{USER_STATS.streak} days</p>
+          <p className="text-xl sm:text-2xl font-bold text-white">{USER_STATS.streak} days</p>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-2 mb-2">
             <Target size={18} className="text-cyan-400" />
-            <span className="text-gray-400 text-sm">Quests Done</span>
+            <span className="text-gray-400 text-xs sm:text-sm">Quests Done</span>
           </div>
-          <p className="text-2xl font-bold text-white">18</p>
+          <p className="text-xl sm:text-2xl font-bold text-white">18</p>
         </div>
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-2 mb-2">
             <Gift size={18} className="text-purple-400" />
-            <span className="text-gray-400 text-sm">Bonus Earned</span>
+            <span className="text-gray-400 text-xs sm:text-sm">Bonus Earned</span>
           </div>
-          <p className="text-2xl font-bold text-white">1,250 cr</p>
+          <p className="text-xl sm:text-2xl font-bold text-white">1,250 cr</p>
         </div>
       </div>
 
-      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-fit">
+      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 overflow-x-auto no-scrollbar">
         {[
           { id: 'leaderboard', label: 'Leaderboard' },
           { id: 'quests', label: 'Quests' },
@@ -75,7 +75,7 @@ export default function Gamification() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
               activeTab === tab.id ? 'bg-green-accent/10 text-green-accent' : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -93,7 +93,7 @@ export default function Gamification() {
           </div>
           <div className="divide-y divide-dark-600">
             {LEADERBOARD.map((user, i) => (
-              <div key={user.id} className={`flex items-center gap-4 px-5 py-4 ${i < 3 ? 'bg-dark-700/50' : ''}`}>
+              <div key={user.id} className={`flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-4 ${i < 3 ? 'bg-dark-700/50' : ''}`}>
                 <span className={`w-8 text-center font-bold ${
                   i === 0 ? 'text-amber-400 text-lg' : i === 1 ? 'text-gray-300 text-lg' : i === 2 ? 'text-orange-400 text-lg' : 'text-gray-500'
                 }`}>
@@ -104,12 +104,12 @@ export default function Gamification() {
                   <p className="text-white text-sm font-medium truncate">{user.displayName}</p>
                   <p className="text-gray-500 text-xs">@{user.username}</p>
                 </div>
-                <TierBadge tier={user.tier} />
-                <div className="text-right min-w-[80px]">
-                  <p className="text-green-accent text-sm font-bold">+{user.weeklyFollowers.toLocaleString()}</p>
-                  <p className="text-gray-500 text-xs">followers</p>
+                <div className="hidden md:block"><TierBadge tier={user.tier} /></div>
+                <div className="text-right min-w-[64px] sm:min-w-[80px]">
+                  <p className="text-green-accent text-xs sm:text-sm font-bold">+{user.weeklyFollowers.toLocaleString()}</p>
+                  <p className="text-gray-500 text-[10px] sm:text-xs">followers</p>
                 </div>
-                <div className="text-right min-w-[60px]">
+                <div className="hidden sm:block text-right min-w-[60px]">
                   <p className="text-amber-400 text-sm font-semibold">{user.streak}d</p>
                   <p className="text-gray-500 text-xs">streak</p>
                 </div>
@@ -121,9 +121,9 @@ export default function Gamification() {
 
       {activeTab === 'quests' && (
         <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {QUESTS.map(quest => (
-              <div key={quest.id} className={`bg-dark-800 border rounded-2xl p-5 ${
+              <div key={quest.id} className={`bg-dark-800 border rounded-2xl p-4 sm:p-5 ${
                 quest.progress >= quest.total ? 'border-green-accent/30' : 'border-dark-600'
               }`}>
                 <div className="flex items-center justify-between mb-3">
@@ -170,7 +170,7 @@ export default function Gamification() {
             { tier: 'influencer', name: 'Influencer', color: 'green-accent', limit: '50 follows/day', desc: 'High trust members with proven engagement history.', perks: ['50 follows per day', '1.5x credit earning', 'Priority in tribe feeds', 'Collaboration matching'] },
             { tier: 'legend', name: 'Legend', color: 'amber-400', limit: 'Unlimited + Priority', desc: 'Elite members with legendary engagement and trust.', perks: ['Unlimited follows', '2x credit earning', '5x Priority pools', 'Golden Hour priority', 'VIP support', 'Custom tribe creation'] },
           ].map(t => (
-            <div key={t.tier} className={`bg-dark-800 border rounded-2xl p-6 ${
+            <div key={t.tier} className={`bg-dark-800 border rounded-2xl p-4 sm:p-6 ${
               t.tier === USER_STATS.tier ? `border-${t.color}/30` : 'border-dark-600'
             }`}>
               <div className="flex items-center gap-4 mb-4">
@@ -196,14 +196,14 @@ export default function Gamification() {
 
       {activeTab === 'streaks' && (
         <div className="space-y-6">
-          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-14 h-14 rounded-xl bg-orange-400/10 flex items-center justify-center">
+              <div className="w-14 h-14 rounded-xl bg-orange-400/10 flex items-center justify-center shrink-0">
                 <Flame size={28} className="text-orange-400" />
               </div>
-              <div>
-                <p className="text-3xl font-bold text-white">{USER_STATS.streak} Day Streak</p>
-                <p className="text-gray-400 text-sm">Keep following daily to maintain your streak!</p>
+              <div className="min-w-0">
+                <p className="text-2xl sm:text-3xl font-bold text-white">{USER_STATS.streak} Day Streak</p>
+                <p className="text-gray-400 text-xs sm:text-sm">Keep following daily to maintain your streak!</p>
               </div>
             </div>
             <div className="grid grid-cols-7 gap-2 mt-4">
@@ -220,13 +220,13 @@ export default function Gamification() {
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             {[
               { days: 7, reward: 200, status: 'claimed' },
               { days: 14, reward: 500, status: USER_STATS.streak >= 14 ? 'claimable' : 'locked' },
               { days: 30, reward: 1000, status: 'locked' },
             ].map(milestone => (
-              <div key={milestone.days} className={`bg-dark-800 border rounded-2xl p-5 ${
+              <div key={milestone.days} className={`bg-dark-800 border rounded-2xl p-4 sm:p-5 ${
                 milestone.status === 'claimed' ? 'border-green-accent/30' : 'border-dark-600'
               }`}>
                 <div className="text-center">

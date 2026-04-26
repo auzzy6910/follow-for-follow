@@ -4,13 +4,13 @@ import { useTribes, useUsers } from '../hooks/useAppData'
 
 function TribeCard({ tribe }) {
   return (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5 card-hover">
+    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 card-hover">
       <div className="flex items-center gap-3 mb-3">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ backgroundColor: `${tribe.color}15` }}>
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0" style={{ backgroundColor: `${tribe.color}15` }}>
           {tribe.icon}
         </div>
-        <div className="flex-1">
-          <h3 className="text-white font-semibold">{tribe.name}</h3>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-white font-semibold truncate">{tribe.name}</h3>
           <p className="text-gray-500 text-xs">{tribe.members.toLocaleString()} members</p>
         </div>
         <div className="text-right">
@@ -45,7 +45,7 @@ function TribeCard({ tribe }) {
 
 function CollaborationCard({ user1, user2 }) {
   return (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5 card-hover">
+    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 card-hover">
       <div className="flex items-center gap-2 mb-3">
         <Handshake size={16} className="text-cyan-400" />
         <span className="text-cyan-400 text-xs font-medium">Collaboration Match</span>
@@ -86,17 +86,17 @@ export default function Tribes() {
   const USERS = useUsers()
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+          <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
             <Users size={24} className="text-green-accent" /> Niche Tribes
           </h2>
-          <p className="text-gray-400 text-sm mt-1">Join micro-communities for relevant, high-value followers</p>
+          <p className="text-gray-400 text-xs sm:text-sm mt-1">Join micro-communities for relevant, high-value followers</p>
         </div>
       </div>
 
-      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-fit">
+      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 overflow-x-auto no-scrollbar">
         {[
           { id: 'browse', label: 'Browse Tribes' },
           { id: 'my-tribes', label: 'My Tribes' },
@@ -105,7 +105,7 @@ export default function Tribes() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
               activeTab === tab.id ? 'bg-green-accent/10 text-green-accent' : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -116,7 +116,7 @@ export default function Tribes() {
 
       {activeTab === 'browse' && (
         <div className="space-y-6">
-          <div className="bg-dark-800 border border-green-accent/20 rounded-2xl p-5">
+          <div className="bg-dark-800 border border-green-accent/20 rounded-2xl p-4 sm:p-5">
             <div className="flex items-center gap-3 mb-2">
               <Star size={20} className="text-amber-400" />
               <h3 className="text-white font-semibold">Why Tribes?</h3>
@@ -126,7 +126,7 @@ export default function Tribes() {
               <span className="text-amber-400 font-semibold"> 2x credits</span>. Your followers will be relevant, engaged, and more likely to interact with your content.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {TRIBES.map(tribe => (
               <TribeCard key={tribe.id} tribe={tribe} />
             ))}
@@ -136,9 +136,9 @@ export default function Tribes() {
 
       {activeTab === 'my-tribes' && (
         <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             {TRIBES.slice(0, 3).map(tribe => (
-              <div key={tribe.id} className="bg-dark-800 border border-green-accent/20 rounded-2xl p-5">
+              <div key={tribe.id} className="bg-dark-800 border border-green-accent/20 rounded-2xl p-4 sm:p-5">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ backgroundColor: `${tribe.color}15` }}>
                     {tribe.icon}
@@ -177,7 +177,7 @@ export default function Tribes() {
 
       {activeTab === 'collab' && (
         <div className="space-y-6">
-          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
             <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
               <Handshake size={18} className="text-cyan-400" /> Collaboration Matching
             </h3>
@@ -185,7 +185,7 @@ export default function Tribes() {
               Partnered with users who have similar follower counts and niches. Perfect for shout-outs and joint live streams.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {Array.from({ length: 6 }, (_, i) => (
               <CollaborationCard key={i} user1={USERS[i * 2]} user2={USERS[i * 2 + 1]} />
             ))}

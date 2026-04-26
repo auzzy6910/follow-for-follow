@@ -47,6 +47,15 @@ body {
   background: var(--color-dark-400);
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .glow-green {
   box-shadow: 0 0 20px var(--color-green-glow), 0 0 40px var(--color-green-glow);
 }

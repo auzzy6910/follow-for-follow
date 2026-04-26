@@ -8,7 +8,7 @@ import {
 
 function CreditStatCard({ icon: Icon, label, value, sublabel, color }) {
   return (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
       <div className="flex items-center gap-3 mb-3">
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
           <Icon size={20} />
@@ -37,18 +37,18 @@ export default function Credits() {
   ]
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white">Credit & Exchange System</h2>
-        <p className="text-gray-400 text-sm mt-1">Earn credits by following, spend to get followers</p>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">Credit & Exchange System</h2>
+        <p className="text-gray-400 text-xs sm:text-sm mt-1">Earn credits by following, spend to get followers</p>
       </div>
 
-      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 w-fit">
+      <div className="flex gap-2 bg-dark-800 p-1 rounded-xl border border-dark-600 overflow-x-auto no-scrollbar">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
               activeTab === tab.id
                 ? 'bg-green-accent/10 text-green-accent'
                 : 'text-gray-400 hover:text-white'
@@ -61,16 +61,16 @@ export default function Credits() {
 
       {activeTab === 'overview' && (
         <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             <CreditStatCard icon={Coins} label="Available Credits" value={USER_STATS.totalCredits.toLocaleString()} sublabel="Ready to spend" color="bg-green-accent/10 text-green-accent" />
             <CreditStatCard icon={ArrowUpRight} label="Total Earned" value="8,420" sublabel="Lifetime earnings" color="bg-cyan-400/10 text-cyan-400" />
             <CreditStatCard icon={ArrowDownRight} label="Total Spent" value="5,970" sublabel="On listing your profile" color="bg-amber-400/10 text-amber-400" />
             <CreditStatCard icon={Lock} label="In Escrow" value="1,150" sublabel="Held for 30-day verification" color="bg-purple-400/10 text-purple-400" />
           </div>
 
-          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
             <h3 className="text-white font-semibold mb-4">How Credits Work</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
               <div className="space-y-3">
                 <div className="w-12 h-12 rounded-xl bg-green-accent/10 flex items-center justify-center">
                   <ArrowUpRight size={24} className="text-green-accent" />
@@ -95,7 +95,7 @@ export default function Credits() {
             </div>
           </div>
 
-          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
             <h3 className="text-white font-semibold mb-2">Verification Engine</h3>
             <p className="text-gray-400 text-sm mb-4">Each follow is verified before credits are awarded.</p>
             <div className="space-y-3">
@@ -111,7 +111,7 @@ export default function Credits() {
       )}
 
       {activeTab === 'history' && (
-        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+        <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <h3 className="text-white font-semibold mb-4">Credit History</h3>
           <div className="space-y-3">
             {CREDIT_HISTORY.map(tx => (
@@ -140,7 +140,7 @@ export default function Credits() {
 
       {activeTab === 'escrow' && (
         <div className="space-y-4">
-          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
             <div className="flex items-center gap-2 mb-4">
               <Lock size={18} className="text-purple-400" />
               <h3 className="text-white font-semibold">Escrow Transactions</h3>
@@ -179,7 +179,7 @@ export default function Credits() {
       )}
 
       {activeTab === 'earn' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6 card-hover">
             <h3 className="text-white font-semibold mb-2">Follow Users</h3>
             <p className="text-gray-400 text-sm mb-4">Earn 25-50 credits per verified follow. Niche matches earn 2x.</p>

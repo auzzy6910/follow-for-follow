@@ -24,15 +24,15 @@ export default function Settings() {
   const NICHES = useNiches()
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
           <SettingsIcon size={24} className="text-green-accent" /> Settings
         </h2>
-        <p className="text-gray-400 text-sm mt-1">Manage your account preferences and connected platforms</p>
+        <p className="text-gray-400 text-xs sm:text-sm mt-1">Manage your account preferences and connected platforms</p>
       </div>
 
-      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
           <User size={18} /> Profile Settings
         </h3>
@@ -70,7 +70,7 @@ export default function Settings() {
         </div>
       </div>
 
-      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
           <Link size={18} /> Connected Platforms (OAuth)
         </h3>
@@ -95,7 +95,7 @@ export default function Settings() {
         </div>
       </div>
 
-      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
+      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
           <Bell size={18} /> Notifications & Preferences
         </h3>

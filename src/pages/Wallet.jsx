@@ -5,26 +5,26 @@ export default function Wallet() {
   const CREDIT_HISTORY = useCreditHistory()
   const USER_STATS = useUserStats()
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
           <WalletIcon size={24} className="text-green-accent" /> Wallet
         </h2>
-        <p className="text-gray-400 text-sm mt-1">Manage your credits and transactions</p>
+        <p className="text-gray-400 text-xs sm:text-sm mt-1">Manage your credits and transactions</p>
       </div>
 
-      <div className="bg-gradient-to-r from-dark-800 to-dark-700 border border-green-accent/20 rounded-2xl p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-gray-400 text-sm mb-1">Available Balance</p>
-            <p className="text-4xl font-bold text-white">{USER_STATS.totalCredits.toLocaleString()}</p>
+      <div className="bg-gradient-to-r from-dark-800 to-dark-700 border border-green-accent/20 rounded-2xl p-4 sm:p-6">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-gray-400 text-xs sm:text-sm mb-1">Available Balance</p>
+            <p className="text-3xl sm:text-4xl font-bold text-white">{USER_STATS.totalCredits.toLocaleString()}</p>
             <p className="text-green-accent text-sm font-medium mt-1">credits</p>
           </div>
-          <div className="w-20 h-20 rounded-2xl bg-green-accent/10 flex items-center justify-center">
-            <Coins size={40} className="text-green-accent" />
+          <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-green-accent/10 flex items-center justify-center shrink-0">
+            <Coins className="text-green-accent w-8 h-8 sm:w-10 sm:h-10" />
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
           <div className="bg-dark-900/50 rounded-xl p-3 text-center">
             <p className="text-green-accent font-bold text-lg">+8,420</p>
             <p className="text-gray-500 text-xs">Total Earned</p>
@@ -40,8 +40,8 @@ export default function Wallet() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <button className="bg-dark-800 border border-dark-600 rounded-2xl p-5 text-left card-hover">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <button className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 text-left card-hover">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl bg-green-accent/10 flex items-center justify-center">
               <ArrowUpRight size={20} className="text-green-accent" />
@@ -52,7 +52,7 @@ export default function Wallet() {
             </div>
           </div>
         </button>
-        <button className="bg-dark-800 border border-dark-600 rounded-2xl p-5 text-left card-hover">
+        <button className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 text-left card-hover">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl bg-amber-400/10 flex items-center justify-center">
               <CreditCard size={20} className="text-amber-400" />
@@ -65,8 +65,8 @@ export default function Wallet() {
         </button>
       </div>
 
-      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
-        <div className="flex items-center justify-between mb-4">
+      <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
+        <div className="flex items-center justify-between mb-4 gap-2">
           <h3 className="text-white font-semibold flex items-center gap-2">
             <BarChart3 size={18} /> Recent Transactions
           </h3>
