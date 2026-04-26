@@ -16,19 +16,57 @@ A social media growth platform that helps users build genuine, engaged audiences
 
 ## Tech Stack
 
+### Frontend
 - React 19 + Vite
 - Tailwind CSS v4
 - React Router v7
 - Lucide React icons
 
+### Backend
+- Python 3.11+
+- FastAPI
+- Uvicorn
+
 ## Development
+
+### Frontend
 
 ```bash
 npm install
 npm run dev
 ```
 
+### Backend
+
+```bash
+cd backend
+pip install fastapi uvicorn
+uvicorn app.main:app --reload
+```
+
+The API will be available at `http://localhost:8000`. Interactive docs at `http://localhost:8000/docs`.
+
+## API Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/health` | Health check |
+| GET | `/api/niches` | List all niches |
+| GET | `/api/platforms` | List all platforms |
+| GET | `/api/users` | List all users |
+| GET | `/api/users/featured` | Get the featured user |
+| GET | `/api/users/{user_id}` | Get a specific user |
+| GET | `/api/tribes` | List all tribes with top members |
+| GET | `/api/quests` | List all quests |
+| GET | `/api/leaderboard` | Get the leaderboard |
+| GET | `/api/escrow` | List escrow transactions |
+| GET | `/api/golden-hour` | List golden hour sessions |
+| GET | `/api/credits/history` | Get credit history |
+| GET | `/api/stats` | Get current user stats |
+
 ## Build
+
+### Frontend
 
 ```bash
 npm run build
