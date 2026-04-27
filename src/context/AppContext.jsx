@@ -36,6 +36,11 @@ const initialState = {
   escrowDrawerOpen: false,
   escrowDrawerTxId: null,
   walletModal: null,
+  claimedQuests: {},
+  claimedStreaks: {},
+  tierUpCelebration: null,
+  qualityAudit: null,
+  commentTemplates: [],
 }
 
 function reducer(state, action) {
@@ -198,6 +203,97 @@ function reducer(state, action) {
 
     case 'SET_WALLET_MODAL':
       return { ...state, walletModal: action.modal }
+
+    case 'CLAIM_QUEST': {
+      if (state.claimedQuests[action.questId]) return state
+      return {
+        ...state,
+        claimedQuests: { ...state.claimedQuests, [action.questId]: true },
+        userStats: {
+          ...state.userStats,
+          totalCredits: state.userStats.totalCredits + action.reward,
+        },
+        creditHistory: [
+          {
+            id: generateId(),
+            type: 'earned',
+            amount: action.reward,
+            action: `Quest reward: ${action.questTitle}`,
+            timestamp: 'Just now',
+          },
+          ...state.creditHistory,
+        ],
+      }
+    }
+
+    case 'CLAIM_STREAK': {
+      if (state.claimedStreaks[action.days]) return state
+      const tiers = ['rookie', 'influencer', 'legend']
+      const currentIdx = tiers.indexOf(state.userStats.tier)
+      let newTier = state.userStats.tier
+      let celebration = null
+      if (action.days >= 30 && currentIdx < 2) {
+        newTier = tiers[currentIdx + 1]
+        celebration = { from: state.userStats.tier, to: newTier }
+      } else if (action.days >= 14 && currentIdx < 1) {
+        newTier = tiers[currentIdx + 1]
+        celebration = { from: state.userStats.tier, to: newTier }
+      }
+      return {
+        ...state,
+        claimedStreaks: { ...state.claimedStreaks, [action.days]: true },
+        userStats: {
+          ...state.userStats,
+          totalCredits: state.userStats.totalCredits + action.reward,
+          tier: newTier,
+        },
+        tierUpCelebration: celebration,
+        creditHistory: [
+          {
+            id: generateId(),
+            type: 'earned',
+            amount: action.reward,
+            action: `${action.days}-day streak bonus`,
+            timestamp: 'Just now',
+          },
+          ...state.creditHistory,
+        ],
+      }
+    }
+
+    case 'DISMISS_CELEBRATION':
+      return { ...state, tierUpCelebration: null }
+
+    case 'RUN_QUALITY_AUDIT':
+      return {
+        ...state,
+        qualityAudit: {
+          running: true,
+          startedAt: Date.now(),
+          report: null,
+        },
+      }
+
+    case 'COMPLETE_QUALITY_AUDIT':
+      return {
+        ...state,
+        qualityAudit: {
+          running: false,
+          startedAt: state.qualityAudit?.startedAt ?? null,
+          report: action.report,
+        },
+      }
+
+    case 'SET_COMMENT_TEMPLATES':
+      return { ...state, commentTemplates: action.templates }
+
+    case 'UPDATE_COMMENT_TEMPLATE':
+      return {
+        ...state,
+        commentTemplates: state.commentTemplates.map(t =>
+          t.id === action.templateId ? { ...t, status: action.status } : t,
+        ),
+      }
 
     default:
       return state
