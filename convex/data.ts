@@ -30,7 +30,7 @@ export const getPlatforms = query({
 export const getLocations = query({
   args: {},
   handler: async (ctx) => {
-    const users = await ctx.db.query("users").collect();
+    const users = await ctx.db.query("directoryUsers").collect();
     const locationSet = new Set<string>();
     for (const u of users) {
       if (u.location) locationSet.add(u.location);
@@ -93,26 +93,26 @@ export const searchUsers = query({
 
     if (args.niche) {
       q = ctx.db
-        .query("users")
+        .query("directoryUsers")
         .withIndex("by_niche", (idx) => idx.eq("niche", args.niche!));
     } else if (args.platform) {
       q = ctx.db
-        .query("users")
+        .query("directoryUsers")
         .withIndex("by_platform", (idx) =>
           idx.eq("platform", args.platform!),
         );
     } else if (args.tier) {
       q = ctx.db
-        .query("users")
+        .query("directoryUsers")
         .withIndex("by_tier", (idx) => idx.eq("tier", args.tier!));
     } else if (args.location) {
       q = ctx.db
-        .query("users")
+        .query("directoryUsers")
         .withIndex("by_location", (idx) =>
           idx.eq("location", args.location!),
         );
     } else {
-      q = ctx.db.query("users");
+      q = ctx.db.query("directoryUsers");
     }
 
     q = q.filter((f) => f.neq(f.field("isFeatured"), true));
@@ -148,7 +148,7 @@ export const getUsers = query({
   args: {},
   handler: async (ctx) => {
     const rows = await ctx.db
-      .query("users")
+      .query("directoryUsers")
       .filter((q) => q.neq(q.field("isFeatured"), true))
       .collect();
     return rows.map(serializeUser);
@@ -159,7 +159,7 @@ export const getFeaturedUser = query({
   args: {},
   handler: async (ctx) => {
     const row = await ctx.db
-      .query("users")
+      .query("directoryUsers")
       .withIndex("by_featured", (q) => q.eq("isFeatured", true))
       .first();
     if (!row) return null;
@@ -172,7 +172,7 @@ export const getTribes = query({
   handler: async (ctx) => {
     const tribes = await ctx.db.query("tribes").collect();
     const users = await ctx.db
-      .query("users")
+      .query("directoryUsers")
       .filter((q) => q.neq(q.field("isFeatured"), true))
       .collect();
     return tribes.map((tribe) => {
@@ -218,7 +218,7 @@ export const getLeaderboard = query({
       .query("leaderboard")
       .withIndex("by_rank")
       .collect();
-    const users = await ctx.db.query("users").collect();
+    const users = await ctx.db.query("directoryUsers").collect();
     const byExternalId = new Map(users.map((u) => [u.externalId, u]));
     return entries
       .map((entry) => {
@@ -241,7 +241,7 @@ export const getEscrowTransactions = query({
   args: {},
   handler: async (ctx) => {
     const rows = await ctx.db.query("escrowTransactions").collect();
-    const users = await ctx.db.query("users").collect();
+    const users = await ctx.db.query("directoryUsers").collect();
     const byExternalId = new Map(users.map((u) => [u.externalId, u]));
     return rows
       .map((row) => {
@@ -365,7 +365,7 @@ export const getRecommendations = query({
     const myNiche = stats ? stats.tier : null;
 
     const allUsers = await ctx.db
-      .query("users")
+      .query("directoryUsers")
       .filter((q) => q.neq(q.field("isFeatured"), true))
       .collect();
 

@@ -1,7 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import { ConvexProvider, ConvexReactClient } from 'convex/react'
+import { ConvexReactClient } from 'convex/react'
+import { ConvexAuthProvider } from '@convex-dev/auth/react'
 import { AppProvider } from './context/AppContext'
 import './index.css'
 import App from './App.jsx'
@@ -15,9 +16,9 @@ if (!convexUrl) {
   )
 }
 
-// ConvexProvider is always mounted so the hooks-in-hooks rules hold. When no
-// URL is configured we use a placeholder that never resolves — queries return
-// undefined and the hook layer falls back to bundled mock data.
+// ConvexAuthProvider is always mounted so the hooks-in-hooks rules hold. When
+// no URL is configured we use a placeholder that never resolves — queries
+// return undefined and the hook layer falls back to bundled mock data.
 const convex = new ConvexReactClient(
   convexUrl || 'https://invalid-convex-url.invalid',
 )
@@ -25,11 +26,11 @@ const convex = new ConvexReactClient(
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <ConvexProvider client={convex}>
+      <ConvexAuthProvider client={convex}>
         <AppProvider>
           <App />
         </AppProvider>
-      </ConvexProvider>
+      </ConvexAuthProvider>
     </BrowserRouter>
   </StrictMode>,
 )

@@ -52,6 +52,43 @@ When deploying from CI / a non-interactive shell, set the
 `CONVEX_DEPLOY_KEY` environment variable (from the Convex dashboard) before
 running the commands above.
 
+## Authentication
+
+Auth is implemented with [Convex Auth](https://labs.convex.dev/auth) using the
+email + password provider. The frontend is wrapped in `ConvexAuthProvider` and
+gated with `<Authenticated>` / `<Unauthenticated>` so unauthenticated visitors
+see the sign-in screen and only signed-in users reach the dashboard.
+
+Backend pieces:
+
+- `convex/auth.ts` — registers the `Password` provider
+- `convex/auth.config.ts` — JWT issuer config
+- `convex/http.ts` — mounts the auth HTTP routes
+- `convex/users.ts` — exposes a `currentUser` query (uses `getAuthUserId`)
+
+Convex Auth requires three deployment-side environment variables (set on your
+Convex deployment, not in `.env.local`):
+
+```bash
+# URL where the frontend is served (used for redirects).
+npx convex env set SITE_URL http://localhost:5173
+
+# Generate a signing key + JWKS once and set them on the deployment.
+node -e "import('jose').then(async ({ exportJWK, exportPKCS8, generateKeyPair }) => { \
+  const k = await generateKeyPair('RS256', { extractable: true }); \
+  const priv = (await exportPKCS8(k.privateKey)).trimEnd().replace(/\n/g, ' '); \
+  const jwks = JSON.stringify({ keys: [{ use: 'sig', ...(await exportJWK(k.publicKey)) }] }); \
+  console.log('JWT_PRIVATE_KEY=' + JSON.stringify(priv)); \
+  console.log('JWKS=' + jwks); \
+})"
+# Copy the printed values into `npx convex env set JWT_PRIVATE_KEY ...` and
+# `npx convex env set JWKS ...` (or set them via the Convex dashboard).
+```
+
+Once those are set, run `npx convex dev` (or `npx convex deploy` for
+production) to push the auth functions, then visit the app — new users can
+sign up directly from the sign-in screen.
+
 ## Build
 
 ```bash
