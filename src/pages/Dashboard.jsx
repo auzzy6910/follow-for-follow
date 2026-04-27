@@ -78,15 +78,12 @@ function FeaturedHero() {
 
 function TopGainers() {
   const LEADERBOARD = useLeaderboard()
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold">Top Gainers</h3>
-        <div className="flex items-center gap-3">
-          <Link to="/gamification" className="text-green-accent text-xs hover:underline">View All</Link>
-          <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="top gainers" />
-        </div>
+        <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="top gainers" />
       </div>
       <div className={`space-y-3 ${visible ? 'block' : 'hidden md:block'}`}>
         {LEADERBOARD.slice(0, 5).map((user, i) => (
@@ -166,17 +163,12 @@ function ActiveQuests() {
 
 function TrendingTribes() {
   const TRIBES = useTribes()
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold text-lg">Trending Tribes</h3>
-        <div className="flex items-center gap-3">
-          <Link to="/tribes" className="text-green-accent text-sm hover:underline flex items-center gap-1">
-            See All <ChevronRight size={16} />
-          </Link>
-          <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="trending tribes" />
-        </div>
+        <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="trending tribes" />
       </div>
       <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 ${visible ? '' : 'hidden md:grid'}`}>
         {TRIBES.slice(0, 5).map(tribe => (
@@ -252,7 +244,7 @@ export default function Dashboard() {
       <TrendingTribes />
       <UserCards />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="hidden md:grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <ActiveQuests />
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
           <h3 className="text-white font-semibold mb-4">Safety Status</h3>
