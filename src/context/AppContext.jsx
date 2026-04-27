@@ -1,5 +1,5 @@
 import { useReducer, useCallback, useRef } from 'react'
-import { ESCROW_TRANSACTIONS, CREDIT_HISTORY, USER_STATS } from '../data/mockData'
+import { ESCROW_TRANSACTIONS, CREDIT_HISTORY, USER_STATS, FEATURED_USER } from '../data/mockData'
 import { AppContext } from './useAppContext'
 
 const PLATFORM_URLS = {
@@ -79,6 +79,8 @@ function reducer(state, action) {
       const follow = state.activeFollows[action.userId]
       if (!follow) return state
       const cost = follow.creditCost
+      const isInNiche = action.targetUser.niche === FEATURED_USER.niche
+      const multiplier = isInNiche ? 2 : 1
       const newEscrow = {
         id: generateId(),
         user: action.targetUser,
@@ -95,11 +97,15 @@ function reducer(state, action) {
         action: `Followed ${action.targetUser.displayName} (escrow)`,
         timestamp: 'Just now',
       }
+      const baseEarn = Math.floor(cost * 0.5)
+      const earnAmount = baseEarn * multiplier
       const earnEntry = {
         id: generateId(),
         type: 'earned',
-        amount: Math.floor(cost * 0.5),
-        action: `Follow verified — ${action.targetUser.displayName}`,
+        amount: earnAmount,
+        action: isInNiche
+          ? `Follow verified — ${action.targetUser.displayName} (2× tribe bonus!)`
+          : `Follow verified — ${action.targetUser.displayName}`,
         timestamp: 'Just now',
       }
       const { [action.userId]: _completedFollow, ...remainingFollows } = state.activeFollows
@@ -109,7 +115,7 @@ function reducer(state, action) {
         activeFollows: remainingFollows,
         userStats: {
           ...state.userStats,
-          totalCredits: state.userStats.totalCredits - cost + earnEntry.amount,
+          totalCredits: state.userStats.totalCredits - cost + earnAmount,
           totalFollowsGiven: state.userStats.totalFollowsGiven + 1,
         },
         escrowTransactions: [newEscrow, ...state.escrowTransactions],
@@ -263,8 +269,12 @@ export function AppProvider({ children }) {
             delete dwellTimersRef.current[user.id]
           }
           dispatch({ type: 'COMPLETE_FOLLOW', userId: user.id, targetUser: user })
+          const isInNiche = user.niche === FEATURED_USER.niche
+          const baseEarn = Math.floor(creditCost * 0.5)
+          const earned = isInNiche ? baseEarn * 2 : baseEarn
+          const bonusText = isInNiche ? ' (2× tribe bonus!)' : ''
           notify(
-            `Follow verified! +${Math.floor(creditCost * 0.5)} cr earned, ${creditCost} cr in escrow for 30 days.`,
+            `Follow verified! +${earned} cr earned${bonusText}, ${creditCost} cr in escrow for 30 days.`,
             'success',
           )
         },
