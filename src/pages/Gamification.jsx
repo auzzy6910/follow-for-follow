@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Trophy, Flame, Target, Crown, Star, TrendingUp, Medal, Zap, Gift } from 'lucide-react'
+import { Trophy, Flame, Target, Crown, Star, Medal, Zap, Gift } from 'lucide-react'
 import { useLeaderboard, useQuests, useUserStats } from '../hooks/useAppData'
 
 function TierBadge({ tier }) {

@@ -112,7 +112,7 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
           ))}
           <button className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200 w-full">
             <LogOut size={20} className="shrink-0" />
-            <span className={`text-sm font-medium ${labelsVisible ? '' : 'lg:hidden'}`}>Logout</span>
+            <span className="text-sm font-medium">Logout</span>
           </button>
         </div>
       </aside>

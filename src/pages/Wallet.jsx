@@ -1,4 +1,4 @@
-import { Wallet as WalletIcon, TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight, Coins, Clock, Gift, CreditCard, BarChart3 } from 'lucide-react'
+import { Wallet as WalletIcon, TrendingDown, ArrowUpRight, ArrowDownRight, Coins, Clock, Gift, CreditCard, BarChart3 } from 'lucide-react'
 import { useCreditHistory, useUserStats } from '../hooks/useAppData'
 
 export default function Wallet() {
