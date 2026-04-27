@@ -1,19 +1,11 @@
-import { Search, Bell, Menu } from 'lucide-react'
+import { Search, Bell, UserPlus } from 'lucide-react'
 import { useUserStats } from '../hooks/useAppData'
 
-export default function Header({ onMenuToggle }) {
+export default function Header() {
   const USER_STATS = useUserStats()
 
   return (
     <header className="h-16 bg-dark-800 border-b border-dark-600 flex items-center px-3 sm:px-4 lg:px-6 gap-2 sm:gap-3 lg:gap-4 shrink-0">
-      <button
-        onClick={onMenuToggle}
-        className="lg:hidden text-gray-400 hover:text-white p-1 shrink-0"
-        aria-label="Open menu"
-      >
-        <Menu size={22} />
-      </button>
-
       <div className="flex-1 min-w-0 max-w-xl">
         <div className="relative">
           <Search size={16} className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 text-gray-500 sm:hidden" />
@@ -32,12 +24,12 @@ export default function Header({ onMenuToggle }) {
       </div>
 
       <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 shrink-0">
-        <div className="hidden md:flex items-center gap-2 bg-dark-700 px-3 py-1.5 rounded-lg border border-dark-500">
+        <div className="hidden lg:flex items-center gap-2 bg-dark-700 px-3 py-1.5 rounded-lg border border-dark-500">
           <span className="text-green-accent text-sm font-semibold">{USER_STATS.totalCredits.toLocaleString()}</span>
           <span className="text-gray-500 text-xs">credits</span>
         </div>
 
-        <div className="hidden md:flex items-center gap-2 bg-dark-700 px-3 py-1.5 rounded-lg border border-dark-500">
+        <div className="hidden lg:flex items-center gap-2 bg-dark-700 px-3 py-1.5 rounded-lg border border-dark-500">
           <div className="w-2 h-2 rounded-full bg-green-accent animate-pulse" />
           <span className="text-gray-300 text-xs">Day {USER_STATS.streak} Streak</span>
         </div>
@@ -45,6 +37,10 @@ export default function Header({ onMenuToggle }) {
         <button className="relative p-2 text-gray-400 hover:text-white transition-colors" aria-label="Notifications">
           <Bell size={20} />
           <span className="absolute top-1 right-1 w-2 h-2 bg-green-accent rounded-full" />
+        </button>
+
+        <button className="p-2 text-gray-400 hover:text-white transition-colors" aria-label="Follow">
+          <UserPlus size={20} />
         </button>
 
         <div className="w-9 h-9 rounded-full bg-gradient-to-br from-green-accent to-cyan-400 flex items-center justify-center cursor-pointer shrink-0">

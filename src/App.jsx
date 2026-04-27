@@ -28,7 +28,7 @@ function App() {
         onMobileClose={closeMobileSidebar}
       />
       <div className="flex flex-col flex-1 overflow-hidden">
-        <Header onMenuToggle={() => setMobileSidebarOpen(true)} />
+        <Header />
         <main className="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6 pb-24 lg:pb-6">
           <Routes>
             <Route path="/" element={<Dashboard />} />
