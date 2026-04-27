@@ -42,13 +42,13 @@ export default function Explore() {
       {showFilters && (
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 space-y-4">
           <div className="relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+            <Search size={18} className="hidden sm:block absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
             <input
               type="text"
               placeholder="Search by username or display name..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/50"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-4 sm:pl-10 sm:pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/50"
             />
           </div>
 

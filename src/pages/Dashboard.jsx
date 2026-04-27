@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TrendingUp, Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff } from 'lucide-react'
+import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff } from 'lucide-react'
 import {
   useFeaturedUser,
   useUsers,
