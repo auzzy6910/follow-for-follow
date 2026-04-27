@@ -1,5 +1,12 @@
-import { Sparkles, ShieldCheck, AlertTriangle, CheckCircle, XCircle, User, Image, FileText, BarChart3, MessageSquare } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import {
+  Sparkles, ShieldCheck, AlertTriangle, CheckCircle, XCircle, User, Image,
+  FileText, BarChart3, MessageSquare, RefreshCw, Loader2, Check, ThumbsUp,
+  ThumbsDown, Eye,
+} from 'lucide-react'
 import { useUserStats } from '../hooks/useAppData'
+import { useAppContext } from '../context/useAppContext'
+import { COMMENT_TEMPLATES } from '../data/mockData'
 
 function ScoreGauge({ score, label, size = 'lg' }) {
   const radius = size === 'lg' ? 60 : 36
@@ -66,8 +73,56 @@ function AuditItem({ icon: Icon, label, status, detail }) {
   )
 }
 
+const MOCK_REPORT = {
+  overallScore: 88,
+  summary: 'Your profile demonstrates strong authenticity signals. Engagement rate is slightly below niche average but within acceptable range. No bot-like patterns detected.',
+  recommendations: [
+    'Increase engagement by replying to 3-5 comments per post to boost your engagement rate from 3.2% toward the 4.1% niche average.',
+    'Add 2-3 niche-specific keywords to your bio for better discoverability.',
+    'Consider posting during peak hours (9-11 AM, 7-9 PM) for higher reach.',
+  ],
+  riskFlags: [],
+  checks: [
+    { icon: Image, label: 'Profile Picture', status: 'pass', detail: 'High-quality, real photo detected — face confidence 97%' },
+    { icon: User, label: 'Username Analysis', status: 'pass', detail: 'Non-spammy, memorable, brand-consistent' },
+    { icon: FileText, label: 'Bio Quality', status: 'pass', detail: 'Descriptive, includes niche keywords, proper length' },
+    { icon: BarChart3, label: 'Post History', status: 'pass', detail: '247 posts, consistent 4-5 posts/week schedule' },
+    { icon: MessageSquare, label: 'Engagement Rate', status: 'warning', detail: '3.2% — slightly below niche average of 4.1%' },
+    { icon: ShieldCheck, label: 'Follower Quality', status: 'pass', detail: '94% real followers, 6% inactive/bots (acceptable)' },
+  ],
+}
+
 export default function QualityScore() {
   const USER_STATS = useUserStats()
+  const { dispatch, qualityAudit, commentTemplates, notify } = useAppContext()
+  const [showReport, setShowReport] = useState(false)
+
+  useEffect(() => {
+    if (commentTemplates.length === 0) {
+      dispatch({ type: 'SET_COMMENT_TEMPLATES', templates: COMMENT_TEMPLATES })
+    }
+  }, [commentTemplates.length, dispatch])
+
+  const runAudit = useCallback(() => {
+    dispatch({ type: 'RUN_QUALITY_AUDIT' })
+    notify('Running AI audit on your profile...', 'info')
+    setTimeout(() => {
+      dispatch({ type: 'COMPLETE_QUALITY_AUDIT', report: MOCK_REPORT })
+      notify('Audit complete! View your AI report.', 'success')
+    }, 3000)
+  }, [dispatch, notify])
+
+  const handleTemplateAction = useCallback((templateId, status) => {
+    dispatch({ type: 'UPDATE_COMMENT_TEMPLATE', templateId, status })
+    notify(
+      status === 'accepted' ? 'Comment template accepted and saved.' : 'Comment template rejected.',
+      status === 'accepted' ? 'success' : 'warning',
+    )
+  }, [dispatch, notify])
+
+  const isAuditing = qualityAudit?.running
+  const auditReport = qualityAudit?.report
+
   return (
     <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div>
@@ -80,8 +135,27 @@ export default function QualityScore() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center">
           <ScoreGauge score={USER_STATS.qualityScore} label="Overall Quality Score" />
-          <p className="text-green-accent text-sm font-medium mt-3">Excellent</p>
+          <p className="text-green-accent text-sm font-medium mt-3">
+            {USER_STATS.qualityScore >= 80 ? 'Excellent' : USER_STATS.qualityScore >= 60 ? 'Good' : 'Needs Work'}
+          </p>
           <p className="text-gray-400 text-xs text-center mt-1">Your profile meets all quality criteria</p>
+          <button
+            onClick={runAudit}
+            disabled={isAuditing}
+            className="mt-4 flex items-center gap-2 bg-green-accent text-dark-900 font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-green-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isAuditing ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                Auditing...
+              </>
+            ) : (
+              <>
+                <RefreshCw size={16} />
+                Run Audit
+              </>
+            )}
+          </button>
         </div>
 
         <div className="lg:col-span-2 bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
@@ -94,6 +168,59 @@ export default function QualityScore() {
           </div>
         </div>
       </div>
+
+      {auditReport && (
+        <div className="bg-dark-800 border border-green-accent/20 rounded-2xl p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-white font-semibold flex items-center gap-2">
+              <ShieldCheck size={18} className="text-green-accent" /> AI Audit Report
+            </h3>
+            <button
+              onClick={() => setShowReport(!showReport)}
+              className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors"
+            >
+              <Eye size={14} />
+              {showReport ? 'Collapse' : 'View Full Report'}
+            </button>
+          </div>
+
+          <p className="text-gray-300 text-sm mb-4">{auditReport.summary}</p>
+
+          {showReport && (
+            <div className="space-y-4 mt-4">
+              <div className="space-y-3">
+                <h4 className="text-white text-sm font-medium">Detailed Checks</h4>
+                {auditReport.checks.map((check, i) => (
+                  <AuditItem key={i} icon={check.icon} label={check.label} status={check.status} detail={check.detail} />
+                ))}
+              </div>
+
+              <div className="bg-dark-700 rounded-xl p-4">
+                <h4 className="text-white text-sm font-medium mb-3 flex items-center gap-2">
+                  <Sparkles size={14} className="text-amber-400" /> Recommendations
+                </h4>
+                <div className="space-y-2">
+                  {auditReport.recommendations.map((rec, i) => (
+                    <div key={i} className="flex items-start gap-2 text-gray-300 text-sm">
+                      <Check size={14} className="text-green-accent shrink-0 mt-0.5" />
+                      {rec}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {auditReport.riskFlags.length > 0 && (
+                <div className="bg-red-400/5 border border-red-400/20 rounded-xl p-4">
+                  <h4 className="text-red-400 text-sm font-medium mb-2">Risk Flags</h4>
+                  {auditReport.riskFlags.map((flag, i) => (
+                    <p key={i} className="text-gray-300 text-sm">{flag}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
@@ -131,24 +258,44 @@ export default function QualityScore() {
 
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
           <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-            <MessageSquare size={18} className="text-cyan-400" /> AI Comment Engine
+            <MessageSquare size={18} className="text-cyan-400" /> AI Comment Templates
           </h3>
           <p className="text-gray-400 text-sm mb-4">
-            AI-generated, contextual comments based on post content. No more generic "Nice!" or spam emojis.
+            AI-generated, contextual comments. Accept to save or reject to discard.
           </p>
           <div className="space-y-3">
-            <div className="bg-dark-700 rounded-xl p-3">
-              <p className="text-gray-500 text-xs mb-1">For a fitness post:</p>
-              <p className="text-gray-200 text-sm italic">"Love the form breakdown here! The cue about hip hinge really clicks."</p>
-            </div>
-            <div className="bg-dark-700 rounded-xl p-3">
-              <p className="text-gray-500 text-xs mb-1">For a tech post:</p>
-              <p className="text-gray-200 text-sm italic">"This approach to microservices architecture is elegant. Have you considered event sourcing?"</p>
-            </div>
-            <div className="bg-dark-700 rounded-xl p-3">
-              <p className="text-gray-500 text-xs mb-1">For a travel post:</p>
-              <p className="text-gray-200 text-sm italic">"Kyoto in cherry blossom season is magical. The temple backdrop makes this shot perfect."</p>
-            </div>
+            {commentTemplates.map(template => (
+              <div key={template.id} className={`bg-dark-700 rounded-xl p-3 ${
+                template.status === 'accepted' ? 'border border-green-accent/20' :
+                template.status === 'rejected' ? 'border border-red-400/20 opacity-60' :
+                ''
+              }`}>
+                <p className="text-gray-500 text-xs mb-1">{template.postContext}</p>
+                <p className="text-gray-200 text-sm italic mb-2">&ldquo;{template.text}&rdquo;</p>
+                {template.status === 'pending' ? (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleTemplateAction(template.id, 'accepted')}
+                      className="flex items-center gap-1 text-xs bg-green-accent/10 text-green-accent px-2.5 py-1.5 rounded-lg hover:bg-green-accent/20 transition-colors"
+                    >
+                      <ThumbsUp size={12} /> Accept
+                    </button>
+                    <button
+                      onClick={() => handleTemplateAction(template.id, 'rejected')}
+                      className="flex items-center gap-1 text-xs bg-red-400/10 text-red-400 px-2.5 py-1.5 rounded-lg hover:bg-red-400/20 transition-colors"
+                    >
+                      <ThumbsDown size={12} /> Reject
+                    </button>
+                  </div>
+                ) : (
+                  <span className={`text-xs font-medium px-2 py-1 rounded-lg ${
+                    template.status === 'accepted' ? 'bg-green-accent/10 text-green-accent' : 'bg-red-400/10 text-red-400'
+                  }`}>
+                    {template.status === 'accepted' ? 'Accepted' : 'Rejected'}
+                  </span>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>

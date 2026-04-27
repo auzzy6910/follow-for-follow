@@ -171,6 +171,62 @@ export const LEADERBOARD = USERS.slice(0, 10).map((user, i) => ({
   streak: Math.floor(Math.random() * 30) + 1,
 })).sort((a, b) => b.weeklyFollowers - a.weeklyFollowers);
 
+function buildLeaderboard(users, followerRange, creditRange) {
+  return users.map((user, i) => ({
+    ...user,
+    rank: i + 1,
+    weeklyFollowers: Math.floor(Math.random() * followerRange[1]) + followerRange[0],
+    weeklyCredits: Math.floor(Math.random() * creditRange[1]) + creditRange[0],
+    streak: Math.floor(Math.random() * 30) + 1,
+  })).sort((a, b) => b.weeklyFollowers - a.weeklyFollowers);
+}
+
+export const LEADERBOARD_DAILY = buildLeaderboard(USERS.slice(0, 10), [100, 2000], [50, 500]);
+export const LEADERBOARD_WEEKLY = LEADERBOARD;
+export const LEADERBOARD_ALLTIME = buildLeaderboard(
+  [...USERS].sort(() => Math.random() - 0.5).slice(0, 10),
+  [50000, 200000],
+  [10000, 50000],
+);
+
+export const COMMENT_TEMPLATES = [
+  {
+    id: 'ct1',
+    category: 'fitness',
+    postContext: 'For a fitness transformation post:',
+    text: 'Incredible progress! The dedication to consistency really shows. What was the biggest mindset shift for you?',
+    status: 'pending',
+  },
+  {
+    id: 'ct2',
+    category: 'tech',
+    postContext: 'For a coding tutorial:',
+    text: 'Clean implementation! The way you broke down the recursion makes it so much easier to follow. Bookmarked.',
+    status: 'pending',
+  },
+  {
+    id: 'ct3',
+    category: 'food',
+    postContext: 'For a recipe reel:',
+    text: 'That caramelization is perfect. Do you use a cast iron or stainless for this?',
+    status: 'pending',
+  },
+  {
+    id: 'ct4',
+    category: 'travel',
+    postContext: 'For a travel photography post:',
+    text: 'The golden hour lighting here is stunning. How early did you have to get up for this shot?',
+    status: 'pending',
+  },
+  {
+    id: 'ct5',
+    category: 'business',
+    postContext: 'For a startup milestone post:',
+    text: 'Congrats on the milestone! The pivot strategy you described is textbook — would love to hear about the metrics that drove that decision.',
+    status: 'pending',
+  },
+];
+
 export const QUESTS = [
   { id: 'q1', title: 'Follow 5 users in Tech tribe', reward: 50, progress: 3, total: 5, niche: 'tech', type: 'daily' },
   { id: 'q2', title: 'Engage with 3 posts (15s+ dwell)', reward: 30, progress: 1, total: 3, niche: null, type: 'daily' },
