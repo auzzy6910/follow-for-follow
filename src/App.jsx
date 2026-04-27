@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { Authenticated, Unauthenticated, AuthLoading } from 'convex/react'
+import { Loader2 } from 'lucide-react'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import MobileNav from './components/MobileNav'
@@ -14,12 +16,24 @@ import Gamification from './pages/Gamification'
 import Safety from './pages/Safety'
 import Settings from './pages/Settings'
 import Wallet from './pages/Wallet'
+import SignIn from './pages/SignIn'
 import ToastContainer from './components/ToastContainer'
 import FollowOverlay from './components/FollowOverlay'
 import EscrowDrawer from './components/EscrowDrawer'
 import WarmingWizard from './components/WarmingWizard'
 
-function App() {
+function AuthLoadingScreen() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-dark-900 text-gray-300">
+      <div className="flex flex-col items-center gap-3">
+        <Loader2 size={28} className="animate-spin text-green-accent" />
+        <span className="text-sm">Loading…</span>
+      </div>
+    </div>
+  )
+}
+
+function AuthenticatedApp() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const closeMobileSidebar = () => setMobileSidebarOpen(false)
@@ -57,6 +71,22 @@ function App() {
       <EscrowDrawer />
       <WarmingWizard />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <>
+      <AuthLoading>
+        <AuthLoadingScreen />
+      </AuthLoading>
+      <Unauthenticated>
+        <SignIn />
+      </Unauthenticated>
+      <Authenticated>
+        <AuthenticatedApp />
+      </Authenticated>
+    </>
   )
 }
 

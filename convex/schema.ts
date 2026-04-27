@@ -1,7 +1,10 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { authTables } from "@convex-dev/auth/server";
 
 export default defineSchema({
+  ...authTables,
+
   niches: defineTable({
     slug: v.string(),
     name: v.string(),
@@ -15,7 +18,7 @@ export default defineSchema({
     icon: v.string(),
   }).index("by_slug", ["slug"]),
 
-  users: defineTable({
+  directoryUsers: defineTable({
     externalId: v.string(),
     username: v.string(),
     displayName: v.string(),

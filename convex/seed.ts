@@ -270,7 +270,7 @@ export const seed = mutation({
     const tables = [
       "niches",
       "platforms",
-      "users",
+      "directoryUsers",
       "tribes",
       "quests",
       "leaderboard",
@@ -295,7 +295,7 @@ export const seed = mutation({
     }
 
     // Featured user
-    await ctx.db.insert("users", {
+    await ctx.db.insert("directoryUsers", {
       externalId: "featured-1",
       username: "TechVisionaryAI",
       displayName: "Alex Chen",
@@ -321,7 +321,7 @@ export const seed = mutation({
     const rng = mulberry32(42);
     for (let i = 0; i < 24; i++) {
       const tier = TIERS[Math.floor(rng() * TIERS.length)];
-      await ctx.db.insert("users", {
+      await ctx.db.insert("directoryUsers", {
         externalId: `user-${i + 1}`,
         username: USER_NAMES[i],
         displayName: DISPLAY_NAMES[i],
