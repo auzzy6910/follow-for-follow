@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Sparkles } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Sparkles, Play } from 'lucide-react'
 import {
   useFeaturedUser,
   useUsers,
@@ -13,6 +13,60 @@ import {
 } from '../hooks/useAppData'
 import { Link, useNavigate } from 'react-router-dom'
 import UserCard from '../components/UserCard'
+import { useAppContext } from '../context/useAppContext'
+
+function formatCooldownRemaining(cooldownUntil) {
+  if (!cooldownUntil) return null
+  const remainingMs = Math.max(0, cooldownUntil - Date.now())
+  const totalSeconds = Math.ceil(remainingMs / 1000)
+  const m = Math.floor(totalSeconds / 60)
+  const s = totalSeconds % 60
+  return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
+}
+
+function CooldownStatus() {
+  const { userStats, startCooldown } = useAppContext()
+  const remaining = userStats.cooldownActive
+    ? formatCooldownRemaining(userStats.cooldownUntil)
+    : null
+
+  if (remaining) {
+    return (
+      <div className="flex items-center justify-between bg-amber-400/10 border border-amber-400/30 rounded-xl p-3">
+        <div className="flex items-center gap-2">
+          <Clock size={16} className="text-amber-400 animate-pulse" />
+          <span className="text-amber-400 text-sm font-medium">Cooldown</span>
+        </div>
+        <span
+          className="text-amber-400 text-sm font-mono font-semibold tabular-nums"
+          aria-live="polite"
+        >
+          {remaining}
+        </span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex items-center justify-between bg-dark-700 rounded-xl p-3">
+      <div className="flex items-center gap-2">
+        <Clock size={16} className="text-gray-400" />
+        <span className="text-gray-300 text-sm">Cooldown</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-green-accent text-sm font-medium">Inactive</span>
+        <button
+          type="button"
+          onClick={() => startCooldown(90)}
+          className="flex items-center gap-1 text-[10px] uppercase tracking-wide px-2 py-1 rounded-md bg-dark-600 text-gray-300 hover:text-green-accent hover:bg-dark-500 transition-colors"
+          aria-label="Start a 90-second cooldown"
+        >
+          <Play size={10} /> Test
+        </button>
+      </div>
+    </div>
+  )
+}
 
 function MobileVisibilityToggle({ visible, onToggle, label }) {
   return (
@@ -294,6 +348,31 @@ function UserCards() {
 
 export default function Dashboard() {
   const USER_STATS = useUserStats()
+  const {
+    warmingWizardDismissed,
+    warmingPlan,
+    warmingWizardOpen,
+    userStats: liveStats,
+    openWarmingWizard,
+  } = useAppContext()
+
+  useEffect(() => {
+    if (
+      !warmingWizardDismissed &&
+      !warmingWizardOpen &&
+      !warmingPlan &&
+      liveStats.accountAge <= 14
+    ) {
+      openWarmingWizard()
+    }
+  }, [
+    warmingWizardDismissed,
+    warmingWizardOpen,
+    warmingPlan,
+    liveStats.accountAge,
+    openWarmingWizard,
+  ])
+
   return (
     <div className="space-y-5 sm:space-y-6 max-w-7xl mx-auto">
       <div className="hidden md:grid md:grid-cols-4 gap-3 sm:gap-4">
@@ -338,13 +417,7 @@ export default function Dashboard() {
                 <div className="progress-bar h-2" style={{ width: `${(USER_STATS.dailyFollowsRemaining / USER_STATS.dailyFollowLimit) * 100}%` }} />
               </div>
             </div>
-            <div className="flex items-center justify-between bg-dark-700 rounded-xl p-3">
-              <div className="flex items-center gap-2">
-                <Clock size={16} className="text-gray-400" />
-                <span className="text-gray-300 text-sm">Cooldown</span>
-              </div>
-              <span className="text-green-accent text-sm font-medium">Inactive</span>
-            </div>
+            <CooldownStatus />
             <div className="flex items-center justify-between bg-dark-700 rounded-xl p-3">
               <div className="flex items-center gap-2">
                 <Shield size={16} className="text-gray-400" />

@@ -270,7 +270,98 @@ export const USER_STATS = {
   dailyFollowsRemaining: 35,
   dailyFollowLimit: 50,
   cooldownActive: false,
+  cooldownUntil: null,
   nextCooldownReset: null,
   accountAge: 45,
   unfollowRate: 3.2,
 };
+
+export const PENALTIES = [
+  {
+    id: 'p1',
+    severity: 'warning',
+    title: 'Unfollow rate spike detected',
+    reason:
+      'Your unfollow rate climbed to 8.4% over the last 48h — above the 5% safe threshold. A first-offense warning has been issued.',
+    creditsSlashed: 150,
+    issuedAt: '2026-04-24T09:15:00Z',
+    expiresAt: '2026-05-24T09:15:00Z',
+    status: 'active',
+    appealText: null,
+    appealedAt: null,
+  },
+  {
+    id: 'p2',
+    severity: 'notice',
+    title: 'Shadow-check flagged cluster follow',
+    reason:
+      'Automated shadow-check flagged 12 follows performed within 47 seconds. No penalty applied, but future clusters will trigger a cooldown.',
+    creditsSlashed: 0,
+    issuedAt: '2026-04-18T14:02:00Z',
+    expiresAt: null,
+    status: 'active',
+    appealText: null,
+    appealedAt: null,
+  },
+  {
+    id: 'p3',
+    severity: 'warning',
+    title: 'Low-quality comment template',
+    reason:
+      'One of your AI comment suggestions was flagged by 3 reviewers as generic. The template has been paused.',
+    creditsSlashed: 25,
+    issuedAt: '2026-04-10T21:44:00Z',
+    expiresAt: null,
+    status: 'overturned',
+    appealText: 'The comment was tailored to the post context — reviewers missed the reference.',
+    appealedAt: '2026-04-11T08:00:00Z',
+  },
+];
+
+export const INBOX_NOTIFICATIONS = [
+  {
+    id: 'n1',
+    type: 'follow_back',
+    title: '@TechVisionaryAI followed you back',
+    body: 'Credit escrow released — +97 credits added to your balance.',
+    createdAt: Date.now() - 1000 * 60 * 4,
+    read: false,
+    link: '/credits',
+  },
+  {
+    id: 'n2',
+    type: 'escrow',
+    title: 'Escrow released for @FitnessMaverick',
+    body: '300 credits unlocked after 30-day verification window.',
+    createdAt: Date.now() - 1000 * 60 * 42,
+    read: false,
+    link: '/wallet',
+  },
+  {
+    id: 'n3',
+    type: 'quest',
+    title: 'Daily quest completed',
+    body: "You finished 'Follow 5 users in Tech tribe' — claim +50 cr.",
+    createdAt: Date.now() - 1000 * 60 * 60 * 2,
+    read: false,
+    link: '/gamification',
+  },
+  {
+    id: 'n4',
+    type: 'penalty',
+    title: 'Warning issued: unfollow rate spike',
+    body: '150 credits slashed. Tap to review the warning and file an appeal.',
+    createdAt: Date.now() - 1000 * 60 * 60 * 5,
+    read: true,
+    link: '/safety',
+  },
+  {
+    id: 'n5',
+    type: 'follow_back',
+    title: '@DesignDailyHQ followed you back',
+    body: '+75 credits (2× tribe bonus applied).',
+    createdAt: Date.now() - 1000 * 60 * 60 * 8,
+    read: true,
+    link: '/credits',
+  },
+];
