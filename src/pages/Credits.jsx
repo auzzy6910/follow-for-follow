@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { Coins, ArrowUpRight, ArrowDownRight, Clock, Shield, AlertTriangle, CheckCircle, XCircle, Lock } from 'lucide-react'
 import {
-  useCreditHistory,
-  useEscrowTransactions,
   useUserStats,
 } from '../hooks/useAppData'
+import { useAppContext } from '../context/useAppContext'
 
 function CreditStatCard({ icon: Icon, label, value, sublabel, color }) {
   return (
@@ -25,9 +24,10 @@ function CreditStatCard({ icon: Icon, label, value, sublabel, color }) {
 
 export default function Credits() {
   const [activeTab, setActiveTab] = useState('overview')
-  const CREDIT_HISTORY = useCreditHistory()
-  const ESCROW_TRANSACTIONS = useEscrowTransactions()
   const USER_STATS = useUserStats()
+  const { creditHistory: ctxHistory, escrowTransactions: ctxEscrow, dispatch } = useAppContext()
+  const CREDIT_HISTORY = [...ctxHistory]
+  const ESCROW_TRANSACTIONS = ctxEscrow
 
   const tabs = [
     { id: 'overview', label: 'Overview' },
@@ -148,7 +148,10 @@ export default function Credits() {
             <p className="text-gray-400 text-sm mb-4">Credits are held for 30 days. If someone unfollows you, their credits are slashed and returned.</p>
             <div className="space-y-3">
               {ESCROW_TRANSACTIONS.map(tx => (
-                <div key={tx.id} className="flex items-center gap-4 bg-dark-700 rounded-xl p-4">
+                <div
+                  key={tx.id}
+                  onClick={() => dispatch({ type: 'OPEN_ESCROW_DRAWER', txId: tx.id })}
+                  className="flex items-center gap-4 bg-dark-700 rounded-xl p-4 cursor-pointer hover:bg-dark-600 transition-colors">
                   <img src={tx.user.avatar} alt="" className="w-10 h-10 rounded-full object-cover" />
                   <div className="flex-1">
                     <p className="text-white text-sm font-medium">{tx.user.displayName}</p>

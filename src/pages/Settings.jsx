@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { Settings as SettingsIcon, User, Bell, Shield, Link, Globe, Eye, Moon, Smartphone } from 'lucide-react'
 import { usePlatforms, useNiches } from '../hooks/useAppData'
+import { useAppContext } from '../context/useAppContext'
 
 function ToggleSwitch({ enabled, onChange }) {
   return (
@@ -14,14 +14,22 @@ function ToggleSwitch({ enabled, onChange }) {
 }
 
 export default function Settings() {
-  const [notifications, setNotifications] = useState(true)
-  const [emailAlerts, setEmailAlerts] = useState(false)
-  const [autoVerify, setAutoVerify] = useState(true)
-  const [darkMode, setDarkMode] = useState(true)
-  const [proxyProtection, setProxyProtection] = useState(true)
-  const [dwellTimeEnabled, setDwellTimeEnabled] = useState(true)
+  const { settings, dispatch, notify } = useAppContext()
   const PLATFORMS = usePlatforms()
   const NICHES = useNiches()
+
+  const updateSetting = (key, value) => {
+    dispatch({ type: 'UPDATE_SETTING', key, value })
+  }
+
+  const settingsItems = [
+    { key: 'notifications', label: 'Push Notifications', desc: 'Get alerts for new followers and engagement trains', icon: Bell },
+    { key: 'emailAlerts', label: 'Email Alerts', desc: 'Weekly summary and important updates', icon: Globe },
+    { key: 'autoVerify', label: 'Auto-Verify Follows', desc: 'Automatically verify follows via API', icon: Shield },
+    { key: 'darkMode', label: 'Dark Mode', desc: 'Currently enabled', icon: Moon },
+    { key: 'proxyProtection', label: 'Proxy Protection', desc: 'Route automated checks through proxies', icon: Eye },
+    { key: 'dwellTimeEnabled', label: 'Dwell Time Requirement', desc: `Require ${settings.dwellTimeDuration}s engagement before credits are awarded`, icon: Smartphone },
+  ]
 
   return (
     <div className="max-w-4xl mx-auto space-y-5 sm:space-y-6">
@@ -100,28 +108,44 @@ export default function Settings() {
           <Bell size={18} /> Notifications & Preferences
         </h3>
         <div className="space-y-4">
-          {[
-            { label: 'Push Notifications', desc: 'Get alerts for new followers and engagement trains', value: notifications, setter: setNotifications, icon: Bell },
-            { label: 'Email Alerts', desc: 'Weekly summary and important updates', value: emailAlerts, setter: setEmailAlerts, icon: Globe },
-            { label: 'Auto-Verify Follows', desc: 'Automatically verify follows via API', value: autoVerify, setter: setAutoVerify, icon: Shield },
-            { label: 'Dark Mode', desc: 'Currently enabled', value: darkMode, setter: setDarkMode, icon: Moon },
-            { label: 'Proxy Protection', desc: 'Route automated checks through proxies', value: proxyProtection, setter: setProxyProtection, icon: Eye },
-            { label: 'Dwell Time Requirement', desc: 'Require 15-30s engagement before credits', value: dwellTimeEnabled, setter: setDwellTimeEnabled, icon: Smartphone },
-          ].map((setting, i) => (
-            <div key={i} className="flex items-center gap-4">
+          {settingsItems.map((setting) => (
+            <div key={setting.key} className="flex items-center gap-4">
               <setting.icon size={18} className="text-gray-400 shrink-0" />
               <div className="flex-1">
                 <p className="text-white text-sm font-medium">{setting.label}</p>
                 <p className="text-gray-500 text-xs">{setting.desc}</p>
               </div>
-              <ToggleSwitch enabled={setting.value} onChange={setting.setter} />
+              <ToggleSwitch
+                enabled={settings[setting.key]}
+                onChange={(val) => updateSetting(setting.key, val)}
+              />
             </div>
           ))}
+
+          {settings.dwellTimeEnabled && (
+            <div className="ml-8 pl-4 border-l border-dark-500">
+              <label className="text-gray-400 text-xs font-medium mb-1.5 block">Dwell Time Duration (seconds)</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="range"
+                  min={15}
+                  max={30}
+                  value={settings.dwellTimeDuration}
+                  onChange={e => updateSetting('dwellTimeDuration', parseInt(e.target.value, 10))}
+                  className="flex-1 accent-green-500"
+                />
+                <span className="text-white text-sm font-medium w-8 text-right">{settings.dwellTimeDuration}s</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
       <div className="flex gap-3">
-        <button className="px-6 py-2.5 bg-green-accent text-dark-900 font-semibold rounded-xl hover:bg-green-accent/90 transition-colors">
+        <button
+          onClick={() => notify('Settings saved.', 'success')}
+          className="px-6 py-2.5 bg-green-accent text-dark-900 font-semibold rounded-xl hover:bg-green-accent/90 transition-colors"
+        >
           Save Changes
         </button>
         <button className="px-6 py-2.5 bg-dark-700 text-gray-300 font-medium rounded-xl hover:bg-dark-600 transition-colors">

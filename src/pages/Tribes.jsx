@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Users, TrendingUp, Crown, Handshake, ChevronRight, Plus, Star } from 'lucide-react'
+import { Users, Crown, Handshake, Star } from 'lucide-react'
 import { useTribes, useUsers } from '../hooks/useAppData'
 
 function TribeCard({ tribe }) {

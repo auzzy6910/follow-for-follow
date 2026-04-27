@@ -13,6 +13,9 @@ import Gamification from './pages/Gamification'
 import Safety from './pages/Safety'
 import Settings from './pages/Settings'
 import Wallet from './pages/Wallet'
+import ToastContainer from './components/ToastContainer'
+import FollowOverlay from './components/FollowOverlay'
+import EscrowDrawer from './components/EscrowDrawer'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -46,6 +49,9 @@ function App() {
         </main>
         <MobileNav />
       </div>
+      <ToastContainer />
+      <FollowOverlay />
+      <EscrowDrawer />
     </div>
   )
 }
