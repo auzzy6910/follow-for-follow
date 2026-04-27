@@ -237,7 +237,9 @@ export default function Dashboard() {
         <div className="lg:col-span-2">
           <FeaturedHero />
         </div>
-        <TopGainers />
+        <div className="hidden md:block">
+          <TopGainers />
+        </div>
       </div>
 
       <SpotlightUsers />
