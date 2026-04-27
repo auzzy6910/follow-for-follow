@@ -197,7 +197,7 @@ function UserCards() {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
         {USERS.slice(0, 8).map(user => (
-          <UserCard key={user.id} user={user} onFollow={(id) => console.log('Follow', id)} />
+          <UserCard key={user.id} user={user} />
         ))}
       </div>
     </div>

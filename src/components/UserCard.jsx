@@ -1,5 +1,6 @@
-import { Shield, Star, Users } from 'lucide-react'
-import { useNiches, usePlatforms } from '../hooks/useAppData'
+import { Shield, Star, Users, Loader } from 'lucide-react'
+import { useNiches, usePlatforms, useUsers } from '../hooks/useAppData'
+import { useAppContext } from '../context/useAppContext'
 
 const tierColors = {
   rookie: 'border-gray-500 text-gray-400',
@@ -7,9 +8,17 @@ const tierColors = {
   legend: 'border-amber-400 text-amber-400',
 }
 
-export default function UserCard({ user, onFollow }) {
+export default function UserCard({ user }) {
   const NICHES = useNiches()
   const PLATFORMS = usePlatforms()
+  const ALL_USERS = useUsers()
+  const { followUser, activeFollows } = useAppContext()
+
+  const isFollowing = !!activeFollows[user.id]
+
+  const handleFollow = () => {
+    followUser(user, ALL_USERS)
+  }
 
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl overflow-hidden card-hover">
@@ -58,10 +67,24 @@ export default function UserCard({ user, onFollow }) {
         </div>
         <div className="flex items-center gap-1.5 sm:gap-2">
           <button
-            onClick={() => onFollow?.(user.id)}
-            className="flex-1 min-w-0 text-[11px] sm:text-sm font-semibold bg-green-accent text-dark-900 py-1.5 sm:py-2 px-2 rounded-lg sm:rounded-xl hover:bg-green-accent/90 transition-colors truncate"
+            onClick={handleFollow}
+            disabled={isFollowing}
+            className={`flex-1 min-w-0 text-[11px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg sm:rounded-xl transition-colors truncate flex items-center justify-center gap-1 ${
+              isFollowing
+                ? 'bg-dark-600 text-gray-400 cursor-not-allowed'
+                : 'bg-green-accent text-dark-900 hover:bg-green-accent/90'
+            }`}
           >
-            Follow <span className="hidden sm:inline">(+{Math.floor(user.qualityScore / 2)} cr)</span>
+            {isFollowing ? (
+              <>
+                <Loader size={14} className="animate-spin" />
+                <span className="hidden sm:inline">Verifying…</span>
+              </>
+            ) : (
+              <>
+                Follow <span className="hidden sm:inline">(+{Math.floor(user.qualityScore / 2)} cr)</span>
+              </>
+            )}
           </button>
           <button className="px-2 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-sm font-medium border border-dark-500 text-gray-300 rounded-lg sm:rounded-xl hover:border-green-accent/50 hover:text-green-accent transition-colors shrink-0">
             Profile

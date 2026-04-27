@@ -1,8 +1,8 @@
 import { Bell, Menu, UserPlus } from 'lucide-react'
-import { useUserStats } from '../hooks/useAppData'
+import { useAppContext } from '../context/useAppContext'
 
 export default function Header({ onSidebarToggle }) {
-  const USER_STATS = useUserStats()
+  const { userStats } = useAppContext()
 
   return (
     <header className="bg-dark-800 border-b border-dark-600 flex flex-col md:flex-row md:items-center md:h-16 px-3 sm:px-4 lg:px-6 md:gap-4 py-2 md:py-0 shrink-0">
@@ -38,13 +38,13 @@ export default function Header({ onSidebarToggle }) {
         </button>
 
         <div className="hidden lg:flex items-center gap-2 bg-dark-700 px-3 py-1.5 rounded-lg border border-dark-500">
-          <span className="text-green-accent text-sm font-semibold">{USER_STATS.totalCredits.toLocaleString()}</span>
+          <span className="text-green-accent text-sm font-semibold">{userStats.totalCredits.toLocaleString()}</span>
           <span className="text-gray-500 text-xs">credits</span>
         </div>
 
         <div className="hidden lg:flex items-center gap-2 bg-dark-700 px-3 py-1.5 rounded-lg border border-dark-500">
           <div className="w-2 h-2 rounded-full bg-green-accent animate-pulse" />
-          <span className="text-gray-300 text-xs">Day {USER_STATS.streak} Streak</span>
+          <span className="text-gray-300 text-xs">Day {userStats.streak} Streak</span>
         </div>
       </div>
 

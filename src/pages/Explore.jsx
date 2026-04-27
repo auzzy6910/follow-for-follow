@@ -105,7 +105,7 @@ export default function Explore() {
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
         {filteredUsers.map(user => (
-          <UserCard key={user.id} user={user} onFollow={(id) => console.log('Follow', id)} />
+          <UserCard key={user.id} user={user} />
         ))}
       </div>
     </div>
