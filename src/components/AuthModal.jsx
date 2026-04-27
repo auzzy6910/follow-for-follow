@@ -21,7 +21,10 @@ export default function AuthModal() {
     const formData = new FormData(event.currentTarget)
     formData.set('flow', flow)
     try {
-      await signIn('password', formData)
+      const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Connection timed out. The backend is not configured — please set VITE_CONVEX_URL to your Convex deployment URL.')), 10000),
+      )
+      await Promise.race([signIn('password', formData), timeout])
       closeModal()
     } catch (err) {
       const message =
