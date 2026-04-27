@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, Compass, Coins, Clock,
-  Users, Trophy, Shield, Settings, Wallet, LogOut, ChevronLeft, ChevronRight, Sparkles, X
+  Users, Trophy, Shield, Settings, Wallet, LogOut, Sparkles, X
 } from 'lucide-react'
 
 const navItems = [
@@ -21,10 +21,9 @@ const bottomItems = [
 ]
 
 export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobileClose }) {
-  // On large screens, sidebar follows isOpen (collapsed/expanded).
-  // On mobile, sidebar is hidden by default and slides in as a drawer when mobileOpen=true.
-  const widthClass = isOpen ? 'lg:w-60' : 'lg:w-20'
-  const labelsVisible = isOpen
+  // On large screens, sidebar is hidden by default and revealed when isOpen=true via the
+  // hamburger toggle in the header. On mobile, it slides in as a drawer when mobileOpen=true.
+  const desktopHiddenClass = isOpen ? '' : 'lg:hidden'
 
   return (
     <>
@@ -39,9 +38,10 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
 
       <aside
         className={`bg-dark-800 border-r border-dark-600 flex flex-col shrink-0
-          fixed lg:static top-0 left-0 z-50 h-full w-64 ${widthClass}
+          fixed lg:static top-0 left-0 z-50 h-full w-64 lg:w-60
           transition-transform duration-300 lg:translate-x-0
-          ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
+          ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          ${desktopHiddenClass}`}
       >
         <div className="flex items-center gap-3 px-4 h-16 border-b border-dark-600">
           <img
@@ -49,8 +49,7 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
             alt="Follow for Follow"
             className="w-10 h-10 rounded-xl shrink-0 object-cover"
           />
-          {/* On mobile drawer always show labels; on desktop honor isOpen */}
-          <div className={`overflow-hidden ${labelsVisible ? '' : 'lg:hidden'}`}>
+          <div className="overflow-hidden">
             <h1 className="text-white font-bold text-lg leading-tight whitespace-nowrap">Follow</h1>
             <p className="text-green-accent text-xs font-medium leading-tight whitespace-nowrap">for Follow</p>
           </div>
@@ -62,13 +61,13 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
           >
             <X size={20} />
           </button>
-          {/* Desktop collapse toggle */}
+          {/* Desktop close button */}
           <button
             onClick={onToggle}
             className="hidden lg:block ml-auto text-gray-400 hover:text-white transition-colors p-1"
-            aria-label="Toggle sidebar"
+            aria-label="Close sidebar"
           >
-            {isOpen ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+            <X size={18} />
           </button>
         </div>
 
@@ -88,7 +87,7 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
               }
             >
               <Icon size={20} className="shrink-0" />
-              <span className={`text-sm font-medium whitespace-nowrap ${labelsVisible ? '' : 'lg:hidden'}`}>{label}</span>
+              <span className="text-sm font-medium whitespace-nowrap">{label}</span>
             </NavLink>
           ))}
         </nav>
@@ -108,7 +107,7 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
               }
             >
               <Icon size={20} className="shrink-0" />
-              <span className={`text-sm font-medium ${labelsVisible ? '' : 'lg:hidden'}`}>{label}</span>
+              <span className="text-sm font-medium">{label}</span>
             </NavLink>
           ))}
           <button className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200 w-full">
