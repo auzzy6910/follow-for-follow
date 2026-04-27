@@ -17,6 +17,7 @@ import Wallet from './pages/Wallet'
 import ToastContainer from './components/ToastContainer'
 import FollowOverlay from './components/FollowOverlay'
 import EscrowDrawer from './components/EscrowDrawer'
+import WarmingWizard from './components/WarmingWizard'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -54,6 +55,7 @@ function App() {
       <ToastContainer />
       <FollowOverlay />
       <EscrowDrawer />
+      <WarmingWizard />
     </div>
   )
 }

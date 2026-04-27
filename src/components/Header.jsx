@@ -1,8 +1,11 @@
 import { Bell, Menu, UserPlus } from 'lucide-react'
 import { useAppContext } from '../context/useAppContext'
+import NotificationCenter from './NotificationCenter'
 
 export default function Header({ onSidebarToggle }) {
-  const { userStats } = useAppContext()
+  const { userStats, inboxNotifications, toggleNotificationCenter } =
+    useAppContext()
+  const unreadCount = inboxNotifications.filter(n => !n.read).length
 
   return (
     <header className="bg-dark-800 border-b border-dark-600 flex flex-col md:flex-row md:items-center md:h-16 px-3 sm:px-4 lg:px-6 md:gap-4 py-2 md:py-0 shrink-0">
@@ -29,13 +32,23 @@ export default function Header({ onSidebarToggle }) {
           <img src="/logo.png" alt="Profile" className="w-full h-full object-cover" />
         </button>
 
-        <button
-          className="relative w-9 h-9 rounded-full bg-dark-700 border border-dark-500 text-gray-300 hover:text-white flex items-center justify-center transition-colors shrink-0"
-          aria-label="Notifications"
-        >
-          <Bell size={18} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-green-accent rounded-full" />
-        </button>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={toggleNotificationCenter}
+            className="relative w-9 h-9 rounded-full bg-dark-700 border border-dark-500 text-gray-300 hover:text-white flex items-center justify-center transition-colors shrink-0"
+            aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`}
+            aria-haspopup="dialog"
+          >
+            <Bell size={18} />
+            {unreadCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-4 h-4 px-1 rounded-full bg-green-accent text-dark-900 text-[10px] font-bold flex items-center justify-center">
+                {unreadCount > 9 ? '9+' : unreadCount}
+              </span>
+            )}
+          </button>
+          <NotificationCenter />
+        </div>
 
         <div className="hidden lg:flex items-center gap-2 bg-dark-700 px-3 py-1.5 rounded-lg border border-dark-500">
           <span className="text-green-accent text-sm font-semibold">{userStats.totalCredits.toLocaleString()}</span>

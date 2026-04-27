@@ -1,6 +1,15 @@
-import { useReducer, useCallback, useRef } from 'react'
-import { ESCROW_TRANSACTIONS, CREDIT_HISTORY, USER_STATS, FEATURED_USER } from '../data/mockData'
+import { useReducer, useCallback, useRef, useEffect } from 'react'
+import {
+  ESCROW_TRANSACTIONS,
+  CREDIT_HISTORY,
+  USER_STATS,
+  FEATURED_USER,
+  PENALTIES,
+  INBOX_NOTIFICATIONS,
+} from '../data/mockData'
 import { AppContext } from './useAppContext'
+
+const WARMING_WIZARD_STORAGE_KEY = 'ff:warming-wizard-dismissed'
 
 const PLATFORM_URLS = {
   instagram: 'https://instagram.com/',
@@ -13,6 +22,15 @@ const PLATFORM_URLS = {
 
 function generateId() {
   return `id-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+}
+
+function readWarmingWizardDismissed() {
+  if (typeof window === 'undefined') return false
+  try {
+    return window.localStorage.getItem(WARMING_WIZARD_STORAGE_KEY) === '1'
+  } catch {
+    return false
+  }
 }
 
 const initialState = {
@@ -41,6 +59,13 @@ const initialState = {
   tierUpCelebration: null,
   qualityAudit: null,
   commentTemplates: [],
+  penalties: PENALTIES.map(p => ({ ...p })),
+  inboxNotifications: INBOX_NOTIFICATIONS.map(n => ({ ...n })),
+  notificationCenterOpen: false,
+  warmingWizardOpen: false,
+  warmingWizardDismissed: readWarmingWizardDismissed(),
+  warmingPlan: null,
+  cooldownTick: 0,
 }
 
 function reducer(state, action) {
@@ -223,6 +248,18 @@ function reducer(state, action) {
           },
           ...state.creditHistory,
         ],
+        inboxNotifications: [
+          {
+            id: generateId(),
+            type: 'quest',
+            title: 'Quest completed',
+            body: `+${action.reward} cr for "${action.questTitle}".`,
+            createdAt: Date.now(),
+            read: false,
+            link: '/gamification',
+          },
+          ...state.inboxNotifications,
+        ].slice(0, 50),
       }
     }
 
@@ -293,6 +330,114 @@ function reducer(state, action) {
         commentTemplates: state.commentTemplates.map(t =>
           t.id === action.templateId ? { ...t, status: action.status } : t,
         ),
+      }
+
+    case 'START_COOLDOWN':
+      return {
+        ...state,
+        userStats: {
+          ...state.userStats,
+          cooldownActive: true,
+          cooldownUntil: action.until,
+        },
+      }
+
+    case 'CLEAR_COOLDOWN':
+      return {
+        ...state,
+        userStats: {
+          ...state.userStats,
+          cooldownActive: false,
+          cooldownUntil: null,
+        },
+      }
+
+    case 'COOLDOWN_TICK':
+      return { ...state, cooldownTick: state.cooldownTick + 1 }
+
+    case 'SUBMIT_APPEAL': {
+      const now = new Date().toISOString()
+      return {
+        ...state,
+        penalties: state.penalties.map(p =>
+          p.id === action.penaltyId
+            ? {
+                ...p,
+                status: 'appealed',
+                appealText: action.text,
+                appealedAt: now,
+              }
+            : p,
+        ),
+      }
+    }
+
+    case 'RESOLVE_APPEAL':
+      return {
+        ...state,
+        penalties: state.penalties.map(p =>
+          p.id === action.penaltyId
+            ? { ...p, status: action.outcome }
+            : p,
+        ),
+      }
+
+    case 'ADD_INBOX_NOTIFICATION':
+      return {
+        ...state,
+        inboxNotifications: [
+          {
+            id: generateId(),
+            read: false,
+            createdAt: Date.now(),
+            ...action.notification,
+          },
+          ...state.inboxNotifications,
+        ].slice(0, 50),
+      }
+
+    case 'MARK_INBOX_READ':
+      return {
+        ...state,
+        inboxNotifications: state.inboxNotifications.map(n =>
+          n.id === action.id ? { ...n, read: true } : n,
+        ),
+      }
+
+    case 'MARK_ALL_INBOX_READ':
+      return {
+        ...state,
+        inboxNotifications: state.inboxNotifications.map(n => ({ ...n, read: true })),
+      }
+
+    case 'CLEAR_INBOX':
+      return { ...state, inboxNotifications: [] }
+
+    case 'TOGGLE_NOTIFICATION_CENTER':
+      return { ...state, notificationCenterOpen: !state.notificationCenterOpen }
+
+    case 'SET_NOTIFICATION_CENTER_OPEN':
+      return { ...state, notificationCenterOpen: action.open }
+
+    case 'OPEN_WARMING_WIZARD':
+      return { ...state, warmingWizardOpen: true }
+
+    case 'CLOSE_WARMING_WIZARD':
+      return { ...state, warmingWizardOpen: false }
+
+    case 'DISMISS_WARMING_WIZARD':
+      return {
+        ...state,
+        warmingWizardOpen: false,
+        warmingWizardDismissed: true,
+      }
+
+    case 'SAVE_WARMING_PLAN':
+      return {
+        ...state,
+        warmingPlan: action.plan,
+        warmingWizardOpen: false,
+        warmingWizardDismissed: true,
       }
 
     default:
@@ -373,6 +518,15 @@ export function AppProvider({ children }) {
             `Follow verified! +${earned} cr earned${bonusText}, ${creditCost} cr in escrow for 30 days.`,
             'success',
           )
+          dispatch({
+            type: 'ADD_INBOX_NOTIFICATION',
+            notification: {
+              type: 'escrow',
+              title: `Escrow held for @${user.username}`,
+              body: `${creditCost} cr in escrow. +${earned} cr earned${bonusText}.`,
+              link: '/wallet',
+            },
+          })
         },
         Math.max(dwellDuration, 2000),
       )
@@ -392,12 +546,129 @@ export function AppProvider({ children }) {
     [notify],
   )
 
+  const startCooldown = useCallback(
+    (seconds = 120) => {
+      const until = Date.now() + seconds * 1000
+      dispatch({ type: 'START_COOLDOWN', until })
+      notify(
+        `Cooldown started — actions paused for ${Math.round(seconds / 60) || 1}m.`,
+        'warning',
+      )
+    },
+    [notify],
+  )
+
+  const clearCooldown = useCallback(() => {
+    dispatch({ type: 'CLEAR_COOLDOWN' })
+    notify('Cooldown cleared.', 'success')
+  }, [notify])
+
+  const submitAppeal = useCallback(
+    (penaltyId, text) => {
+      dispatch({ type: 'SUBMIT_APPEAL', penaltyId, text })
+      notify('Appeal submitted — a reviewer will respond within 24h.', 'success')
+      dispatch({
+        type: 'ADD_INBOX_NOTIFICATION',
+        notification: {
+          type: 'penalty',
+          title: 'Appeal filed',
+          body: 'Your penalty appeal is under review.',
+          link: '/safety',
+        },
+      })
+    },
+    [notify],
+  )
+
+  const markInboxRead = useCallback(id => {
+    dispatch({ type: 'MARK_INBOX_READ', id })
+  }, [])
+
+  const markAllInboxRead = useCallback(() => {
+    dispatch({ type: 'MARK_ALL_INBOX_READ' })
+  }, [])
+
+  const clearInbox = useCallback(() => {
+    dispatch({ type: 'CLEAR_INBOX' })
+  }, [])
+
+  const toggleNotificationCenter = useCallback(() => {
+    dispatch({ type: 'TOGGLE_NOTIFICATION_CENTER' })
+  }, [])
+
+  const setNotificationCenterOpen = useCallback(open => {
+    dispatch({ type: 'SET_NOTIFICATION_CENTER_OPEN', open })
+  }, [])
+
+  const openWarmingWizard = useCallback(() => {
+    dispatch({ type: 'OPEN_WARMING_WIZARD' })
+  }, [])
+
+  const closeWarmingWizard = useCallback(() => {
+    dispatch({ type: 'CLOSE_WARMING_WIZARD' })
+  }, [])
+
+  const dismissWarmingWizard = useCallback(() => {
+    dispatch({ type: 'DISMISS_WARMING_WIZARD' })
+    try {
+      window.localStorage.setItem(WARMING_WIZARD_STORAGE_KEY, '1')
+    } catch {
+      // ignore storage errors
+    }
+  }, [])
+
+  const saveWarmingPlan = useCallback(
+    plan => {
+      dispatch({ type: 'SAVE_WARMING_PLAN', plan })
+      try {
+        window.localStorage.setItem(WARMING_WIZARD_STORAGE_KEY, '1')
+      } catch {
+        // ignore storage errors
+      }
+      notify(
+        `Account-warming plan saved — targeting ${plan.dailyFollows} follows/day.`,
+        'success',
+      )
+    },
+    [notify],
+  )
+
+  // Cooldown ticker: keeps `cooldownTick` incrementing while cooldown is
+  // active so dependent components re-render each second. Auto-clears the
+  // cooldown when `cooldownUntil` is reached.
+  useEffect(() => {
+    if (!state.userStats.cooldownActive || !state.userStats.cooldownUntil) {
+      return undefined
+    }
+    const interval = setInterval(() => {
+      if (Date.now() >= state.userStats.cooldownUntil) {
+        dispatch({ type: 'CLEAR_COOLDOWN' })
+        notify('Cooldown ended — actions resumed.', 'success')
+        return
+      }
+      dispatch({ type: 'COOLDOWN_TICK' })
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [state.userStats.cooldownActive, state.userStats.cooldownUntil, notify])
+
   const value = {
     ...state,
     dispatch,
     notify,
     followUser,
     cancelFollow,
+    startCooldown,
+    clearCooldown,
+    submitAppeal,
+    markInboxRead,
+    markAllInboxRead,
+    clearInbox,
+    toggleNotificationCenter,
+    setNotificationCenterOpen,
+    openWarmingWizard,
+    closeWarmingWizard,
+    dismissWarmingWizard,
+    saveWarmingPlan,
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
