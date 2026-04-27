@@ -1,4 +1,6 @@
-import { query } from "./_generated/server";
+import { query, mutation } from "./_generated/server";
+import { paginationOptsValidator } from "convex/server";
+import { v } from "convex/values";
 
 export const getNiches = query({
   args: {},
@@ -25,6 +27,18 @@ export const getPlatforms = query({
   },
 });
 
+export const getLocations = query({
+  args: {},
+  handler: async (ctx) => {
+    const users = await ctx.db.query("users").collect();
+    const locationSet = new Set<string>();
+    for (const u of users) {
+      if (u.location) locationSet.add(u.location);
+    }
+    return Array.from(locationSet).sort();
+  },
+});
+
 const serializeUser = (row: {
   externalId: string;
   username: string;
@@ -38,6 +52,7 @@ const serializeUser = (row: {
   niche: string;
   platform: string;
   tier: string;
+  location?: string;
   trustScore: number;
   credits: number;
   qualityScore: number;
@@ -56,11 +71,77 @@ const serializeUser = (row: {
   niche: row.niche,
   platform: row.platform,
   tier: row.tier,
+  location: row.location ?? "",
   trustScore: row.trustScore,
   credits: row.credits,
   qualityScore: row.qualityScore,
   isVerified: row.isVerified ?? false,
   lastActive: row.lastActive ?? "",
+});
+
+export const searchUsers = query({
+  args: {
+    niche: v.optional(v.string()),
+    platform: v.optional(v.string()),
+    tier: v.optional(v.string()),
+    location: v.optional(v.string()),
+    search: v.optional(v.string()),
+    paginationOpts: paginationOptsValidator,
+  },
+  handler: async (ctx, args) => {
+    let q;
+
+    if (args.niche) {
+      q = ctx.db
+        .query("users")
+        .withIndex("by_niche", (idx) => idx.eq("niche", args.niche!));
+    } else if (args.platform) {
+      q = ctx.db
+        .query("users")
+        .withIndex("by_platform", (idx) =>
+          idx.eq("platform", args.platform!),
+        );
+    } else if (args.tier) {
+      q = ctx.db
+        .query("users")
+        .withIndex("by_tier", (idx) => idx.eq("tier", args.tier!));
+    } else if (args.location) {
+      q = ctx.db
+        .query("users")
+        .withIndex("by_location", (idx) =>
+          idx.eq("location", args.location!),
+        );
+    } else {
+      q = ctx.db.query("users");
+    }
+
+    q = q.filter((f) => f.neq(f.field("isFeatured"), true));
+
+    if (args.platform && args.niche) {
+      q = q.filter((f) => f.eq(f.field("platform"), args.platform!));
+    }
+    if (args.tier && (args.niche || args.platform)) {
+      q = q.filter((f) => f.eq(f.field("tier"), args.tier!));
+    }
+    if (args.location && (args.niche || args.platform || args.tier)) {
+      q = q.filter((f) => f.eq(f.field("location"), args.location!));
+    }
+
+    const result = await q.paginate(args.paginationOpts);
+
+    let pages = result.page.map(serializeUser);
+
+    if (args.search) {
+      const lower = args.search.toLowerCase();
+      pages = pages.filter(
+        (u) =>
+          u.displayName.toLowerCase().includes(lower) ||
+          u.username.toLowerCase().includes(lower),
+      );
+    }
+
+    return { ...result, page: pages };
+  },
 });
 
 export const getUsers = query({
@@ -231,5 +312,71 @@ export const getUserStats = query({
       accountAge: row.accountAge,
       unfollowRate: row.unfollowRate,
     };
+  },
+});
+
+export const getSavedSearches = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db
+      .query("savedSearches")
+      .withIndex("by_owner", (q) => q.eq("ownerKey", "demo"))
+      .collect();
+  },
+});
+
+export const saveSearch = mutation({
+  args: {
+    name: v.string(),
+    niche: v.optional(v.string()),
+    platform: v.optional(v.string()),
+    tier: v.optional(v.string()),
+    location: v.optional(v.string()),
+    searchQuery: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.insert("savedSearches", {
+      ownerKey: "demo",
+      name: args.name,
+      niche: args.niche,
+      platform: args.platform,
+      tier: args.tier,
+      location: args.location,
+      searchQuery: args.searchQuery,
+      createdAt: Date.now(),
+    });
+  },
+});
+
+export const deleteSearch = mutation({
+  args: { id: v.id("savedSearches") },
+  handler: async (ctx, args) => {
+    await ctx.db.delete(args.id);
+  },
+});
+
+export const getRecommendations = query({
+  args: {},
+  handler: async (ctx) => {
+    const stats = await ctx.db
+      .query("userStats")
+      .withIndex("by_owner", (q) => q.eq("ownerKey", "demo"))
+      .first();
+    const myNiche = stats ? stats.tier : null;
+
+    const allUsers = await ctx.db
+      .query("users")
+      .filter((q) => q.neq(q.field("isFeatured"), true))
+      .collect();
+
+    if (allUsers.length === 0) return [];
+
+    const sameNicheUsers = myNiche
+      ? allUsers.filter((u) => u.tier === myNiche)
+      : allUsers;
+    const pool = sameNicheUsers.length > 0 ? sameNicheUsers : allUsers;
+
+    const sorted = [...pool].sort((a, b) => b.qualityScore - a.qualityScore);
+    return sorted.slice(0, 6).map(serializeUser);
   },
 });

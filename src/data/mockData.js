@@ -20,6 +20,21 @@ export const PLATFORMS = [
   { id: 'threads', name: 'Threads', icon: '🧵' },
 ];
 
+export const LOCATIONS = [
+  'New York, US',
+  'Los Angeles, US',
+  'London, UK',
+  'Tokyo, JP',
+  'Nairobi, KE',
+  'Lagos, NG',
+  'Dubai, AE',
+  'Singapore, SG',
+  'Berlin, DE',
+  'S\u00e3o Paulo, BR',
+  'Mumbai, IN',
+  'Sydney, AU',
+];
+
 const avatarUrls = [
   'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&crop=face',
   'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face',
@@ -59,6 +74,7 @@ export const FEATURED_USER = {
   niche: 'tech',
   platform: 'instagram',
   tier: 'legend',
+  location: 'New York, US',
   trustScore: 98,
   credits: 15000,
   qualityScore: 97,
@@ -116,6 +132,7 @@ export const USERS = Array.from({ length: 24 }, (_, i) => ({
   niche: NICHES[i % NICHES.length].id,
   platform: PLATFORMS[i % PLATFORMS.length].id,
   tier: ['rookie', 'rookie', 'influencer', 'influencer', 'legend'][Math.floor(Math.random() * 5)],
+  location: LOCATIONS[i % LOCATIONS.length],
   trustScore: Math.floor(Math.random() * 30) + 70,
   credits: Math.floor(Math.random() * 5000) + 100,
   qualityScore: Math.floor(Math.random() * 30) + 70,

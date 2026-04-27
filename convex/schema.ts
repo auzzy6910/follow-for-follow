@@ -28,6 +28,7 @@ export default defineSchema({
     niche: v.string(),
     platform: v.string(),
     tier: v.string(),
+    location: v.optional(v.string()),
     trustScore: v.number(),
     credits: v.number(),
     qualityScore: v.number(),
@@ -37,6 +38,9 @@ export default defineSchema({
   })
     .index("by_externalId", ["externalId"])
     .index("by_niche", ["niche"])
+    .index("by_platform", ["platform"])
+    .index("by_tier", ["tier"])
+    .index("by_location", ["location"])
     .index("by_featured", ["isFeatured"]),
 
   tribes: defineTable({
@@ -109,5 +113,16 @@ export default defineSchema({
     nextCooldownReset: v.union(v.string(), v.null()),
     accountAge: v.number(),
     unfollowRate: v.number(),
+  }).index("by_owner", ["ownerKey"]),
+
+  savedSearches: defineTable({
+    ownerKey: v.string(),
+    name: v.string(),
+    niche: v.optional(v.string()),
+    platform: v.optional(v.string()),
+    tier: v.optional(v.string()),
+    location: v.optional(v.string()),
+    searchQuery: v.optional(v.string()),
+    createdAt: v.number(),
   }).index("by_owner", ["ownerKey"]),
 });

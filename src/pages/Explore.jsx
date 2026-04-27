@@ -1,26 +1,96 @@
-import { useState } from 'react'
-import { Search, Filter, MapPin, ChevronDown } from 'lucide-react'
-import { useUsers, useNiches, usePlatforms } from '../hooks/useAppData'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
+import { Search, Filter, MapPin, ChevronDown, Loader, Bookmark } from 'lucide-react'
+import {
+  useNiches,
+  usePlatforms,
+  useLocations,
+  useSearchUsers,
+  useSaveSearch,
+  useUsers,
+} from '../hooks/useAppData'
 import UserCard from '../components/UserCard'
 
 export default function Explore() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState('')
   const [selectedNiche, setSelectedNiche] = useState('all')
   const [selectedPlatform, setSelectedPlatform] = useState('all')
   const [selectedTier, setSelectedTier] = useState('all')
+  const [selectedLocation, setSelectedLocation] = useState('all')
   const [showFilters, setShowFilters] = useState(true)
-  const USERS = useUsers()
+  const [saveLabel, setSaveLabel] = useState('')
   const NICHES = useNiches()
   const PLATFORMS = usePlatforms()
+  const LOCATIONS = useLocations()
+  const saveSearch = useSaveSearch()
+  const sentinelRef = useRef(null)
 
-  const filteredUsers = USERS.filter(user => {
-    const matchesSearch = user.displayName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.username.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesNiche = selectedNiche === 'all' || user.niche === selectedNiche
-    const matchesPlatform = selectedPlatform === 'all' || user.platform === selectedPlatform
-    const matchesTier = selectedTier === 'all' || user.tier === selectedTier
-    return matchesSearch && matchesNiche && matchesPlatform && matchesTier
-  })
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(searchQuery), 300)
+    return () => clearTimeout(t)
+  }, [searchQuery])
+
+  const filters = useMemo(
+    () => ({
+      niche: selectedNiche,
+      platform: selectedPlatform,
+      tier: selectedTier,
+      location: selectedLocation,
+      search: debouncedSearch,
+    }),
+    [selectedNiche, selectedPlatform, selectedTier, selectedLocation, debouncedSearch],
+  )
+
+  const { results: filteredUsers, status, loadMore } = useSearchUsers(filters)
+
+  const ALL_USERS = useUsers()
+
+  const handleLoadMore = useCallback(() => {
+    if (status === 'CanLoadMore') loadMore(12)
+  }, [status, loadMore])
+
+  useEffect(() => {
+    const el = sentinelRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) handleLoadMore()
+      },
+      { rootMargin: '200px' },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [handleLoadMore])
+
+  const hasActiveFilters =
+    selectedNiche !== 'all' ||
+    selectedPlatform !== 'all' ||
+    selectedTier !== 'all' ||
+    selectedLocation !== 'all' ||
+    debouncedSearch !== ''
+
+  const handleSaveSearch = async () => {
+    if (!hasActiveFilters) return
+    const parts = []
+    if (selectedNiche !== 'all') parts.push(selectedNiche)
+    if (selectedPlatform !== 'all') parts.push(selectedPlatform)
+    if (selectedTier !== 'all') parts.push(selectedTier)
+    if (selectedLocation !== 'all') parts.push(selectedLocation)
+    if (debouncedSearch) parts.push(`"${debouncedSearch}"`)
+    const name = parts.join(' + ') || 'Saved search'
+    await saveSearch({
+      name,
+      niche: selectedNiche !== 'all' ? selectedNiche : undefined,
+      platform: selectedPlatform !== 'all' ? selectedPlatform : undefined,
+      tier: selectedTier !== 'all' ? selectedTier : undefined,
+      location: selectedLocation !== 'all' ? selectedLocation : undefined,
+      searchQuery: debouncedSearch || undefined,
+    })
+    setSaveLabel('Saved!')
+    setTimeout(() => setSaveLabel(''), 2000)
+  }
+
+  const displayedUsers = filteredUsers.length > 0 ? filteredUsers : ALL_USERS
 
   return (
     <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
@@ -52,7 +122,7 @@ export default function Explore() {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <label className="text-gray-400 text-xs font-medium mb-1.5 block">Niche / Category</label>
               <select
@@ -92,22 +162,72 @@ export default function Explore() {
                 <option value="legend">Legend</option>
               </select>
             </div>
+            <div>
+              <label className="text-gray-400 text-xs font-medium mb-1.5 block">Location</label>
+              <div className="relative">
+                <MapPin size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                <select
+                  value={selectedLocation}
+                  onChange={e => setSelectedLocation(e.target.value)}
+                  className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-8 pr-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-accent/50 appearance-none"
+                >
+                  <option value="all">All Locations</option>
+                  {LOCATIONS.map(loc => (
+                    <option key={loc} value={loc}>{loc}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <MapPin size={14} className="text-gray-500" />
-            <span className="text-gray-500 text-xs">Location filter coming soon</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-gray-500 text-xs">
+              <MapPin size={14} />
+              <span>{selectedLocation !== 'all' ? selectedLocation : 'Showing all locations'}</span>
+            </div>
+            {hasActiveFilters && (
+              <button
+                onClick={handleSaveSearch}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-green-accent border border-green-accent/30 rounded-lg hover:bg-green-accent/10 transition-colors"
+              >
+                <Bookmark size={14} />
+                {saveLabel || 'Save Search'}
+              </button>
+            )}
           </div>
         </div>
       )}
 
-      <p className="text-gray-400 text-sm">{filteredUsers.length} users found</p>
+      <p className="text-gray-400 text-sm">{displayedUsers.length} users found{status === 'CanLoadMore' ? ' (scroll for more)' : ''}</p>
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-        {filteredUsers.map(user => (
+        {displayedUsers.map(user => (
           <UserCard key={user.id} user={user} />
         ))}
       </div>
+
+      {status === 'LoadingMore' && (
+        <div className="flex justify-center py-6">
+          <Loader size={24} className="animate-spin text-green-accent" />
+        </div>
+      )}
+
+      <div ref={sentinelRef} className="h-1" />
+
+      {status === 'CanLoadMore' && (
+        <div className="flex justify-center">
+          <button
+            onClick={handleLoadMore}
+            className="px-6 py-2.5 bg-dark-700 border border-dark-500 rounded-xl text-sm text-gray-300 hover:text-white hover:border-green-accent/50 transition-colors"
+          >
+            Load More
+          </button>
+        </div>
+      )}
+
+      {status === 'Exhausted' && displayedUsers.length > 0 && (
+        <p className="text-center text-gray-500 text-sm py-4">All users loaded</p>
+      )}
     </div>
   )
 }

@@ -131,6 +131,21 @@ const BIOS = [
 
 const TIERS = ["rookie", "rookie", "influencer", "influencer", "legend"];
 
+const LOCATIONS = [
+  "New York, US",
+  "Los Angeles, US",
+  "London, UK",
+  "Tokyo, JP",
+  "Nairobi, KE",
+  "Lagos, NG",
+  "Dubai, AE",
+  "Singapore, SG",
+  "Berlin, DE",
+  "São Paulo, BR",
+  "Mumbai, IN",
+  "Sydney, AU",
+];
+
 const TRIBE_DESCRIPTIONS = [
   "The hub for developers, engineers & tech enthusiasts.",
   "Crypto traders, DeFi builders & blockchain believers.",
@@ -263,6 +278,7 @@ export const seed = mutation({
       "goldenHourSessions",
       "creditHistory",
       "userStats",
+      "savedSearches",
     ] as const;
     for (const table of tables) {
       const rows = await ctx.db.query(table).collect();
@@ -295,6 +311,7 @@ export const seed = mutation({
       niche: "tech",
       platform: "instagram",
       tier: "legend",
+      location: "New York, US",
       trustScore: 98,
       credits: 15000,
       qualityScore: 97,
@@ -317,6 +334,7 @@ export const seed = mutation({
         niche: NICHES[i % NICHES.length].slug,
         platform: PLATFORMS[i % PLATFORMS.length].slug,
         tier,
+        location: LOCATIONS[i % LOCATIONS.length],
         trustScore: Math.floor(rng() * 30) + 70,
         credits: Math.floor(rng() * 5000) + 100,
         qualityScore: Math.floor(rng() * 30) + 70,

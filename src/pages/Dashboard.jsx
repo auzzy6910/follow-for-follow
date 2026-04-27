@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff } from 'lucide-react'
+import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Sparkles } from 'lucide-react'
 import {
   useFeaturedUser,
   useUsers,
@@ -7,8 +7,11 @@ import {
   useUserStats,
   useLeaderboard,
   useQuests,
+  useSavedSearches,
+  useDeleteSearch,
+  useRecommendations,
 } from '../hooks/useAppData'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import UserCard from '../components/UserCard'
 
 function MobileVisibilityToggle({ visible, onToggle, label }) {
@@ -185,6 +188,91 @@ function TrendingTribes() {
   )
 }
 
+function SavedSearches() {
+  const searches = useSavedSearches()
+  const deleteSearch = useDeleteSearch()
+  const navigate = useNavigate()
+  const [visible, setVisible] = useState(true)
+
+  if (searches.length === 0) return null
+
+  const handleApply = (s) => {
+    const params = new URLSearchParams()
+    if (s.niche) params.set('niche', s.niche)
+    if (s.platform) params.set('platform', s.platform)
+    if (s.tier) params.set('tier', s.tier)
+    if (s.location) params.set('location', s.location)
+    if (s.searchQuery) params.set('q', s.searchQuery)
+    navigate(`/explore?${params.toString()}`)
+  }
+
+  return (
+    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <Bookmark size={18} className="text-green-accent" />
+          <h3 className="text-white font-semibold">Saved Searches</h3>
+        </div>
+        <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="saved searches" />
+      </div>
+      <div className={`space-y-2 ${visible ? 'block' : 'hidden md:block'}`}>
+        {searches.map(s => (
+          <div
+            key={s._id}
+            className="flex items-center justify-between bg-dark-700 rounded-xl px-4 py-3 hover:border-green-accent/30 border border-transparent transition-colors cursor-pointer group"
+            onClick={() => handleApply(s)}
+          >
+            <div className="flex-1 min-w-0">
+              <p className="text-gray-200 text-sm font-medium truncate">{s.name}</p>
+              <p className="text-gray-500 text-xs mt-0.5">
+                {new Date(s.createdAt).toLocaleDateString()}
+              </p>
+            </div>
+            <button
+              onClick={e => {
+                e.stopPropagation()
+                deleteSearch({ id: s._id })
+              }}
+              className="text-gray-500 hover:text-red-400 p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <Trash2 size={14} />
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function Recommendations() {
+  const recs = useRecommendations()
+  const [visible, setVisible] = useState(true)
+
+  if (recs.length === 0) return null
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <Sparkles size={18} className="text-green-accent" />
+          <h3 className="text-white font-semibold text-lg">People Like You</h3>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link to="/explore" className="text-green-accent text-sm hover:underline hidden md:flex items-center gap-1">
+            Explore More <ChevronRight size={16} />
+          </Link>
+          <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="recommendations" />
+        </div>
+      </div>
+      <div className={`grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 ${visible ? '' : 'hidden md:grid'}`}>
+        {recs.map(user => (
+          <UserCard key={user.id} user={user} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function UserCards() {
   const USERS = useUsers()
   return (
@@ -225,6 +313,14 @@ export default function Dashboard() {
       </div>
 
       <SpotlightUsers />
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="lg:col-span-2">
+          <Recommendations />
+        </div>
+        <SavedSearches />
+      </div>
+
       <TrendingTribes />
       <UserCards />
 
