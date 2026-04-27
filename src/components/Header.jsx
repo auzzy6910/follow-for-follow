@@ -15,10 +15,10 @@ export default function Header() {
         </button>
 
         <button
-          className="w-9 h-9 rounded-full bg-gradient-to-br from-green-accent to-cyan-400 flex items-center justify-center cursor-pointer shrink-0"
+          className="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center cursor-pointer shrink-0 ring-1 ring-green-accent/40"
           aria-label="Profile"
         >
-          <span className="text-dark-900 font-bold text-sm">U</span>
+          <img src="/logo.png" alt="Profile" className="w-full h-full object-cover" />
         </button>
 
         <button
@@ -40,7 +40,7 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="order-2 md:order-1 md:flex-1 md:min-w-0 md:max-w-xl mt-2 md:mt-0">
+      <div className="hidden md:block md:order-1 md:flex-1 md:min-w-0 md:max-w-xl">
         <input
           type="text"
           placeholder="Search users, tribes & niches..."
