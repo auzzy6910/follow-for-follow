@@ -1,5 +1,5 @@
 import { useReducer, useCallback, useRef } from 'react'
-import { ESCROW_TRANSACTIONS, CREDIT_HISTORY, USER_STATS, FEATURED_USER } from '../data/mockData'
+import { ESCROW_TRANSACTIONS, CREDIT_HISTORY, USER_STATS, FEATURED_USER, WARNINGS, GLOBAL_NOTIFICATIONS } from '../data/mockData'
 import { AppContext } from './useAppContext'
 
 const PLATFORM_URLS = {
@@ -41,6 +41,10 @@ const initialState = {
   tierUpCelebration: null,
   qualityAudit: null,
   commentTemplates: [],
+  cooldown: { active: false, endsAt: null },
+  warnings: [...WARNINGS],
+  globalNotifications: [...GLOBAL_NOTIFICATIONS],
+  warmingDismissed: false,
 }
 
 function reducer(state, action) {
@@ -295,6 +299,51 @@ function reducer(state, action) {
         ),
       }
 
+    case 'START_COOLDOWN':
+      return {
+        ...state,
+        cooldown: { active: true, endsAt: Date.now() + action.durationMs },
+      }
+
+    case 'END_COOLDOWN':
+      return {
+        ...state,
+        cooldown: { active: false, endsAt: null },
+      }
+
+    case 'APPEAL_WARNING':
+      return {
+        ...state,
+        warnings: state.warnings.map(w =>
+          w.id === action.warningId ? { ...w, status: 'appealed', appealReason: action.reason } : w,
+        ),
+      }
+
+    case 'DISMISS_WARNING':
+      return {
+        ...state,
+        warnings: state.warnings.map(w =>
+          w.id === action.warningId ? { ...w, status: 'resolved' } : w,
+        ),
+      }
+
+    case 'READ_GLOBAL_NOTIFICATION':
+      return {
+        ...state,
+        globalNotifications: state.globalNotifications.map(n =>
+          n.id === action.notifId ? { ...n, read: true } : n,
+        ),
+      }
+
+    case 'READ_ALL_GLOBAL_NOTIFICATIONS':
+      return {
+        ...state,
+        globalNotifications: state.globalNotifications.map(n => ({ ...n, read: true })),
+      }
+
+    case 'DISMISS_WARMING':
+      return { ...state, warmingDismissed: true }
+
     default:
       return state
   }
@@ -373,6 +422,8 @@ export function AppProvider({ children }) {
             `Follow verified! +${earned} cr earned${bonusText}, ${creditCost} cr in escrow for 30 days.`,
             'success',
           )
+          const cooldownSec = 15 + Math.floor(Math.random() * 16)
+          dispatch({ type: 'START_COOLDOWN', durationMs: cooldownSec * 1000 })
         },
         Math.max(dwellDuration, 2000),
       )

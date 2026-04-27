@@ -1,5 +1,6 @@
-import { Bell, Menu, UserPlus } from 'lucide-react'
+import { Menu, UserPlus } from 'lucide-react'
 import { useAppContext } from '../context/useAppContext'
+import NotificationCenter from './NotificationCenter'
 
 export default function Header({ onSidebarToggle }) {
   const { userStats } = useAppContext()
@@ -29,13 +30,7 @@ export default function Header({ onSidebarToggle }) {
           <img src="/logo.png" alt="Profile" className="w-full h-full object-cover" />
         </button>
 
-        <button
-          className="relative w-9 h-9 rounded-full bg-dark-700 border border-dark-500 text-gray-300 hover:text-white flex items-center justify-center transition-colors shrink-0"
-          aria-label="Notifications"
-        >
-          <Bell size={18} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-green-accent rounded-full" />
-        </button>
+        <NotificationCenter />
 
         <div className="hidden lg:flex items-center gap-2 bg-dark-700 px-3 py-1.5 rounded-lg border border-dark-500">
           <span className="text-green-accent text-sm font-semibold">{userStats.totalCredits.toLocaleString()}</span>

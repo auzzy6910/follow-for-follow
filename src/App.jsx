@@ -12,6 +12,8 @@ import Tribes from './pages/Tribes'
 import TribeDetail from './pages/TribeDetail'
 import Gamification from './pages/Gamification'
 import Safety from './pages/Safety'
+import Warnings from './pages/Warnings'
+import AccountWarming from './pages/AccountWarming'
 import Settings from './pages/Settings'
 import Wallet from './pages/Wallet'
 import ToastContainer from './components/ToastContainer'
@@ -45,6 +47,8 @@ function App() {
             <Route path="/tribes/:tribeId" element={<TribeDetail />} />
             <Route path="/gamification" element={<Gamification />} />
             <Route path="/safety" element={<Safety />} />
+            <Route path="/warnings" element={<Warnings />} />
+            <Route path="/account-warming" element={<AccountWarming />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/wallet" element={<Wallet />} />
           </Routes>

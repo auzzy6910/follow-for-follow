@@ -1,7 +1,8 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, Compass, Coins, Clock,
-  Users, Trophy, Shield, Settings, Wallet, LogOut, Sparkles, X
+  Users, Trophy, Shield, Settings, Wallet, LogOut, Sparkles, X,
+  AlertTriangle, Sprout,
 } from 'lucide-react'
 
 const navItems = [
@@ -13,6 +14,8 @@ const navItems = [
   { path: '/tribes', label: 'Tribes', icon: Users },
   { path: '/gamification', label: 'Leaderboards', icon: Trophy },
   { path: '/safety', label: 'Safety', icon: Shield },
+  { path: '/warnings', label: 'Warnings', icon: AlertTriangle },
+  { path: '/account-warming', label: 'Warming', icon: Sprout },
 ]
 
 const bottomItems = [

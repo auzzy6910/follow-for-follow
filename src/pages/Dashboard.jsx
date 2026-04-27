@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Sparkles } from 'lucide-react'
 import {
   useFeaturedUser,
@@ -13,6 +13,7 @@ import {
 } from '../hooks/useAppData'
 import { Link, useNavigate } from 'react-router-dom'
 import UserCard from '../components/UserCard'
+import { useAppContext } from '../context/useAppContext'
 
 function MobileVisibilityToggle({ visible, onToggle, label }) {
   return (
@@ -292,6 +293,58 @@ function UserCards() {
   )
 }
 
+function CooldownCountdown() {
+  const { cooldown, dispatch } = useAppContext()
+  const [remaining, setRemaining] = useState(() =>
+    cooldown.active && cooldown.endsAt ? Math.max(0, cooldown.endsAt - Date.now()) : 0,
+  )
+
+  useEffect(() => {
+    if (!cooldown.active || !cooldown.endsAt) return
+    const tick = () => {
+      const left = Math.max(0, cooldown.endsAt - Date.now())
+      setRemaining(left)
+      if (left <= 0) dispatch({ type: 'END_COOLDOWN' })
+    }
+    tick()
+    const id = setInterval(tick, 100)
+    return () => clearInterval(id)
+  }, [cooldown.active, cooldown.endsAt, dispatch])
+
+  if (!cooldown.active) {
+    return (
+      <div className="flex items-center justify-between bg-dark-700 rounded-xl p-3">
+        <div className="flex items-center gap-2">
+          <Clock size={16} className="text-gray-400" />
+          <span className="text-gray-300 text-sm">Cooldown</span>
+        </div>
+        <span className="text-green-accent text-sm font-medium">Inactive</span>
+      </div>
+    )
+  }
+
+  const secs = Math.ceil(remaining / 1000)
+  const pct = remaining > 0 ? (remaining / 30000) * 100 : 0
+
+  return (
+    <div className="bg-dark-700 rounded-xl p-3 space-y-2">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Clock size={16} className="text-amber-400 animate-pulse" />
+          <span className="text-gray-300 text-sm">Cooldown Active</span>
+        </div>
+        <span className="text-amber-400 text-sm font-bold tabular-nums">{secs}s</span>
+      </div>
+      <div className="w-full bg-dark-500 rounded-full h-1.5">
+        <div
+          className="h-1.5 rounded-full bg-amber-400 transition-all duration-100"
+          style={{ width: `${Math.max(0, Math.min(100, pct))}%` }}
+        />
+      </div>
+    </div>
+  )
+}
+
 export default function Dashboard() {
   const USER_STATS = useUserStats()
   return (
@@ -338,13 +391,7 @@ export default function Dashboard() {
                 <div className="progress-bar h-2" style={{ width: `${(USER_STATS.dailyFollowsRemaining / USER_STATS.dailyFollowLimit) * 100}%` }} />
               </div>
             </div>
-            <div className="flex items-center justify-between bg-dark-700 rounded-xl p-3">
-              <div className="flex items-center gap-2">
-                <Clock size={16} className="text-gray-400" />
-                <span className="text-gray-300 text-sm">Cooldown</span>
-              </div>
-              <span className="text-green-accent text-sm font-medium">Inactive</span>
-            </div>
+            <CooldownCountdown />
             <div className="flex items-center justify-between bg-dark-700 rounded-xl p-3">
               <div className="flex items-center gap-2">
                 <Shield size={16} className="text-gray-400" />
