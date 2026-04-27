@@ -4,10 +4,7 @@ import {
   Compass,
   Coins,
   Clock,
-  Sparkles,
   Users,
-  Trophy,
-  Shield,
 } from 'lucide-react'
 
 const items = [
@@ -15,10 +12,7 @@ const items = [
   { path: '/explore', label: 'Explore', icon: Compass },
   { path: '/credits', label: 'Credits', icon: Coins },
   { path: '/golden-hour', label: 'Boost', icon: Clock },
-  { path: '/quality', label: 'Quality', icon: Sparkles },
   { path: '/tribes', label: 'Tribes', icon: Users },
-  { path: '/gamification', label: 'Ranks', icon: Trophy },
-  { path: '/safety', label: 'Safety', icon: Shield },
 ]
 
 export default function MobileNav() {

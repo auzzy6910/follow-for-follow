@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TrendingUp, Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff } from 'lucide-react'
+import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff } from 'lucide-react'
 import {
   useFeaturedUser,
   useUsers,
@@ -9,6 +9,7 @@ import {
   useQuests,
 } from '../hooks/useAppData'
 import { Link } from 'react-router-dom'
+import UserCard from '../components/UserCard'
 
 function MobileVisibilityToggle({ visible, onToggle, label }) {
   return (
@@ -196,26 +197,7 @@ function UserCards() {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
         {USERS.slice(0, 8).map(user => (
-          <div key={user.id} className="bg-dark-800 border border-dark-600 rounded-2xl overflow-hidden card-hover">
-            <div className="relative h-20 sm:h-28">
-              <img src={user.cover} alt="" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-800 to-transparent" />
-            </div>
-            <div className="px-3 sm:px-4 pb-3 sm:pb-4 -mt-6 sm:-mt-8 relative">
-              <img src={user.avatar} alt="" className="w-11 h-11 sm:w-14 sm:h-14 rounded-full border-2 border-dark-800 object-cover mb-2" />
-              <div className="flex items-center gap-1.5 mb-1 min-w-0">
-                <h4 className="text-white text-xs sm:text-sm font-semibold truncate min-w-0">{user.displayName}</h4>
-                {user.isVerified && <Shield size={12} className="text-green-accent shrink-0" />}
-              </div>
-              <p className="text-gray-500 text-[11px] sm:text-xs mb-2 truncate">@{user.username}</p>
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-gray-400 text-[11px] sm:text-xs truncate">{(user.followers / 1000).toFixed(1)}K followers</span>
-                <button className="text-[11px] sm:text-xs font-semibold bg-green-accent/10 text-green-accent px-2 sm:px-3 py-1 rounded-lg hover:bg-green-accent/20 transition-colors shrink-0">
-                  Follow
-                </button>
-              </div>
-            </div>
-          </div>
+          <UserCard key={user.id} user={user} />
         ))}
       </div>
     </div>

@@ -40,7 +40,7 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="order-2 md:order-1 md:flex-1 md:min-w-0 md:max-w-xl mt-2 md:mt-0">
+      <div className="hidden md:block order-2 md:order-1 md:flex-1 md:min-w-0 md:max-w-xl mt-2 md:mt-0">
         <input
           type="text"
           placeholder="Search users, tribes & niches..."
