@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Users, Crown, Handshake, Star } from 'lucide-react'
 import { useTribes, useUsers } from '../hooks/useAppData'
 
@@ -36,9 +37,12 @@ function TribeCard({ tribe }) {
         </div>
         <span className="text-gray-500 text-xs">Top members</span>
       </div>
-      <button className="w-full py-2.5 bg-green-accent/10 text-green-accent font-semibold rounded-xl hover:bg-green-accent/20 transition-colors text-sm">
-        Join Tribe
-      </button>
+      <Link
+        to={`/tribes/${tribe.id}`}
+        className="block w-full py-2.5 bg-green-accent/10 text-green-accent font-semibold rounded-xl hover:bg-green-accent/20 transition-colors text-sm text-center"
+      >
+        View Tribe
+      </Link>
     </div>
   )
 }
@@ -166,9 +170,12 @@ export default function Tribes() {
                     <p className="text-gray-500 text-xs">Credit Bonus</p>
                   </div>
                 </div>
-                <button className="w-full py-2 bg-dark-600 text-gray-300 font-medium rounded-xl hover:bg-dark-500 transition-colors text-sm">
-                  View Tribe Members
-                </button>
+                <Link
+                  to={`/tribes/${tribe.id}`}
+                  className="block w-full py-2 bg-dark-600 text-gray-300 font-medium rounded-xl hover:bg-dark-500 transition-colors text-sm text-center"
+                >
+                  View Tribe Details
+                </Link>
               </div>
             ))}
           </div>

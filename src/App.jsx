@@ -9,6 +9,7 @@ import Credits from './pages/Credits'
 import GoldenHour from './pages/GoldenHour'
 import QualityScore from './pages/QualityScore'
 import Tribes from './pages/Tribes'
+import TribeDetail from './pages/TribeDetail'
 import Gamification from './pages/Gamification'
 import Safety from './pages/Safety'
 import Settings from './pages/Settings'
@@ -41,6 +42,7 @@ function App() {
             <Route path="/golden-hour" element={<GoldenHour />} />
             <Route path="/quality" element={<QualityScore />} />
             <Route path="/tribes" element={<Tribes />} />
+            <Route path="/tribes/:tribeId" element={<TribeDetail />} />
             <Route path="/gamification" element={<Gamification />} />
             <Route path="/safety" element={<Safety />} />
             <Route path="/settings" element={<Settings />} />
