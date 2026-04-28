@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Sparkles, Play } from 'lucide-react'
+import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Sparkles, Play, Gift } from 'lucide-react'
 import {
   useFeaturedUser,
   useUsers,
@@ -82,9 +82,9 @@ function MobileVisibilityToggle({ visible, onToggle, label }) {
   )
 }
 
-function StatCard({ icon: Icon, label, value, change, positive }) {
-  return (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 card-hover">
+function StatCard({ icon: Icon, label, value, change, positive, to }) {
+  const inner = (
+    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 card-hover h-full">
       <div className="flex items-center justify-between mb-3">
         <div className="w-10 h-10 rounded-xl bg-green-accent/10 flex items-center justify-center">
           <Icon size={20} className="text-green-accent" />
@@ -97,6 +97,16 @@ function StatCard({ icon: Icon, label, value, change, positive }) {
       <p className="text-xl sm:text-2xl font-bold text-white">{value}</p>
       <p className="text-gray-500 text-xs sm:text-sm mt-1">{label}</p>
     </div>
+  )
+  if (!to) return inner
+  return (
+    <Link
+      to={to}
+      aria-label={`${label} — view more`}
+      className="block focus:outline-none focus:ring-2 focus:ring-green-accent/50 rounded-2xl"
+    >
+      {inner}
+    </Link>
   )
 }
 
@@ -176,13 +186,18 @@ function SpotlightUsers() {
       </div>
       <div className="flex gap-4 overflow-x-auto pb-2">
         {spotlightUsers.map(user => (
-          <div key={user.id} className="flex flex-col items-center gap-2 shrink-0">
-            <div className={`p-0.5 rounded-full ${user.tier === 'legend' ? 'bg-gradient-to-br from-amber-400 to-orange-500' : user.tier === 'influencer' ? 'bg-gradient-to-br from-green-accent to-cyan-400' : 'bg-dark-500'}`}>
+          <Link
+            key={user.id}
+            to={`/profile/${user.id}`}
+            aria-label={`Open ${user.displayName}'s profile`}
+            className="flex flex-col items-center gap-2 shrink-0 group focus:outline-none focus:ring-2 focus:ring-green-accent/50 rounded-xl px-1 py-1"
+          >
+            <div className={`p-0.5 rounded-full transition-transform group-hover:scale-105 ${user.tier === 'legend' ? 'bg-gradient-to-br from-amber-400 to-orange-500' : user.tier === 'influencer' ? 'bg-gradient-to-br from-green-accent to-cyan-400' : 'bg-dark-500'}`}>
               <img src={user.avatar} alt="" className="w-14 h-14 rounded-full object-cover border-2 border-dark-900" />
             </div>
-            <p className="text-gray-300 text-xs font-medium truncate w-16 text-center">@{user.username.slice(0, 8)}</p>
+            <p className="text-gray-300 text-xs font-medium truncate w-16 text-center group-hover:text-white">@{user.username.slice(0, 8)}</p>
             <span className="text-green-accent text-xs">{user.credits} cr</span>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
@@ -376,10 +391,38 @@ export default function Dashboard() {
   return (
     <div className="space-y-5 sm:space-y-6 max-w-7xl mx-auto">
       <div className="hidden md:grid md:grid-cols-4 gap-3 sm:gap-4">
-        <StatCard icon={Users} label="Followers Gained" value={USER_STATS.totalFollowersGained.toLocaleString()} change="+12.5%" positive />
-        <StatCard icon={Coins} label="Credits Balance" value={USER_STATS.totalCredits.toLocaleString()} change="+340" positive />
-        <StatCard icon={Flame} label="Day Streak" value={USER_STATS.streak} change="+1" positive />
-        <StatCard icon={Shield} label="Trust Score" value={`${USER_STATS.trustScore}%`} change="-0.5%" positive={false} />
+        <StatCard
+          icon={Gift}
+          label="Earn"
+          value={USER_STATS.dailyFollowsRemaining}
+          change="Find accounts"
+          positive
+          to="/explore"
+        />
+        <StatCard
+          icon={Users}
+          label="Followers Gained"
+          value={USER_STATS.totalFollowersGained.toLocaleString()}
+          change="+12.5%"
+          positive
+          to="/gamification"
+        />
+        <StatCard
+          icon={Coins}
+          label="Credits Balance"
+          value={USER_STATS.totalCredits.toLocaleString()}
+          change="+340"
+          positive
+          to="/credits"
+        />
+        <StatCard
+          icon={Flame}
+          label="Day Streak"
+          value={USER_STATS.streak}
+          change="+1"
+          positive
+          to="/gamification"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
