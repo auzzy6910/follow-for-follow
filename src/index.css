@@ -7,9 +7,9 @@
   --color-dark-600: #22222e;
   --color-dark-500: #2a2a38;
   --color-dark-400: #3a3a4a;
-  --color-green-accent: #39ff14;
-  --color-green-glow: #39ff1440;
-  --color-green-dark: #1a3a10;
+  --color-blue-accent: #1e90ff;
+  --color-blue-glow: #1e90ff40;
+  --color-blue-dark: #0a2440;
   --color-amber-accent: #ffb800;
   --color-red-accent: #ff4444;
   --font-sans: 'Inter', system-ui, sans-serif;
@@ -56,12 +56,12 @@ body {
   scrollbar-width: none;
 }
 
-.glow-green {
-  box-shadow: 0 0 20px var(--color-green-glow), 0 0 40px var(--color-green-glow);
+.glow-blue {
+  box-shadow: 0 0 20px var(--color-blue-glow), 0 0 40px var(--color-blue-glow);
 }
 
 .glow-text {
-  text-shadow: 0 0 10px var(--color-green-glow);
+  text-shadow: 0 0 10px var(--color-blue-glow);
 }
 
 .card-hover {
@@ -70,7 +70,7 @@ body {
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(57, 255, 20, 0.15);
+  box-shadow: 0 8px 30px rgba(30, 144, 255, 0.15);
 }
 
 .gradient-border {
@@ -83,7 +83,7 @@ body {
   inset: 0;
   padding: 1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #39ff14, #00c9ff, #39ff14);
+  background: linear-gradient(135deg, #1e90ff, #00c9ff, #1e90ff);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -100,7 +100,7 @@ body {
 }
 
 .shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(57, 255, 20, 0.05) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(30, 144, 255, 0.05) 50%, transparent 100%);
   background-size: 200% 100%;
   animation: shimmer 3s infinite;
 }
@@ -115,13 +115,13 @@ body {
 }
 
 .progress-bar {
-  background: linear-gradient(90deg, #39ff14, #00c9ff);
+  background: linear-gradient(90deg, #1e90ff, #00c9ff);
   border-radius: 9999px;
   transition: width 0.5s ease;
 }
 
 .tier-rookie { border-color: #888; }
-.tier-influencer { border-color: #39ff14; }
+.tier-influencer { border-color: #1e90ff; }
 .tier-legend { border-color: #ffd700; }
 
 @keyframes slide-in {

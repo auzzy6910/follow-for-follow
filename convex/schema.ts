@@ -118,6 +118,26 @@ export default defineSchema({
     unfollowRate: v.number(),
   }).index("by_owner", ["ownerKey"]),
 
+  ownerProfiles: defineTable({
+    userId: v.id("users"),
+    username: v.string(),
+    displayName: v.string(),
+    bio: v.string(),
+    avatar: v.string(),
+    cover: v.string(),
+    niche: v.optional(v.string()),
+    platform: v.optional(v.string()),
+    location: v.optional(v.string()),
+    followers: v.number(),
+    following: v.number(),
+    posts: v.number(),
+    tier: v.string(),
+    trustScore: v.number(),
+    qualityScore: v.number(),
+    credits: v.number(),
+    updatedAt: v.number(),
+  }).index("by_user", ["userId"]),
+
   savedSearches: defineTable({
     ownerKey: v.string(),
     name: v.string(),

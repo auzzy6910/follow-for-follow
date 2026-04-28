@@ -11,6 +11,7 @@
 import type * as auth from "../auth.js";
 import type * as data from "../data.js";
 import type * as http from "../http.js";
+import type * as ownerProfile from "../ownerProfile.js";
 import type * as seed from "../seed.js";
 import type * as users from "../users.js";
 
@@ -24,6 +25,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   data: typeof data;
   http: typeof http;
+  ownerProfile: typeof ownerProfile;
   seed: typeof seed;
   users: typeof users;
 }>;

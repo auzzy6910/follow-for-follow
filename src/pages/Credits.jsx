@@ -50,7 +50,7 @@ export default function Credits() {
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
               activeTab === tab.id
-                ? 'bg-green-accent/10 text-green-accent'
+                ? 'bg-blue-accent/10 text-blue-accent'
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -62,7 +62,7 @@ export default function Credits() {
       {activeTab === 'overview' && (
         <div className="space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-            <CreditStatCard icon={Coins} label="Available Credits" value={USER_STATS.totalCredits.toLocaleString()} sublabel="Ready to spend" color="bg-green-accent/10 text-green-accent" />
+            <CreditStatCard icon={Coins} label="Available Credits" value={USER_STATS.totalCredits.toLocaleString()} sublabel="Ready to spend" color="bg-blue-accent/10 text-blue-accent" />
             <CreditStatCard icon={ArrowUpRight} label="Total Earned" value="8,420" sublabel="Lifetime earnings" color="bg-cyan-400/10 text-cyan-400" />
             <CreditStatCard icon={ArrowDownRight} label="Total Spent" value="5,970" sublabel="On listing your profile" color="bg-amber-400/10 text-amber-400" />
             <CreditStatCard icon={Lock} label="In Escrow" value="1,150" sublabel="Held for 30-day verification" color="bg-purple-400/10 text-purple-400" />
@@ -72,8 +72,8 @@ export default function Credits() {
             <h3 className="text-white font-semibold mb-4">How Credits Work</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-green-accent/10 flex items-center justify-center">
-                  <ArrowUpRight size={24} className="text-green-accent" />
+                <div className="w-12 h-12 rounded-xl bg-blue-accent/10 flex items-center justify-center">
+                  <ArrowUpRight size={24} className="text-blue-accent" />
                 </div>
                 <h4 className="text-white font-medium">Earn by Following</h4>
                 <p className="text-gray-400 text-sm">Follow other users to earn credits. Higher quality accounts earn more. Tribe matches give 2x bonus.</p>
@@ -101,7 +101,7 @@ export default function Credits() {
             <div className="space-y-3">
               {['API-based automatic follow verification', 'Manual "Check" button for instant verification', '30-day escrow period for unfollows', 'Automated periodic re-checks'].map((item, i) => (
                 <div key={i} className="flex items-center gap-3 bg-dark-700 rounded-xl p-3">
-                  <CheckCircle size={16} className="text-green-accent shrink-0" />
+                  <CheckCircle size={16} className="text-blue-accent shrink-0" />
                   <span className="text-gray-300 text-sm">{item}</span>
                 </div>
               ))}
@@ -117,9 +117,9 @@ export default function Credits() {
             {CREDIT_HISTORY.map(tx => (
               <div key={tx.id} className="flex items-center gap-4 bg-dark-700 rounded-xl p-4">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                  tx.type === 'earned' ? 'bg-green-accent/10' : tx.type === 'spent' ? 'bg-amber-400/10' : 'bg-red-400/10'
+                  tx.type === 'earned' ? 'bg-blue-accent/10' : tx.type === 'spent' ? 'bg-amber-400/10' : 'bg-red-400/10'
                 }`}>
-                  {tx.type === 'earned' ? <ArrowUpRight size={18} className="text-green-accent" /> :
+                  {tx.type === 'earned' ? <ArrowUpRight size={18} className="text-blue-accent" /> :
                    tx.type === 'spent' ? <ArrowDownRight size={18} className="text-amber-400" /> :
                    <AlertTriangle size={18} className="text-red-400" />}
                 </div>
@@ -128,7 +128,7 @@ export default function Credits() {
                   <p className="text-gray-500 text-xs">{tx.timestamp}</p>
                 </div>
                 <span className={`text-sm font-bold ${
-                  tx.type === 'earned' ? 'text-green-accent' : tx.type === 'spent' ? 'text-amber-400' : 'text-red-400'
+                  tx.type === 'earned' ? 'text-blue-accent' : tx.type === 'spent' ? 'text-amber-400' : 'text-red-400'
                 }`}>
                   {tx.type === 'earned' ? '+' : '-'}{tx.amount} cr
                 </span>
@@ -159,16 +159,16 @@ export default function Credits() {
                   </div>
                   <div className="text-right">
                     <p className={`text-sm font-bold ${
-                      tx.status === 'held' ? 'text-amber-400' : tx.status === 'released' ? 'text-green-accent' : 'text-red-400'
+                      tx.status === 'held' ? 'text-amber-400' : tx.status === 'released' ? 'text-blue-accent' : 'text-red-400'
                     }`}>
                       {tx.credits} cr
                     </p>
                     <div className="flex items-center gap-1 mt-0.5">
                       {tx.status === 'held' && <Clock size={12} className="text-amber-400" />}
-                      {tx.status === 'released' && <CheckCircle size={12} className="text-green-accent" />}
+                      {tx.status === 'released' && <CheckCircle size={12} className="text-blue-accent" />}
                       {tx.status === 'slashed' && <XCircle size={12} className="text-red-400" />}
                       <span className={`text-xs capitalize ${
-                        tx.status === 'held' ? 'text-amber-400' : tx.status === 'released' ? 'text-green-accent' : 'text-red-400'
+                        tx.status === 'held' ? 'text-amber-400' : tx.status === 'released' ? 'text-blue-accent' : 'text-red-400'
                       }`}>
                         {tx.status}{tx.daysRemaining > 0 ? ` (${tx.daysRemaining}d left)` : ''}
                       </span>
@@ -186,7 +186,7 @@ export default function Credits() {
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6 card-hover">
             <h3 className="text-white font-semibold mb-2">Follow Users</h3>
             <p className="text-gray-400 text-sm mb-4">Earn 25-50 credits per verified follow. Niche matches earn 2x.</p>
-            <button className="w-full py-2.5 bg-green-accent text-dark-900 font-semibold rounded-xl hover:bg-green-accent/90 transition-colors">
+            <button className="w-full py-2.5 bg-blue-accent text-dark-900 font-semibold rounded-xl hover:bg-blue-accent/90 transition-colors">
               Browse Users to Follow
             </button>
           </div>
@@ -211,7 +211,7 @@ export default function Credits() {
               <div className="flex-1 bg-dark-500 rounded-full h-2">
                 <div className="progress-bar h-2" style={{ width: `${(USER_STATS.streak / 30) * 100}%` }} />
               </div>
-              <span className="text-green-accent text-sm font-medium">{USER_STATS.streak}/30</span>
+              <span className="text-blue-accent text-sm font-medium">{USER_STATS.streak}/30</span>
             </div>
           </div>
         </div>

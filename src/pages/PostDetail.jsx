@@ -113,7 +113,7 @@ export default function PostDetail() {
         {/* Banner */}
         <div
           className="h-2"
-          style={{ backgroundColor: niche?.color || '#39ff14' }}
+          style={{ backgroundColor: niche?.color || '#1e90ff' }}
         />
 
         <div className="p-5 sm:p-6">
@@ -216,7 +216,7 @@ export default function PostDetail() {
           {/* Capacity progress */}
           <div className="mt-3 w-full bg-dark-700 rounded-full h-1.5">
             <div
-              className="bg-green-accent h-1.5 rounded-full transition-[width] duration-500"
+              className="bg-blue-accent h-1.5 rounded-full transition-[width] duration-500"
               style={{ width: `${filledPct}%` }}
             />
           </div>
@@ -240,7 +240,7 @@ export default function PostDetail() {
                 return (
                   <span
                     key={id}
-                    className="text-xs font-medium px-3 py-1.5 rounded-full bg-green-accent/10 border border-green-accent/30 text-green-accent"
+                    className="text-xs font-medium px-3 py-1.5 rounded-full bg-blue-accent/10 border border-blue-accent/30 text-blue-accent"
                   >
                     {opt.icon} {opt.label}
                   </span>

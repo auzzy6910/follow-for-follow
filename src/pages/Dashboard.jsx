@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Star, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Sparkles, Play, Gift } from 'lucide-react'
+import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Sparkles, Play, Gift } from 'lucide-react'
 import {
-  useFeaturedUser,
   useUsers,
   useTribes,
   useUserStats,
@@ -13,6 +12,7 @@ import {
 } from '../hooks/useAppData'
 import { Link, useNavigate } from 'react-router-dom'
 import UserCard from '../components/UserCard'
+import OwnerFeaturedHero from '../components/OwnerFeaturedHero'
 import { useAppContext } from '../context/useAppContext'
 
 function formatCooldownRemaining(cooldownUntil) {
@@ -54,11 +54,11 @@ function CooldownStatus() {
         <span className="text-gray-300 text-sm">Cooldown</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-green-accent text-sm font-medium">Inactive</span>
+        <span className="text-blue-accent text-sm font-medium">Inactive</span>
         <button
           type="button"
           onClick={() => startCooldown(90)}
-          className="flex items-center gap-1 text-[10px] uppercase tracking-wide px-2 py-1 rounded-md bg-dark-600 text-gray-300 hover:text-green-accent hover:bg-dark-500 transition-colors"
+          className="flex items-center gap-1 text-[10px] uppercase tracking-wide px-2 py-1 rounded-md bg-dark-600 text-gray-300 hover:text-blue-accent hover:bg-dark-500 transition-colors"
           aria-label="Start a 90-second cooldown"
         >
           <Play size={10} /> Test
@@ -86,10 +86,10 @@ function StatCard({ icon: Icon, label, value, change, positive, to }) {
   const inner = (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 card-hover h-full">
       <div className="flex items-center justify-between mb-3">
-        <div className="w-10 h-10 rounded-xl bg-green-accent/10 flex items-center justify-center">
-          <Icon size={20} className="text-green-accent" />
+        <div className="w-10 h-10 rounded-xl bg-blue-accent/10 flex items-center justify-center">
+          <Icon size={20} className="text-blue-accent" />
         </div>
-        <span className={`flex items-center gap-1 text-xs font-medium ${positive ? 'text-green-400' : 'text-red-400'}`}>
+        <span className={`flex items-center gap-1 text-xs font-medium ${positive ? 'text-blue-400' : 'text-red-400'}`}>
           {positive ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
           {change}
         </span>
@@ -103,7 +103,7 @@ function StatCard({ icon: Icon, label, value, change, positive, to }) {
     <Link
       to={to}
       aria-label={`${label} — view more`}
-      className="block focus:outline-none focus:ring-2 focus:ring-green-accent/50 rounded-2xl"
+      className="block focus:outline-none focus:ring-2 focus:ring-blue-accent/50 rounded-2xl"
     >
       {inner}
     </Link>
@@ -111,37 +111,7 @@ function StatCard({ icon: Icon, label, value, change, positive, to }) {
 }
 
 function FeaturedHero() {
-  const FEATURED_USER = useFeaturedUser()
-  return (
-    <div className="relative rounded-2xl overflow-hidden bg-dark-800 border border-dark-600">
-      <img src={FEATURED_USER.cover} alt="" className="w-full h-48 sm:h-72 object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/60 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-        <div className="flex items-end gap-3 sm:gap-4">
-          <img
-            src={FEATURED_USER.avatar}
-            alt={FEATURED_USER.displayName}
-            className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl border-2 border-green-accent object-cover shrink-0"
-          />
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-[10px] sm:text-xs font-semibold text-dark-900 bg-green-accent px-2 py-0.5 rounded-full">FEATURED</span>
-              <span className="text-[10px] sm:text-xs font-medium text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full flex items-center gap-1">
-                <Star size={10} /> Legend
-              </span>
-            </div>
-            <h2 className="text-base sm:text-xl font-bold text-white truncate">{FEATURED_USER.displayName}</h2>
-            <p className="text-gray-400 text-xs sm:text-sm truncate">@{FEATURED_USER.username}</p>
-            <p className="hidden sm:block text-gray-300 text-sm mt-1 line-clamp-1">{FEATURED_USER.bio}</p>
-          </div>
-          <div className="text-right shrink-0">
-            <p className="text-lg sm:text-2xl font-bold text-white">{(FEATURED_USER.followers / 1000).toFixed(1)}K</p>
-            <p className="text-gray-400 text-xs sm:text-sm">followers</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+  return <OwnerFeaturedHero />
 }
 
 function TopGainers() {
@@ -163,7 +133,7 @@ function TopGainers() {
               <p className="text-gray-500 text-xs">@{user.username}</p>
             </div>
             <div className="text-right">
-              <p className="text-green-accent text-sm font-semibold">+{user.weeklyFollowers.toLocaleString()}</p>
+              <p className="text-blue-accent text-sm font-semibold">+{user.weeklyFollowers.toLocaleString()}</p>
               <p className="text-gray-500 text-xs">this week</p>
             </div>
           </div>
@@ -180,7 +150,7 @@ function SpotlightUsers() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold text-lg">Spotlight Users</h3>
-        <Link to="/explore" className="text-green-accent text-sm hover:underline hidden md:flex items-center gap-1">
+        <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
           See All <ChevronRight size={16} />
         </Link>
       </div>
@@ -190,13 +160,13 @@ function SpotlightUsers() {
             key={user.id}
             to={`/profile/${user.id}`}
             aria-label={`Open ${user.displayName}'s profile`}
-            className="flex flex-col items-center gap-2 shrink-0 group focus:outline-none focus:ring-2 focus:ring-green-accent/50 rounded-xl px-1 py-1"
+            className="flex flex-col items-center gap-2 shrink-0 group focus:outline-none focus:ring-2 focus:ring-blue-accent/50 rounded-xl px-1 py-1"
           >
-            <div className={`p-0.5 rounded-full transition-transform group-hover:scale-105 ${user.tier === 'legend' ? 'bg-gradient-to-br from-amber-400 to-orange-500' : user.tier === 'influencer' ? 'bg-gradient-to-br from-green-accent to-cyan-400' : 'bg-dark-500'}`}>
+            <div className={`p-0.5 rounded-full transition-transform group-hover:scale-105 ${user.tier === 'legend' ? 'bg-gradient-to-br from-amber-400 to-orange-500' : user.tier === 'influencer' ? 'bg-gradient-to-br from-blue-accent to-cyan-400' : 'bg-dark-500'}`}>
               <img src={user.avatar} alt="" className="w-14 h-14 rounded-full object-cover border-2 border-dark-900" />
             </div>
             <p className="text-gray-300 text-xs font-medium truncate w-16 text-center group-hover:text-white">@{user.username.slice(0, 8)}</p>
-            <span className="text-green-accent text-xs">{user.credits} cr</span>
+            <span className="text-blue-accent text-xs">{user.credits} cr</span>
           </Link>
         ))}
       </div>
@@ -212,7 +182,7 @@ function ActiveQuests() {
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold">Daily Quests</h3>
         <div className="flex items-center gap-3">
-          <Link to="/gamification" className="text-green-accent text-xs hover:underline">View All</Link>
+          <Link to="/gamification" className="text-blue-accent text-xs hover:underline">View All</Link>
           <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="daily quests" />
         </div>
       </div>
@@ -249,7 +219,7 @@ function TrendingTribes() {
             <div className="text-3xl mb-2">{tribe.icon}</div>
             <p className="text-white text-sm font-medium">{tribe.name}</p>
             <p className="text-gray-500 text-xs mt-1">{tribe.members.toLocaleString()} members</p>
-            <p className="text-green-accent text-xs mt-1">+{tribe.weeklyGrowth}% this week</p>
+            <p className="text-blue-accent text-xs mt-1">+{tribe.weeklyGrowth}% this week</p>
           </div>
         ))}
       </div>
@@ -279,7 +249,7 @@ function SavedSearches() {
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Bookmark size={18} className="text-green-accent" />
+          <Bookmark size={18} className="text-blue-accent" />
           <h3 className="text-white font-semibold">Saved Searches</h3>
         </div>
         <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="saved searches" />
@@ -288,7 +258,7 @@ function SavedSearches() {
         {searches.map(s => (
           <div
             key={s._id}
-            className="flex items-center justify-between bg-dark-700 rounded-xl px-4 py-3 hover:border-green-accent/30 border border-transparent transition-colors cursor-pointer group"
+            className="flex items-center justify-between bg-dark-700 rounded-xl px-4 py-3 hover:border-blue-accent/30 border border-transparent transition-colors cursor-pointer group"
             onClick={() => handleApply(s)}
           >
             <div className="flex-1 min-w-0">
@@ -323,11 +293,11 @@ function Recommendations() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Sparkles size={18} className="text-green-accent" />
+          <Sparkles size={18} className="text-blue-accent" />
           <h3 className="text-white font-semibold text-lg">People Like You</h3>
         </div>
         <div className="flex items-center gap-3">
-          <Link to="/explore" className="text-green-accent text-sm hover:underline hidden md:flex items-center gap-1">
+          <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
             Explore More <ChevronRight size={16} />
           </Link>
           <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="recommendations" />
@@ -348,7 +318,7 @@ function UserCards() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold text-lg">Recommended For You</h3>
-        <Link to="/explore" className="text-green-accent text-sm hover:underline hidden md:flex items-center gap-1">
+        <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
           See All <ChevronRight size={16} />
         </Link>
       </div>
@@ -454,7 +424,7 @@ export default function Dashboard() {
             <div>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-gray-300 text-sm">Daily Follow Limit</span>
-                <span className="text-green-accent text-sm font-medium">{USER_STATS.dailyFollowsRemaining}/{USER_STATS.dailyFollowLimit}</span>
+                <span className="text-blue-accent text-sm font-medium">{USER_STATS.dailyFollowsRemaining}/{USER_STATS.dailyFollowLimit}</span>
               </div>
               <div className="w-full bg-dark-500 rounded-full h-2">
                 <div className="progress-bar h-2" style={{ width: `${(USER_STATS.dailyFollowsRemaining / USER_STATS.dailyFollowLimit) * 100}%` }} />
@@ -466,7 +436,7 @@ export default function Dashboard() {
                 <Shield size={16} className="text-gray-400" />
                 <span className="text-gray-300 text-sm">Unfollow Rate</span>
               </div>
-              <span className="text-green-accent text-sm font-medium">{USER_STATS.unfollowRate}%</span>
+              <span className="text-blue-accent text-sm font-medium">{USER_STATS.unfollowRate}%</span>
             </div>
           </div>
         </div>

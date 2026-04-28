@@ -62,8 +62,8 @@ function WizardBody() {
       body: (
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-green-accent/10 flex items-center justify-center">
-              <Sparkles size={22} className="text-green-accent" />
+            <div className="w-12 h-12 rounded-2xl bg-blue-accent/10 flex items-center justify-center">
+              <Sparkles size={22} className="text-blue-accent" />
             </div>
             <div>
               <p className="text-white font-semibold">
@@ -77,11 +77,11 @@ function WizardBody() {
           </div>
           <div className="bg-dark-700 rounded-xl p-4 text-sm text-gray-300 space-y-2">
             <p>
-              <span className="text-green-accent font-semibold">Account age:</span>{' '}
+              <span className="text-blue-accent font-semibold">Account age:</span>{' '}
               {userStats.accountAge} days
             </p>
             <p>
-              <span className="text-green-accent font-semibold">Current phase:</span>{' '}
+              <span className="text-blue-accent font-semibold">Current phase:</span>{' '}
               {suggestedPhase.label} ({suggestedPhase.limit} follows/day max)
             </p>
           </div>
@@ -106,7 +106,7 @@ function WizardBody() {
                   onClick={() => toggleNiche(n.id)}
                   className={`flex items-center gap-2 rounded-xl px-3 py-2 border text-sm transition-colors ${
                     active
-                      ? 'border-green-accent/60 bg-green-accent/10 text-white'
+                      ? 'border-blue-accent/60 bg-blue-accent/10 text-white'
                       : 'border-dark-500 bg-dark-700 text-gray-300 hover:border-dark-400'
                   }`}
                 >
@@ -130,7 +130,7 @@ function WizardBody() {
           <div className="bg-dark-700 rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-300 text-sm">Daily follows</span>
-              <span className="text-green-accent text-sm font-semibold">
+              <span className="text-blue-accent text-sm font-semibold">
                 {dailyFollows} / {suggestedPhase.limit} max
               </span>
             </div>
@@ -140,7 +140,7 @@ function WizardBody() {
               max={suggestedPhase.limit}
               value={Math.min(dailyFollows, suggestedPhase.limit)}
               onChange={e => setDailyFollows(Number(e.target.value))}
-              className="w-full accent-green-500"
+              className="w-full accent-blue-500"
               aria-label="Daily follow cadence"
             />
             <div className="flex justify-between text-gray-600 text-xs mt-1">
@@ -164,19 +164,19 @@ function WizardBody() {
         <div className="space-y-4">
           <div className="bg-dark-700 rounded-xl p-4 space-y-2 text-sm">
             <p className="text-gray-300">
-              <span className="text-green-accent font-semibold">Niches:</span>{' '}
+              <span className="text-blue-accent font-semibold">Niches:</span>{' '}
               {selectedNiches.length === 0
                 ? 'Any (no filter)'
                 : selectedNiches.join(', ')}
             </p>
             <p className="text-gray-300">
-              <span className="text-green-accent font-semibold">
+              <span className="text-blue-accent font-semibold">
                 Daily follows:
               </span>{' '}
               {dailyFollows}
             </p>
             <p className="text-gray-300">
-              <span className="text-green-accent font-semibold">Phase:</span>{' '}
+              <span className="text-blue-accent font-semibold">Phase:</span>{' '}
               {suggestedPhase.label}
             </p>
           </div>
@@ -201,7 +201,7 @@ function WizardBody() {
       <div className="bg-dark-800 border border-dark-500 rounded-2xl w-full max-w-lg overflow-hidden">
         <div className="flex items-center justify-between px-5 py-4 border-b border-dark-600">
           <div className="flex items-center gap-2">
-            <Activity size={18} className="text-green-accent" />
+            <Activity size={18} className="text-blue-accent" />
             <h2 id="warming-wizard-title" className="text-white font-semibold">
               Account-Warming Wizard
             </h2>
@@ -222,7 +222,7 @@ function WizardBody() {
               <div
                 key={i}
                 className={`flex-1 h-1 rounded-full transition-colors ${
-                  i <= step ? 'bg-green-accent' : 'bg-dark-500'
+                  i <= step ? 'bg-blue-accent' : 'bg-dark-500'
                 }`}
               />
             ))}
@@ -255,7 +255,7 @@ function WizardBody() {
               <button
                 type="button"
                 onClick={() => setStep(s => s + 1)}
-                className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-dark-900 bg-green-accent hover:brightness-110"
+                className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-dark-900 bg-blue-accent hover:brightness-110"
               >
                 Next <ChevronRight size={14} />
               </button>
@@ -263,7 +263,7 @@ function WizardBody() {
               <button
                 type="button"
                 onClick={handleFinish}
-                className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-dark-900 bg-green-accent hover:brightness-110"
+                className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-dark-900 bg-blue-accent hover:brightness-110"
               >
                 Start warming
               </button>

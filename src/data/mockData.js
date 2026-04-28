@@ -1,5 +1,5 @@
 export const NICHES = [
-  { id: 'tech', name: 'Tech & Dev', icon: '💻', color: '#39ff14' },
+  { id: 'tech', name: 'Tech & Dev', icon: '💻', color: '#1e90ff' },
   { id: 'crypto', name: 'Crypto & Web3', icon: '🪙', color: '#f7931a' },
   { id: 'fitness', name: 'Fitness', icon: '💪', color: '#ff4444' },
   { id: 'art', name: 'Art & Design', icon: '🎨', color: '#9b59b6' },

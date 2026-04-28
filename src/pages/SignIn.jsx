@@ -56,7 +56,7 @@ export default function SignIn() {
     <div className="min-h-screen flex items-center justify-center bg-dark-900 px-4 py-10">
       <div className="w-full max-w-md">
         <div className="text-center mb-6">
-          <div className="inline-flex w-14 h-14 rounded-2xl bg-gradient-to-br from-green-accent to-cyan-400 items-center justify-center text-dark-900 font-bold text-2xl mb-3">
+          <div className="inline-flex w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-accent to-cyan-400 items-center justify-center text-dark-900 font-bold text-2xl mb-3">
             F4F
           </div>
           <h1 className="text-2xl font-bold text-white">
@@ -92,7 +92,7 @@ export default function SignIn() {
                 autoComplete="email"
                 required
                 placeholder="you@example.com"
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-9 pr-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/60 transition-colors"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-9 pr-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/60 transition-colors"
               />
             </div>
           </div>
@@ -117,7 +117,7 @@ export default function SignIn() {
                 required
                 minLength={8}
                 placeholder={isSignUp ? 'At least 8 characters' : '••••••••'}
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-9 pr-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/60 transition-colors"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-9 pr-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/60 transition-colors"
               />
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function SignIn() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full inline-flex items-center justify-center gap-2 bg-green-accent text-dark-900 font-semibold py-2.5 rounded-xl hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+            className="w-full inline-flex items-center justify-center gap-2 bg-blue-accent text-dark-900 font-semibold py-2.5 rounded-xl hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
           >
             {submitting ? (
               <Loader2 size={16} className="animate-spin" />
@@ -151,7 +151,7 @@ export default function SignIn() {
             <button
               type="button"
               onClick={toggleFlow}
-              className="text-green-accent font-medium hover:underline"
+              className="text-blue-accent font-medium hover:underline"
             >
               {isSignUp ? 'Sign in' : 'Sign up'}
             </button>
