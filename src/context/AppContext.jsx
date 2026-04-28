@@ -6,10 +6,55 @@ import {
   FEATURED_USER,
   PENALTIES,
   INBOX_NOTIFICATIONS,
+  F4F_POSTS,
 } from '../data/mockData'
 import { AppContext } from './useAppContext'
 
 const WARMING_WIZARD_STORAGE_KEY = 'ff:warming-wizard-dismissed'
+const F4F_POSTS_STORAGE_KEY = 'ff:f4f-posts'
+const F4F_DELETED_SEED_KEY = 'ff:f4f-deleted-seed'
+
+function readUserPosts() {
+  if (typeof window === 'undefined') return []
+  try {
+    const raw = window.localStorage.getItem(F4F_POSTS_STORAGE_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
+function writeUserPosts(posts) {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(F4F_POSTS_STORAGE_KEY, JSON.stringify(posts))
+  } catch {
+    // ignore storage errors
+  }
+}
+
+function readDeletedSeedIds() {
+  if (typeof window === 'undefined') return []
+  try {
+    const raw = window.localStorage.getItem(F4F_DELETED_SEED_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
+function writeDeletedSeedIds(ids) {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(F4F_DELETED_SEED_KEY, JSON.stringify(ids))
+  } catch {
+    // ignore storage errors
+  }
+}
 
 const PLATFORM_URLS = {
   instagram: 'https://instagram.com/',
@@ -66,6 +111,9 @@ const initialState = {
   warmingWizardDismissed: readWarmingWizardDismissed(),
   warmingPlan: null,
   cooldownTick: 0,
+  userPosts: readUserPosts(),
+  deletedSeedPostIds: readDeletedSeedIds(),
+  posts: [],
 }
 
 function reducer(state, action) {
@@ -440,6 +488,27 @@ function reducer(state, action) {
         warmingWizardDismissed: true,
       }
 
+    case 'ADD_F4F_POST': {
+      const userPosts = [action.post, ...state.userPosts]
+      writeUserPosts(userPosts)
+      return { ...state, userPosts }
+    }
+
+    case 'DELETE_F4F_POST': {
+      const userPosts = state.userPosts.filter(p => p.id !== action.postId)
+      writeUserPosts(userPosts)
+      // If it's a seed post, mark it deleted so it stays hidden across reloads.
+      const isSeed = !state.userPosts.some(p => p.id === action.postId)
+      if (isSeed) {
+        const deletedSeedPostIds = state.deletedSeedPostIds.includes(action.postId)
+          ? state.deletedSeedPostIds
+          : [...state.deletedSeedPostIds, action.postId]
+        writeDeletedSeedIds(deletedSeedPostIds)
+        return { ...state, userPosts, deletedSeedPostIds }
+      }
+      return { ...state, userPosts }
+    }
+
     default:
       return state
   }
@@ -651,8 +720,36 @@ export function AppProvider({ children }) {
     return () => clearInterval(interval)
   }, [state.userStats.cooldownActive, state.userStats.cooldownUntil, notify])
 
+  const addPost = useCallback(
+    post => {
+      const fullPost = {
+        id: generateId(),
+        createdAt: Date.now(),
+        ...post,
+      }
+      dispatch({ type: 'ADD_F4F_POST', post: fullPost })
+      notify('F4F post published.', 'success')
+      return fullPost
+    },
+    [notify],
+  )
+
+  const deletePost = useCallback(
+    postId => {
+      dispatch({ type: 'DELETE_F4F_POST', postId })
+      notify('F4F post removed.', 'warning')
+    },
+    [notify],
+  )
+
+  const allPosts = [
+    ...state.userPosts,
+    ...F4F_POSTS.filter(p => !state.deletedSeedPostIds.includes(p.id)),
+  ]
+
   const value = {
     ...state,
+    posts: allPosts,
     dispatch,
     notify,
     followUser,
@@ -669,6 +766,8 @@ export function AppProvider({ children }) {
     closeWarmingWizard,
     dismissWarmingWizard,
     saveWarmingPlan,
+    addPost,
+    deletePost,
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
