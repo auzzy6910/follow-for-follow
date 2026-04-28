@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useQuery, usePaginatedQuery, useMutation } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import {
@@ -14,6 +15,7 @@ import {
   CREDIT_HISTORY,
   USER_STATS,
 } from '../data/mockData'
+import { useAppContext } from '../context/useAppContext'
 
 function useWithFallback(queryRef, fallback) {
   const data = useQuery(queryRef)
@@ -26,8 +28,16 @@ export const usePlatforms = () =>
 export const useLocations = () =>
   useWithFallback(api.data.getLocations, LOCATIONS)
 export const useUsers = () => useWithFallback(api.data.getUsers, USERS)
-export const useFeaturedUser = () =>
-  useWithFallback(api.data.getFeaturedUser, FEATURED_USER)
+export const useFeaturedUser = () => {
+  const base = useWithFallback(api.data.getFeaturedUser, FEATURED_USER)
+  const { profileOverrides } = useAppContext()
+  return useMemo(() => {
+    if (!base) return base
+    if (!profileOverrides || Object.keys(profileOverrides).length === 0)
+      return base
+    return { ...base, ...profileOverrides }
+  }, [base, profileOverrides])
+}
 export const useTribes = () => useWithFallback(api.data.getTribes, TRIBES)
 export const useQuests = () => useWithFallback(api.data.getQuests, QUESTS)
 export const useLeaderboard = () =>
