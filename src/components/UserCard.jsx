@@ -1,12 +1,19 @@
-import { Shield, Star, Users, Loader } from 'lucide-react'
+import { BadgeCheck, Loader, MapPin } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { useNiches, usePlatforms, useUsers } from '../hooks/useAppData'
 import { useAppContext } from '../context/useAppContext'
 import { useAuthGuard } from '../context/useAuthGuard'
 
-const tierColors = {
-  rookie: 'border-gray-500 text-gray-400',
-  influencer: 'border-green-accent text-green-accent',
-  legend: 'border-amber-400 text-amber-400',
+const tierRing = {
+  rookie: 'from-gray-400 via-gray-500 to-gray-400',
+  influencer: 'from-fuchsia-500 via-pink-500 to-amber-400',
+  legend: 'from-amber-400 via-pink-500 to-fuchsia-600',
+}
+
+function formatCount(n) {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 1)}M`
+  if (n >= 1_000) return `${(n / 1_000).toFixed(n % 1_000 === 0 ? 0 : 1)}K`
+  return `${n}`
 }
 
 export default function UserCard({ user }) {
@@ -17,82 +24,117 @@ export default function UserCard({ user }) {
   const { requireAuth } = useAuthGuard()
 
   const isFollowing = !!activeFollows[user.id]
+  const niche = NICHES.find(n => n.id === user.niche)
+  const platform = PLATFORMS.find(p => p.id === user.platform)
 
   const handleFollow = () => {
     requireAuth(() => followUser(user, ALL_USERS))
   }
 
   return (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl overflow-hidden card-hover">
-      <div className="relative h-20 sm:h-32">
-        <img src={user.cover} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-800 to-transparent" />
-        <div className="absolute top-2 right-2 sm:top-3 sm:right-3 flex gap-1.5">
-          <span className={`text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-full border ${tierColors[user.tier]} bg-dark-900/80 capitalize`}>
-            {user.tier}
-          </span>
+    <div className="bg-dark-800 border border-dark-600 rounded-2xl card-hover flex flex-col items-center text-center px-3 sm:px-5 pt-5 sm:pt-6 pb-4 sm:pb-5">
+      {/* Story-ring avatar (Instagram-style gradient) */}
+      <div className={`p-[2px] sm:p-[3px] rounded-full bg-gradient-to-tr ${tierRing[user.tier] || tierRing.rookie}`}>
+        <div className="bg-dark-800 p-[2px] rounded-full">
+          <img
+            src={user.avatar}
+            alt={user.displayName}
+            className="w-16 h-16 sm:w-24 sm:h-24 rounded-full object-cover"
+          />
         </div>
       </div>
-      <div className="px-3 sm:px-4 pb-3 sm:pb-4 -mt-6 sm:-mt-10 relative">
-        <div className="flex items-end gap-2 sm:gap-3 mb-2 sm:mb-3 min-w-0">
-          <img src={user.avatar} alt="" className={`w-11 h-11 sm:w-16 sm:h-16 rounded-full border-2 object-cover shrink-0 ${user.tier === 'legend' ? 'border-amber-400' : user.tier === 'influencer' ? 'border-green-accent' : 'border-dark-500'}`} />
-          <div className="flex-1 min-w-0 pb-1">
-            <div className="flex items-center gap-1 sm:gap-1.5 min-w-0">
-              <h4 className="text-white text-xs sm:text-base font-semibold truncate min-w-0">{user.displayName}</h4>
-              {user.isVerified && <Shield size={12} className="text-green-accent shrink-0" />}
-            </div>
-            <p className="text-gray-500 text-[11px] sm:text-xs truncate">@{user.username}</p>
-          </div>
-        </div>
-        <p className="hidden sm:block text-gray-400 text-xs line-clamp-2 mb-3">{user.bio}</p>
-        <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 flex-wrap">
-          <div className="flex items-center gap-1 text-[11px] sm:text-xs text-gray-400">
-            <Users size={12} />
-            <span>{(user.followers / 1000).toFixed(1)}K</span>
-          </div>
-          <div className="hidden sm:flex items-center gap-1 text-xs text-gray-400">
-            <Star size={12} />
-            <span>Q: {user.qualityScore}</span>
-          </div>
-          <div className="hidden sm:flex items-center gap-1 text-xs text-gray-400">
-            <Shield size={12} />
-            <span>Trust: {user.trustScore}%</span>
-          </div>
-        </div>
-        <div className="hidden sm:flex items-center gap-2 mb-3">
-          <span className="text-xs bg-dark-600 text-gray-300 px-2 py-0.5 rounded-full">
-            {NICHES.find(n => n.id === user.niche)?.icon} {NICHES.find(n => n.id === user.niche)?.name}
-          </span>
-          <span className="text-xs bg-dark-600 text-gray-300 px-2 py-0.5 rounded-full">
-            {PLATFORMS.find(p => p.id === user.platform)?.icon} {PLATFORMS.find(p => p.id === user.platform)?.name}
-          </span>
-        </div>
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          <button
-            onClick={handleFollow}
-            disabled={isFollowing}
-            className={`flex-1 min-w-0 text-[11px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg sm:rounded-xl transition-colors truncate flex items-center justify-center gap-1 ${
-              isFollowing
-                ? 'bg-dark-600 text-gray-400 cursor-not-allowed'
-                : 'bg-green-accent text-dark-900 hover:bg-green-accent/90'
-            }`}
+
+      {/* Username + verified badge */}
+      <div className="mt-3 flex items-center justify-center gap-1 min-w-0 w-full">
+        <h4 className="text-white text-sm sm:text-base font-semibold truncate min-w-0">
+          {user.username}
+        </h4>
+        {user.isVerified && (
+          <BadgeCheck size={16} className="text-sky-400 fill-sky-400/20 shrink-0" />
+        )}
+      </div>
+
+      {/* Display name */}
+      <p className="text-gray-300 text-[11px] sm:text-xs font-medium truncate w-full">
+        {user.displayName}
+      </p>
+
+      {/* Stats row: posts | followers | following */}
+      <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-1 w-full text-white">
+        <Stat value={formatCount(user.posts ?? 0)} label="posts" />
+        <Stat value={formatCount(user.followers)} label="followers" />
+        <Stat value={formatCount(user.following ?? 0)} label="following" />
+      </div>
+
+      {/* Bio */}
+      {user.bio && (
+        <p className="hidden sm:block mt-3 text-gray-400 text-[11px] leading-snug line-clamp-2 w-full">
+          {user.bio}
+        </p>
+      )}
+
+      {/* Niche + location pills */}
+      <div className="mt-2 sm:mt-3 hidden sm:flex items-center justify-center gap-1.5 flex-wrap">
+        {niche && (
+          <span
+            className="text-[10px] font-medium px-2 py-0.5 rounded-full"
+            style={{ backgroundColor: `${niche.color}20`, color: niche.color }}
           >
-            {isFollowing ? (
-              <>
-                <Loader size={14} className="animate-spin" />
-                <span className="hidden sm:inline">Verifying…</span>
-              </>
-            ) : (
-              <>
-                Follow <span className="hidden sm:inline">(+{Math.floor(user.qualityScore / 2)} cr)</span>
-              </>
-            )}
-          </button>
-          <button className="px-2 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-sm font-medium border border-dark-500 text-gray-300 rounded-lg sm:rounded-xl hover:border-green-accent/50 hover:text-green-accent transition-colors shrink-0">
-            Profile
-          </button>
-        </div>
+            {niche.icon} {niche.name}
+          </span>
+        )}
+        {platform && (
+          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-dark-600 text-gray-300">
+            {platform.icon} {platform.name}
+          </span>
+        )}
       </div>
+
+      {user.location && (
+        <div className="hidden sm:flex items-center gap-1 mt-1.5 text-[10px] text-gray-500">
+          <MapPin size={10} />
+          <span className="truncate">{user.location}</span>
+        </div>
+      )}
+
+      {/* Follow / Message buttons (Instagram-style) */}
+      <div className="mt-3 sm:mt-4 flex items-center gap-2 w-full">
+        <button
+          onClick={handleFollow}
+          disabled={isFollowing}
+          className={`flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg transition-colors flex items-center justify-center gap-1 ${
+            isFollowing
+              ? 'bg-dark-600 text-gray-300 hover:bg-dark-500'
+              : 'bg-sky-500 text-white hover:bg-sky-400'
+          }`}
+        >
+          {isFollowing ? (
+            <>
+              <Loader size={14} className="animate-spin" />
+              <span>Following</span>
+            </>
+          ) : (
+            <span>Follow</span>
+          )}
+        </button>
+        <Link
+          to={`/profile/${user.id}`}
+          className="flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg bg-dark-600 text-white hover:bg-dark-500 transition-colors text-center"
+        >
+          Profile
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+function Stat({ value, label }) {
+  return (
+    <div className="flex flex-col items-center min-w-0">
+      <span className="text-white text-sm sm:text-base font-bold leading-tight truncate max-w-full">
+        {value}
+      </span>
+      <span className="text-gray-500 text-[10px] sm:text-xs leading-tight">{label}</span>
     </div>
   )
 }
