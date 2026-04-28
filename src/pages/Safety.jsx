@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Shield, Clock, AlertTriangle, Eye, Activity, Lock, UserX, Ban, Info, CheckCircle, Gauge, Play, Sparkles } from 'lucide-react'
 import { useUserStats } from '../hooks/useAppData'
 import { useAppContext } from '../context/useAppContext'
+import { useAuthGuard } from '../context/useAuthGuard'
 import PenaltiesInbox from '../components/PenaltiesInbox'
 
 function formatCooldownRemaining(cooldownUntil) {
@@ -25,6 +26,7 @@ export default function Safety() {
     startCooldown,
     clearCooldown,
   } = useAppContext()
+  const { requireAuth } = useAuthGuard()
   const cooldownRemaining = liveStats.cooldownActive
     ? formatCooldownRemaining(liveStats.cooldownUntil)
     : null
@@ -143,7 +145,7 @@ export default function Safety() {
               {cooldownRemaining ? (
                 <button
                   type="button"
-                  onClick={clearCooldown}
+                  onClick={() => requireAuth(clearCooldown)}
                   className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-dark-900 bg-amber-400 hover:brightness-110"
                 >
                   Clear cooldown
@@ -151,7 +153,7 @@ export default function Safety() {
               ) : (
                 <button
                   type="button"
-                  onClick={() => startCooldown(90)}
+                  onClick={() => requireAuth(() => startCooldown(90))}
                   className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-dark-900 bg-green-accent hover:brightness-110"
                 >
                   <Play size={12} /> Start 90s cooldown
@@ -174,7 +176,7 @@ export default function Safety() {
             </div>
             <button
               type="button"
-              onClick={openWarmingWizard}
+              onClick={() => requireAuth(openWarmingWizard)}
               className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-dark-900 bg-green-accent hover:brightness-110 shrink-0"
             >
               <Sparkles size={14} /> {warmingPlan ? 'Re-run wizard' : 'Run warming wizard'}

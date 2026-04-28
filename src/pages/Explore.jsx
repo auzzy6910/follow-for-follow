@@ -9,6 +9,7 @@ import {
   useUsers,
 } from '../hooks/useAppData'
 import UserCard from '../components/UserCard'
+import { useAuthGuard } from '../context/useAuthGuard'
 
 export default function Explore() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -23,6 +24,7 @@ export default function Explore() {
   const PLATFORMS = usePlatforms()
   const LOCATIONS = useLocations()
   const saveSearch = useSaveSearch()
+  const { requireAuth } = useAuthGuard()
   const sentinelRef = useRef(null)
 
   useEffect(() => {
@@ -71,6 +73,7 @@ export default function Explore() {
 
   const handleSaveSearch = async () => {
     if (!hasActiveFilters) return
+    if (!requireAuth(() => {})) return
     const parts = []
     if (selectedNiche !== 'all') parts.push(selectedNiche)
     if (selectedPlatform !== 'all') parts.push(selectedPlatform)

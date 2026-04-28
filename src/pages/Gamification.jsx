@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Trophy, Flame, Target, Crown, Star, Medal, Zap, Gift, X, Sparkles, Calendar, Clock, TrendingUp } from 'lucide-react'
 import { useLeaderboard, useQuests, useUserStats } from '../hooks/useAppData'
 import { useAppContext } from '../context/useAppContext'
+import { useAuthGuard } from '../context/useAuthGuard'
 import { LEADERBOARD_DAILY, LEADERBOARD_ALLTIME, FEATURED_USER } from '../data/mockData'
 
 function TierBadge({ tier }) {
@@ -77,6 +78,7 @@ export default function Gamification() {
   const QUESTS = useQuests()
   const USER_STATS = useUserStats()
   const { dispatch, claimedQuests, claimedStreaks, tierUpCelebration, notify } = useAppContext()
+  const { requireAuth } = useAuthGuard()
 
   const leaderboardData =
     leaderboardRange === 'daily' ? LEADERBOARD_DAILY :
@@ -98,14 +100,18 @@ export default function Gamification() {
 
   const handleClaimQuest = (quest) => {
     if (claimedQuests[quest.id]) return
-    dispatch({ type: 'CLAIM_QUEST', questId: quest.id, reward: quest.reward, questTitle: quest.title })
-    notify(`Quest reward claimed! +${quest.reward} credits`, 'success')
+    requireAuth(() => {
+      dispatch({ type: 'CLAIM_QUEST', questId: quest.id, reward: quest.reward, questTitle: quest.title })
+      notify(`Quest reward claimed! +${quest.reward} credits`, 'success')
+    })
   }
 
   const handleClaimStreak = (milestone) => {
     if (claimedStreaks[milestone.days]) return
-    dispatch({ type: 'CLAIM_STREAK', days: milestone.days, reward: milestone.reward })
-    notify(`${milestone.days}-day streak reward claimed! +${milestone.reward} credits`, 'success')
+    requireAuth(() => {
+      dispatch({ type: 'CLAIM_STREAK', days: milestone.days, reward: milestone.reward })
+      notify(`${milestone.days}-day streak reward claimed! +${milestone.reward} credits`, 'success')
+    })
   }
 
   return (

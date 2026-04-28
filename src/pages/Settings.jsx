@@ -1,6 +1,7 @@
 import { Settings as SettingsIcon, User, Bell, Shield, Link, Globe, Eye, Moon, Smartphone } from 'lucide-react'
 import { usePlatforms, useNiches } from '../hooks/useAppData'
 import { useAppContext } from '../context/useAppContext'
+import { useAuthGuard } from '../context/useAuthGuard'
 
 function ToggleSwitch({ enabled, onChange }) {
   return (
@@ -15,11 +16,12 @@ function ToggleSwitch({ enabled, onChange }) {
 
 export default function Settings() {
   const { settings, dispatch, notify } = useAppContext()
+  const { requireAuth } = useAuthGuard()
   const PLATFORMS = usePlatforms()
   const NICHES = useNiches()
 
   const updateSetting = (key, value) => {
-    dispatch({ type: 'UPDATE_SETTING', key, value })
+    requireAuth(() => dispatch({ type: 'UPDATE_SETTING', key, value }))
   }
 
   const settingsItems = [
@@ -143,7 +145,7 @@ export default function Settings() {
 
       <div className="flex gap-3">
         <button
-          onClick={() => notify('Settings saved.', 'success')}
+          onClick={() => requireAuth(() => notify('Settings saved.', 'success'))}
           className="px-6 py-2.5 bg-green-accent text-dark-900 font-semibold rounded-xl hover:bg-green-accent/90 transition-colors"
         >
           Save Changes
