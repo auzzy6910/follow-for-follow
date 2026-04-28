@@ -365,3 +365,109 @@ export const INBOX_NOTIFICATIONS = [
     link: '/credits',
   },
 ];
+
+export const ENGAGEMENT_OPTIONS = [
+  { id: 'like', label: 'Like', icon: '❤️' },
+  { id: 'comment', label: 'Comment', icon: '💬' },
+  { id: 'share', label: 'Share', icon: '🔁' },
+  { id: 'save', label: 'Save', icon: '🔖' },
+  { id: 'story_share', label: 'Story share', icon: '📲' },
+  { id: 'subscribe', label: 'Subscribe', icon: '🔔' },
+];
+
+const F4F_POST_TEMPLATES = [
+  {
+    title: 'Tech mutuals — building in public',
+    description: "Fellow devs only. I'll follow back within 24h and engage on your latest 3 posts. Looking for serious builders, not bot-style accounts.",
+    tags: ['mutual', 'engagement-train'],
+  },
+  {
+    title: 'Crypto traders — alpha exchange',
+    description: 'F4F for verified crypto/DeFi accounts. Drop your latest analysis and I will repost in my story.',
+    tags: ['niche', 'shoutout'],
+  },
+  {
+    title: 'Fitness journey accountability partner',
+    description: 'Looking for fitness creators to swap follows + drop genuine comments. Min 1k followers and posting 3x/week.',
+    tags: ['accountability', 'mutual'],
+  },
+  {
+    title: 'Designers daily inbox',
+    description: 'Curating top design accounts. Follow + like + save my pinned post. I will DM feedback on your portfolio in 48h.',
+    tags: ['design', 'feedback'],
+  },
+  {
+    title: 'Gamer squad recruiting',
+    description: 'Streamers & content creators only. F4F + watch first 60s of latest VOD. Squad sessions on Saturdays.',
+    tags: ['gaming', 'squad'],
+  },
+  {
+    title: 'Music creators boost circle',
+    description: 'Looking for indie artists. F4F + save latest release. Will add to my Spotify follower playlist if I dig it.',
+    tags: ['music', 'boost'],
+  },
+  {
+    title: 'Foodies & travel storytellers',
+    description: 'Travel/food creators with consistent feeds. F4F + comment on last 2 posts. Bonus credits if you DM your favourite city.',
+    tags: ['travel', 'food'],
+  },
+  {
+    title: 'Founder F4F — startup edition',
+    description: 'B2B / SaaS founders only. Mutual follow + share one another\'s pinned launch tweet. Quality > quantity.',
+    tags: ['founders', 'b2b'],
+  },
+  {
+    title: 'Streetwear style swap',
+    description: 'Fashion creators with original fits. F4F + save my latest grid post. I rotate features weekly to my 60K crowd.',
+    tags: ['fashion', 'feature'],
+  },
+  {
+    title: 'Edtech & teachers tribe',
+    description: 'Educators sharing high-signal content. F4F + comment one resource you swear by.',
+    tags: ['education', 'tribe'],
+  },
+];
+
+const ENGAGEMENT_PRESETS = [
+  ['like', 'comment'],
+  ['like'],
+  ['like', 'comment', 'save'],
+  ['like', 'share'],
+  ['like', 'comment', 'story_share'],
+  ['like', 'save'],
+];
+
+function buildPostsFor(user, baseIndex) {
+  const numPosts = ((baseIndex % 3) + 1); // 1-3 posts per user
+  return Array.from({ length: numPosts }, (_, j) => {
+    const idx = (baseIndex + j) % F4F_POST_TEMPLATES.length;
+    const tmpl = F4F_POST_TEMPLATES[idx];
+    const minFollowers = [500, 1000, 2500, 5000, 10000][(baseIndex + j) % 5];
+    const reward = [25, 40, 60, 100, 150][(baseIndex + j) % 5];
+    const capacity = [25, 50, 100, 200][(baseIndex + j) % 4];
+    const filled = Math.floor(((baseIndex * 7 + j * 3) % capacity));
+    const engagement = ENGAGEMENT_PRESETS[(baseIndex + j) % ENGAGEMENT_PRESETS.length];
+    return {
+      id: `post-${user.id}-${j}`,
+      creatorId: user.id,
+      title: tmpl.title,
+      description: tmpl.description,
+      tags: tmpl.tags,
+      niche: user.niche,
+      platform: user.platform,
+      minFollowers,
+      rewardCredits: reward,
+      engagementAsks: engagement,
+      postsToEngage: ((baseIndex + j) % 3) + 1,
+      capacity,
+      filledCount: filled,
+      createdAt: new Date(Date.now() - (baseIndex * 6 + j * 3) * 60 * 60 * 1000).toISOString(),
+      status: filled >= capacity ? 'closed' : 'active',
+    };
+  });
+}
+
+export const F4F_POSTS = [
+  ...buildPostsFor(FEATURED_USER, 0),
+  ...USERS.flatMap((u, i) => buildPostsFor(u, i + 1)),
+];

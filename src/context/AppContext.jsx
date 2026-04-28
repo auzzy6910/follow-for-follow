@@ -6,6 +6,7 @@ import {
   FEATURED_USER,
   PENALTIES,
   INBOX_NOTIFICATIONS,
+  F4F_POSTS,
 } from '../data/mockData'
 import { AppContext } from './useAppContext'
 
@@ -66,6 +67,7 @@ const initialState = {
   warmingWizardDismissed: readWarmingWizardDismissed(),
   warmingPlan: null,
   cooldownTick: 0,
+  f4fPosts: [...F4F_POSTS],
 }
 
 function reducer(state, action) {
@@ -440,6 +442,18 @@ function reducer(state, action) {
         warmingWizardDismissed: true,
       }
 
+    case 'CREATE_F4F_POST':
+      return {
+        ...state,
+        f4fPosts: [action.post, ...state.f4fPosts],
+      }
+
+    case 'DELETE_F4F_POST':
+      return {
+        ...state,
+        f4fPosts: state.f4fPosts.filter(p => p.id !== action.postId),
+      }
+
     default:
       return state
   }
@@ -617,6 +631,31 @@ export function AppProvider({ children }) {
     }
   }, [])
 
+  const createF4FPost = useCallback(
+    post => {
+      const newPost = {
+        id: generateId(),
+        creatorId: FEATURED_USER.id,
+        createdAt: new Date().toISOString(),
+        filledCount: 0,
+        status: 'active',
+        ...post,
+      }
+      dispatch({ type: 'CREATE_F4F_POST', post: newPost })
+      notify(`F4F post “${newPost.title}” published.`, 'success')
+      return newPost
+    },
+    [notify],
+  )
+
+  const deleteF4FPost = useCallback(
+    postId => {
+      dispatch({ type: 'DELETE_F4F_POST', postId })
+      notify('F4F post deleted.', 'info')
+    },
+    [notify],
+  )
+
   const saveWarmingPlan = useCallback(
     plan => {
       dispatch({ type: 'SAVE_WARMING_PLAN', plan })
@@ -669,6 +708,8 @@ export function AppProvider({ children }) {
     closeWarmingWizard,
     dismissWarmingWizard,
     saveWarmingPlan,
+    createF4FPost,
+    deleteF4FPost,
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
