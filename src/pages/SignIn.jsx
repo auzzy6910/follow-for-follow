@@ -2,6 +2,28 @@ import { useState } from 'react'
 import { useAuthActions } from '@convex-dev/auth/react'
 import { Loader2, Mail, Lock, UserPlus, LogIn } from 'lucide-react'
 
+// Convex Auth surfaces server errors as long stack traces. Map the known
+// error codes to short, user-friendly messages and fall back to a generic
+// one so we never leak an internal trace into the UI.
+function friendlyAuthError(err, isSignUp) {
+  const raw = (err && (err.message || err.toString())) || ''
+  if (/InvalidSecret|InvalidAccountId|CredentialsSignin/i.test(raw)) {
+    return 'Invalid email or password.'
+  }
+  if (/AccountAlreadyExists|already.*exist/i.test(raw)) {
+    return 'An account with that email already exists. Try signing in instead.'
+  }
+  if (/PasswordValidation|too short|weak/i.test(raw)) {
+    return 'Password must be at least 8 characters.'
+  }
+  if (/Network|fetch|Failed to fetch/i.test(raw)) {
+    return 'Network error — please check your connection and try again.'
+  }
+  return isSignUp
+    ? 'Could not sign up. Try a different email or stronger password.'
+    : 'Invalid email or password.'
+}
+
 export default function SignIn() {
   const { signIn } = useAuthActions()
   const [flow, setFlow] = useState('signIn')
@@ -19,12 +41,7 @@ export default function SignIn() {
     try {
       await signIn('password', formData)
     } catch (err) {
-      const message =
-        (err && (err.message || err.toString())) ||
-        (isSignUp
-          ? 'Could not sign up. Try a different email or stronger password.'
-          : 'Invalid email or password.')
-      setError(message)
+      setError(friendlyAuthError(err, isSignUp))
     } finally {
       setSubmitting(false)
     }
