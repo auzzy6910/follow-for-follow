@@ -8,6 +8,7 @@ import {
   usePlatforms,
 } from '../hooks/useAppData'
 import { useAppContext } from '../context/useAppContext'
+import { useAuthGuard } from '../context/useAuthGuard'
 
 function LiveCounter({ base }) {
   const [count, setCount] = useState(base)
@@ -269,6 +270,7 @@ export default function GoldenHour() {
   const GOLDEN_HOUR_SESSIONS = useGoldenHourSessions()
   const PLATFORMS = usePlatforms()
   const { notify } = useAppContext()
+  const { requireAuth } = useAuthGuard()
   const [scheduled, setScheduled] = useState([])
 
   const enhancedSessions = [
@@ -277,25 +279,31 @@ export default function GoldenHour() {
   ]
 
   const handleSchedule = (data) => {
-    const platform = PLATFORMS.find(p => p.id === data.platform)
-    setScheduled(prev => [...prev, {
-      id: `sched-${Date.now()}`,
-      scheduledTime: data.dateTime,
-      platform: data.platform,
-      participants: 0,
-      status: 'upcoming',
-      postUrl: data.postUrl,
-      credits: data.credits,
-    }])
-    notify(`Post scheduled on ${platform?.name || data.platform} for ${new Date(data.dateTime).toLocaleString()}!`, 'success')
+    requireAuth(() => {
+      const platform = PLATFORMS.find(p => p.id === data.platform)
+      setScheduled(prev => [...prev, {
+        id: `sched-${Date.now()}`,
+        scheduledTime: data.dateTime,
+        platform: data.platform,
+        participants: 0,
+        status: 'upcoming',
+        postUrl: data.postUrl,
+        credits: data.credits,
+      }])
+      notify(`Post scheduled on ${platform?.name || data.platform} for ${new Date(data.dateTime).toLocaleString()}!`, 'success')
+    })
   }
 
   const handleJoinTrain = () => {
-    notify('Joined engagement train! You\'ll be notified when it starts.', 'success')
+    requireAuth(() => {
+      notify('Joined engagement train! You\'ll be notified when it starts.', 'success')
+    })
   }
 
   const handleChecklistComplete = () => {
-    notify('All checklist items complete! +100 bonus credits earned!', 'success')
+    requireAuth(() => {
+      notify('All checklist items complete! +100 bonus credits earned!', 'success')
+    })
   }
 
   const allSessions = [...enhancedSessions, ...scheduled].sort((a, b) => {

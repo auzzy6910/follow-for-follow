@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, Compass, Coins, Clock,
-  Users, Trophy, Shield, Settings, Wallet, LogOut, LogIn, Sparkles, X
+  Users, Trophy, Shield, Settings, Wallet, LogOut, LogIn, Sparkles, X, User
 } from 'lucide-react'
 import { useAuthActions } from '@convex-dev/auth/react'
 import { useAuthGuard } from '../context/useAuthGuard'
@@ -18,6 +18,7 @@ const navItems = [
 ]
 
 const bottomItems = [
+  { path: '/profile', label: 'Profile', icon: User },
   { path: '/settings', label: 'Settings', icon: Settings },
   { path: '/wallet', label: 'Wallet', icon: Wallet },
 ]

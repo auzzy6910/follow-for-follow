@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { useUserStats } from '../hooks/useAppData'
 import { useAppContext } from '../context/useAppContext'
+import { useAuthGuard } from '../context/useAuthGuard'
 import { COMMENT_TEMPLATES } from '../data/mockData'
 
 function ScoreGauge({ score, label, size = 'lg' }) {
@@ -95,6 +96,7 @@ const MOCK_REPORT = {
 export default function QualityScore() {
   const USER_STATS = useUserStats()
   const { dispatch, qualityAudit, commentTemplates, notify } = useAppContext()
+  const { requireAuth } = useAuthGuard()
   const [showReport, setShowReport] = useState(false)
 
   useEffect(() => {
@@ -104,21 +106,25 @@ export default function QualityScore() {
   }, [commentTemplates.length, dispatch])
 
   const runAudit = useCallback(() => {
-    dispatch({ type: 'RUN_QUALITY_AUDIT' })
-    notify('Running AI audit on your profile...', 'info')
-    setTimeout(() => {
-      dispatch({ type: 'COMPLETE_QUALITY_AUDIT', report: MOCK_REPORT })
-      notify('Audit complete! View your AI report.', 'success')
-    }, 3000)
-  }, [dispatch, notify])
+    requireAuth(() => {
+      dispatch({ type: 'RUN_QUALITY_AUDIT' })
+      notify('Running AI audit on your profile...', 'info')
+      setTimeout(() => {
+        dispatch({ type: 'COMPLETE_QUALITY_AUDIT', report: MOCK_REPORT })
+        notify('Audit complete! View your AI report.', 'success')
+      }, 3000)
+    })
+  }, [dispatch, notify, requireAuth])
 
   const handleTemplateAction = useCallback((templateId, status) => {
-    dispatch({ type: 'UPDATE_COMMENT_TEMPLATE', templateId, status })
-    notify(
-      status === 'accepted' ? 'Comment template accepted and saved.' : 'Comment template rejected.',
-      status === 'accepted' ? 'success' : 'warning',
-    )
-  }, [dispatch, notify])
+    requireAuth(() => {
+      dispatch({ type: 'UPDATE_COMMENT_TEMPLATE', templateId, status })
+      notify(
+        status === 'accepted' ? 'Comment template accepted and saved.' : 'Comment template rejected.',
+        status === 'accepted' ? 'success' : 'warning',
+      )
+    })
+  }, [dispatch, notify, requireAuth])
 
   const isAuditing = qualityAudit?.running
   const auditReport = qualityAudit?.report

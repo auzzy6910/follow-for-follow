@@ -14,6 +14,7 @@ import {
   ArrowRightLeft,
 } from 'lucide-react'
 import { useAppContext } from '../context/useAppContext'
+import { useAuthGuard } from '../context/useAuthGuard'
 
 function TopUpModal({ onClose }) {
   const { dispatch, notify } = useAppContext()
@@ -157,6 +158,7 @@ export default function Wallet() {
   const { creditHistory, userStats } = useAppContext()
   const [filterType, setFilterType] = useState('all')
   const [walletModal, setWalletModal] = useState(null)
+  const { requireAuth } = useAuthGuard()
 
   const balance = userStats.totalCredits
   const filtered = filterType === 'all'
@@ -201,7 +203,7 @@ export default function Wallet() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
         <button
-          onClick={() => setWalletModal('topup')}
+          onClick={() => requireAuth(() => setWalletModal('topup'))}
           className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 text-left card-hover"
         >
           <div className="flex items-center gap-3 mb-2">
@@ -215,7 +217,7 @@ export default function Wallet() {
           </div>
         </button>
         <button
-          onClick={() => setWalletModal('withdraw')}
+          onClick={() => requireAuth(() => setWalletModal('withdraw'))}
           className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 text-left card-hover"
         >
           <div className="flex items-center gap-3 mb-2">

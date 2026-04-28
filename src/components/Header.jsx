@@ -1,14 +1,16 @@
-import { Bell, Menu, UserPlus, LogOut, LogIn } from 'lucide-react'
+import { Bell, Menu, UserPlus, LogOut, LogIn, User } from 'lucide-react'
 import { useAuthActions } from '@convex-dev/auth/react'
 import { useAppContext } from '../context/useAppContext'
 import { useAuthGuard } from '../context/useAuthGuard'
+import { useNavigate } from 'react-router-dom'
 import NotificationCenter from './NotificationCenter'
 
 export default function Header({ onSidebarToggle }) {
   const { userStats, inboxNotifications, toggleNotificationCenter } =
     useAppContext()
   const { signOut } = useAuthActions()
-  const { isAuthenticated, openModal } = useAuthGuard()
+  const { isAuthenticated, openModal, requireAuth } = useAuthGuard()
+  const navigate = useNavigate()
   const unreadCount = inboxNotifications.filter(n => !n.read).length
 
   return (
@@ -25,6 +27,7 @@ export default function Header({ onSidebarToggle }) {
         <button
           className="w-9 h-9 rounded-full bg-green-accent text-dark-900 flex items-center justify-center hover:brightness-110 transition-colors shrink-0"
           aria-label="Follow"
+          onClick={() => requireAuth(() => {})}
         >
           <UserPlus size={18} strokeWidth={2.5} />
         </button>
@@ -32,8 +35,17 @@ export default function Header({ onSidebarToggle }) {
         <button
           className="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center cursor-pointer shrink-0 ring-1 ring-green-accent/40"
           aria-label="Profile"
+          onClick={() => isAuthenticated ? navigate('/profile') : openModal()}
         >
-          <img src="/logo.png" alt="Profile" className="w-full h-full object-cover" />
+          {isAuthenticated ? (
+            <div className="w-full h-full bg-gradient-to-br from-green-accent to-cyan-400 flex items-center justify-center">
+              <User size={16} className="text-dark-900" />
+            </div>
+          ) : (
+            <div className="w-full h-full bg-dark-600 flex items-center justify-center">
+              <User size={16} className="text-gray-400" />
+            </div>
+          )}
         </button>
 
         <div className="relative">

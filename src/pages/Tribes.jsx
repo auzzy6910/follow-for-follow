@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Users, Crown, Handshake, Star } from 'lucide-react'
 import { useTribes, useUsers } from '../hooks/useAppData'
+import { useAuthGuard } from '../context/useAuthGuard'
 
 function TribeCard({ tribe }) {
   return (
@@ -47,7 +48,7 @@ function TribeCard({ tribe }) {
   )
 }
 
-function CollaborationCard({ user1, user2 }) {
+function CollaborationCard({ user1, user2, onAction }) {
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 card-hover">
       <div className="flex items-center gap-2 mb-3">
@@ -73,10 +74,10 @@ function CollaborationCard({ user1, user2 }) {
         </div>
       </div>
       <div className="mt-4 flex gap-2">
-        <button className="flex-1 py-2 bg-cyan-400/10 text-cyan-400 font-semibold rounded-xl hover:bg-cyan-400/20 transition-colors text-sm">
+        <button onClick={onAction} className="flex-1 py-2 bg-cyan-400/10 text-cyan-400 font-semibold rounded-xl hover:bg-cyan-400/20 transition-colors text-sm">
           Shout-out
         </button>
-        <button className="flex-1 py-2 bg-purple-400/10 text-purple-400 font-semibold rounded-xl hover:bg-purple-400/20 transition-colors text-sm">
+        <button onClick={onAction} className="flex-1 py-2 bg-purple-400/10 text-purple-400 font-semibold rounded-xl hover:bg-purple-400/20 transition-colors text-sm">
           Joint Live
         </button>
       </div>
@@ -88,6 +89,7 @@ export default function Tribes() {
   const [activeTab, setActiveTab] = useState('browse')
   const TRIBES = useTribes()
   const USERS = useUsers()
+  const { requireAuth } = useAuthGuard()
 
   return (
     <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
@@ -194,7 +196,7 @@ export default function Tribes() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {Array.from({ length: 6 }, (_, i) => (
-              <CollaborationCard key={i} user1={USERS[i * 2]} user2={USERS[i * 2 + 1]} />
+              <CollaborationCard key={i} user1={USERS[i * 2]} user2={USERS[i * 2 + 1]} onAction={() => requireAuth(() => {})} />
             ))}
           </div>
         </div>
