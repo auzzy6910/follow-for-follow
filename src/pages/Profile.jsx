@@ -7,12 +7,14 @@ import {
   Grid3x3,
   Loader,
   MapPin,
+  Plus,
   Settings as SettingsIcon,
   UserSquare2,
 } from 'lucide-react'
 import { useNiches, usePlatforms, useUsers, useFeaturedUser } from '../hooks/useAppData'
 import { useAppContext } from '../context/useAppContext'
 import { useAuthGuard } from '../context/useAuthGuard'
+import F4FPostCard from '../components/F4FPostCard'
 
 const tierRing = {
   rookie: 'from-gray-400 via-gray-500 to-gray-400',
@@ -26,21 +28,6 @@ function formatCount(n) {
   if (n >= 1_000) return `${(n / 1_000).toFixed(n % 1_000 === 0 ? 0 : 1)}K`
   return `${n}`
 }
-
-const POST_IMAGES = [
-  'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=400&fit=crop',
-]
 
 const HIGHLIGHTS = [
   { id: 'recent', label: 'Recent', emoji: '✨' },
@@ -57,7 +44,7 @@ export default function Profile() {
   const FEATURED = useFeaturedUser()
   const NICHES = useNiches()
   const PLATFORMS = usePlatforms()
-  const { followUser, activeFollows } = useAppContext()
+  const { followUser, activeFollows, posts } = useAppContext()
   const { requireAuth } = useAuthGuard()
 
   const user = useMemo(() => {
@@ -65,16 +52,13 @@ export default function Profile() {
     return ALL_USERS.find(u => u.id === userId)
   }, [ALL_USERS, FEATURED, userId])
 
-  const posts = useMemo(() => {
+  const userPosts = useMemo(() => {
     if (!user) return []
-    const seed = [...user.id].reduce((acc, c) => acc + c.charCodeAt(0), 0)
-    return Array.from({ length: 12 }, (_, i) => ({
-      id: `${user.id}-post-${i}`,
-      image: POST_IMAGES[(seed + i) % POST_IMAGES.length],
-      likes: ((seed * (i + 7)) % 4900) + 100,
-      comments: ((seed * (i + 3)) % 480) + 8,
-    }))
-  }, [user])
+    return posts
+      .filter(p => p.authorId === user.id)
+      .slice()
+      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
+  }, [posts, user])
 
   if (!user) {
     return (
@@ -157,8 +141,8 @@ export default function Profile() {
           {/* Stats row */}
           <div className="flex justify-center md:justify-start gap-6 sm:gap-10 mb-3 md:mb-4 text-white">
             <div className="text-center md:text-left">
-              <span className="font-bold">{formatCount(user.posts ?? posts.length)}</span>
-              <span className="text-gray-400 text-sm ml-1">posts</span>
+              <span className="font-bold">{formatCount(userPosts.length)}</span>
+              <span className="text-gray-400 text-sm ml-1">F4F posts</span>
             </div>
             <div className="text-center md:text-left">
               <span className="font-bold">{formatCount(user.followers)}</span>
@@ -208,7 +192,7 @@ export default function Profile() {
       {/* Tabs */}
       <div className="border-t border-dark-600 flex justify-center gap-10 sm:gap-16 mt-2">
         <button className="flex items-center gap-2 py-3 text-white text-xs font-semibold tracking-widest uppercase border-t border-white -mt-px">
-          <Grid3x3 size={14} /> Posts
+          <Grid3x3 size={14} /> F4F Posts
         </button>
         <button className="flex items-center gap-2 py-3 text-gray-500 text-xs font-semibold tracking-widest uppercase">
           <Bookmark size={14} /> Saved
@@ -220,23 +204,28 @@ export default function Profile() {
 
       {/* Posts grid */}
       <div className="grid grid-cols-3 gap-1 sm:gap-2 mt-2">
-        {posts.map(post => (
-          <div
-            key={post.id}
-            className="relative aspect-square overflow-hidden bg-dark-700 group cursor-pointer"
-          >
-            <img
-              src={post.image}
-              alt=""
-              className="w-full h-full object-cover transition-transform group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 text-white text-sm font-semibold">
-              <span>❤ {formatCount(post.likes)}</span>
-              <span>💬 {formatCount(post.comments)}</span>
-            </div>
-          </div>
+        <Link
+          to={`/posts/new?authorId=${user.id}`}
+          onClick={e => {
+            if (!requireAuth(() => {})) {
+              e.preventDefault()
+            }
+          }}
+          className="relative aspect-square rounded-md sm:rounded-lg border-2 border-dashed border-dark-500 text-gray-400 hover:text-green-accent hover:border-green-accent flex flex-col items-center justify-center gap-1 transition-colors"
+        >
+          <Plus size={28} />
+          <span className="text-[11px] sm:text-xs font-semibold">New F4F post</span>
+        </Link>
+        {userPosts.map(post => (
+          <F4FPostCard key={post.id} post={post} />
         ))}
       </div>
+
+      {userPosts.length === 0 && (
+        <p className="text-center text-gray-500 text-xs mt-3">
+          No F4F posts yet — tap the dashed tile above to publish the first one.
+        </p>
+      )}
     </div>
   )
 }

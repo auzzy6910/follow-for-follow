@@ -365,3 +365,73 @@ export const INBOX_NOTIFICATIONS = [
     link: '/credits',
   },
 ];
+
+export const ENGAGEMENT_ASKS = [
+  { id: 'follow', label: 'Follow my account', icon: '🤝' },
+  { id: 'like_latest', label: 'Like latest 3 posts', icon: '❤️' },
+  { id: 'comment', label: 'Leave a genuine comment', icon: '💬' },
+  { id: 'share_story', label: 'Share to your Story', icon: '📲' },
+  { id: 'notifications', label: 'Turn on post notifications', icon: '🔔' },
+  { id: 'save_post', label: 'Save the pinned post', icon: '📌' },
+  { id: 'dm_keyword', label: 'DM a keyword for collab', icon: '✉️' },
+];
+
+const POST_IMAGE_POOL = [
+  'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=600&fit=crop',
+];
+
+const POST_TITLES = [
+  'F4F drop — same-niche only',
+  'Tribe boost: golden-hour pod',
+  'New launch — looking for first 100 fans',
+  'Genuine engagers wanted (no bots)',
+  'Collab pod — 2× credits bonus',
+  'Algorithm reset — let\'s lift each other',
+];
+
+const ASK_PRESETS = [
+  ['follow', 'like_latest'],
+  ['follow', 'comment'],
+  ['follow', 'like_latest', 'comment'],
+  ['follow', 'share_story'],
+  ['follow', 'notifications', 'like_latest'],
+  ['follow', 'comment', 'save_post'],
+];
+
+function postsForUser(user, baseIndex) {
+  return Array.from({ length: 3 }, (_, i) => {
+    const seed = baseIndex * 7 + i * 11;
+    const reward = 80 + ((seed * 17) % 420);
+    const minFollowers = [500, 1000, 2500, 5000, 10000][seed % 5];
+    return {
+      id: `${user.id}-f4f-${i + 1}`,
+      authorId: user.id,
+      title: POST_TITLES[seed % POST_TITLES.length],
+      description:
+        'Looking for engaged accounts in this niche. Reciprocity guaranteed within 24h — escrow holds the credits until both sides verify the follow.',
+      niche: user.niche,
+      platform: user.platform,
+      minFollowers,
+      rewardCredits: reward,
+      engagementAsks: ASK_PRESETS[seed % ASK_PRESETS.length],
+      image: POST_IMAGE_POOL[(baseIndex * 3 + i) % POST_IMAGE_POOL.length],
+      createdAt: Date.now() - 1000 * 60 * 60 * (i + 1) * (baseIndex + 2),
+    };
+  });
+}
+
+export const F4F_POSTS = [
+  ...postsForUser(FEATURED_USER, 0),
+  ...USERS.flatMap((u, i) => postsForUser(u, i + 1)),
+];
