@@ -1,8 +1,10 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, Compass, Coins, Clock,
-  Users, Trophy, Shield, Settings, Wallet, LogOut, Sparkles, X
+  Users, Trophy, Shield, Settings, Wallet, LogOut, LogIn, Sparkles, X
 } from 'lucide-react'
+import { useAuthActions } from '@convex-dev/auth/react'
+import { useAuthGuard } from '../context/useAuthGuard'
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -21,6 +23,8 @@ const bottomItems = [
 ]
 
 export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobileClose }) {
+  const { signOut } = useAuthActions()
+  const { isAuthenticated, openModal } = useAuthGuard()
   // On large screens, sidebar is hidden by default and revealed when isOpen=true via the
   // hamburger toggle in the header. On mobile, it slides in as a drawer when mobileOpen=true.
   const desktopHiddenClass = isOpen ? '' : 'lg:hidden'
@@ -110,10 +114,23 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
               <span className="text-sm font-medium">{label}</span>
             </NavLink>
           ))}
-          <button className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200 w-full">
-            <LogOut size={20} className="shrink-0" />
-            <span className="text-sm font-medium">Logout</span>
-          </button>
+          {isAuthenticated ? (
+            <button
+              onClick={() => void signOut()}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200 w-full"
+            >
+              <LogOut size={20} className="shrink-0" />
+              <span className="text-sm font-medium">Logout</span>
+            </button>
+          ) : (
+            <button
+              onClick={openModal}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-green-accent hover:bg-green-accent/10 transition-all duration-200 w-full"
+            >
+              <LogIn size={20} className="shrink-0" />
+              <span className="text-sm font-medium">Sign in</span>
+            </button>
+          )}
         </div>
       </aside>
     </>

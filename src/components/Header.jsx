@@ -1,12 +1,14 @@
-import { Bell, Menu, UserPlus, LogOut } from 'lucide-react'
+import { Bell, Menu, UserPlus, LogOut, LogIn } from 'lucide-react'
 import { useAuthActions } from '@convex-dev/auth/react'
 import { useAppContext } from '../context/useAppContext'
+import { useAuthGuard } from '../context/useAuthGuard'
 import NotificationCenter from './NotificationCenter'
 
 export default function Header({ onSidebarToggle }) {
   const { userStats, inboxNotifications, toggleNotificationCenter } =
     useAppContext()
   const { signOut } = useAuthActions()
+  const { isAuthenticated, openModal } = useAuthGuard()
   const unreadCount = inboxNotifications.filter(n => !n.read).length
 
   return (
@@ -62,15 +64,26 @@ export default function Header({ onSidebarToggle }) {
           <span className="text-gray-300 text-xs">Day {userStats.streak} Streak</span>
         </div>
 
-        <button
-          type="button"
-          onClick={() => void signOut()}
-          aria-label="Sign out"
-          title="Sign out"
-          className="w-9 h-9 rounded-full bg-dark-700 border border-dark-500 text-gray-300 hover:text-white hover:border-red-400/40 flex items-center justify-center transition-colors shrink-0"
-        >
-          <LogOut size={18} />
-        </button>
+        {isAuthenticated ? (
+          <button
+            type="button"
+            onClick={() => void signOut()}
+            aria-label="Sign out"
+            title="Sign out"
+            className="w-9 h-9 rounded-full bg-dark-700 border border-dark-500 text-gray-300 hover:text-white hover:border-red-400/40 flex items-center justify-center transition-colors shrink-0"
+          >
+            <LogOut size={18} />
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={openModal}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-green-accent text-dark-900 text-sm font-semibold hover:brightness-110 transition-colors shrink-0"
+          >
+            <LogIn size={16} strokeWidth={2.5} />
+            Sign in
+          </button>
+        )}
       </div>
 
       <div className="hidden md:block md:order-1 md:flex-1 md:min-w-0 md:max-w-xl">

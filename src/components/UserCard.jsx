@@ -1,6 +1,7 @@
 import { Shield, Star, Users, Loader } from 'lucide-react'
 import { useNiches, usePlatforms, useUsers } from '../hooks/useAppData'
 import { useAppContext } from '../context/useAppContext'
+import { useAuthGuard } from '../context/useAuthGuard'
 
 const tierColors = {
   rookie: 'border-gray-500 text-gray-400',
@@ -13,11 +14,12 @@ export default function UserCard({ user }) {
   const PLATFORMS = usePlatforms()
   const ALL_USERS = useUsers()
   const { followUser, activeFollows } = useAppContext()
+  const { requireAuth } = useAuthGuard()
 
   const isFollowing = !!activeFollows[user.id]
 
   const handleFollow = () => {
-    followUser(user, ALL_USERS)
+    requireAuth(() => followUser(user, ALL_USERS))
   }
 
   return (
