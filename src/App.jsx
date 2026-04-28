@@ -15,6 +15,7 @@ import Safety from './pages/Safety'
 import Settings from './pages/Settings'
 import Wallet from './pages/Wallet'
 import Profile from './pages/Profile'
+import MyProfile from './pages/MyProfile'
 import PostDetail from './pages/PostDetail'
 import ToastContainer from './components/ToastContainer'
 import FollowOverlay from './components/FollowOverlay'
@@ -52,6 +53,7 @@ function AppShell() {
             <Route path="/safety" element={<Safety />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/wallet" element={<Wallet />} />
+            <Route path="/me" element={<MyProfile />} />
             <Route path="/profile/:userId" element={<Profile />} />
             <Route path="/posts/:postId" element={<PostDetail />} />
           </Routes>

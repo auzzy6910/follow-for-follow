@@ -1,13 +1,14 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, Compass, Coins, Clock,
-  Users, Trophy, Shield, Settings, Wallet, LogOut, LogIn, Sparkles, X
+  Users, Trophy, Shield, Settings, Wallet, LogOut, LogIn, Sparkles, X, UserCircle
 } from 'lucide-react'
 import { useAuthActions } from '@convex-dev/auth/react'
 import { useAuthGuard } from '../context/useAuthGuard'
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard },
+  { path: '/me', label: 'My Profile', icon: UserCircle },
   { path: '/explore', label: 'Explore', icon: Compass },
   { path: '/credits', label: 'Credits', icon: Coins },
   { path: '/golden-hour', label: 'Golden Hour', icon: Clock },

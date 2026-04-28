@@ -11,6 +11,7 @@ import {
 import { AppContext } from './useAppContext'
 
 const WARMING_WIZARD_STORAGE_KEY = 'ff:warming-wizard-dismissed'
+const PROFILE_OVERRIDES_STORAGE_KEY = 'ff:profile-overrides'
 
 const PLATFORM_URLS = {
   instagram: 'https://instagram.com/',
@@ -31,6 +32,30 @@ function readWarmingWizardDismissed() {
     return window.localStorage.getItem(WARMING_WIZARD_STORAGE_KEY) === '1'
   } catch {
     return false
+  }
+}
+
+function readProfileOverrides() {
+  if (typeof window === 'undefined') return {}
+  try {
+    const raw = window.localStorage.getItem(PROFILE_OVERRIDES_STORAGE_KEY)
+    if (!raw) return {}
+    const parsed = JSON.parse(raw)
+    return parsed && typeof parsed === 'object' ? parsed : {}
+  } catch {
+    return {}
+  }
+}
+
+function writeProfileOverrides(overrides) {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(
+      PROFILE_OVERRIDES_STORAGE_KEY,
+      JSON.stringify(overrides),
+    )
+  } catch {
+    // ignore storage errors
   }
 }
 
@@ -68,6 +93,7 @@ const initialState = {
   warmingPlan: null,
   cooldownTick: 0,
   f4fPosts: [...F4F_POSTS],
+  profileOverrides: readProfileOverrides(),
 }
 
 function reducer(state, action) {
@@ -454,6 +480,15 @@ function reducer(state, action) {
         f4fPosts: state.f4fPosts.filter(p => p.id !== action.postId),
       }
 
+    case 'UPDATE_PROFILE':
+      return {
+        ...state,
+        profileOverrides: { ...state.profileOverrides, ...action.updates },
+      }
+
+    case 'RESET_PROFILE':
+      return { ...state, profileOverrides: {} }
+
     default:
       return state
   }
@@ -656,6 +691,24 @@ export function AppProvider({ children }) {
     [notify],
   )
 
+  const updateProfile = useCallback(
+    (updates, options = {}) => {
+      const next = { ...state.profileOverrides, ...updates }
+      dispatch({ type: 'UPDATE_PROFILE', updates })
+      writeProfileOverrides(next)
+      if (options.silent !== true) {
+        notify('Profile updated.', 'success')
+      }
+    },
+    [state.profileOverrides, notify],
+  )
+
+  const resetProfile = useCallback(() => {
+    dispatch({ type: 'RESET_PROFILE' })
+    writeProfileOverrides({})
+    notify('Profile reset to defaults.', 'info')
+  }, [notify])
+
   const saveWarmingPlan = useCallback(
     plan => {
       dispatch({ type: 'SAVE_WARMING_PLAN', plan })
@@ -710,6 +763,8 @@ export function AppProvider({ children }) {
     saveWarmingPlan,
     createF4FPost,
     deleteF4FPost,
+    updateProfile,
+    resetProfile,
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
