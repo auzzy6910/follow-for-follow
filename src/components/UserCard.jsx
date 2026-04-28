@@ -1,4 +1,5 @@
 import { BadgeCheck, Loader, MapPin } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { useNiches, usePlatforms, useUsers } from '../hooks/useAppData'
 import { useAppContext } from '../context/useAppContext'
 import { useAuthGuard } from '../context/useAuthGuard'
@@ -116,9 +117,12 @@ export default function UserCard({ user }) {
             <span>Follow</span>
           )}
         </button>
-        <button className="flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg bg-dark-600 text-white hover:bg-dark-500 transition-colors">
-          Message
-        </button>
+        <Link
+          to={`/profile/${user.id}`}
+          className="flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg bg-dark-600 text-white hover:bg-dark-500 transition-colors text-center"
+        >
+          Profile
+        </Link>
       </div>
     </div>
   )

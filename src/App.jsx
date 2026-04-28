@@ -14,6 +14,7 @@ import Gamification from './pages/Gamification'
 import Safety from './pages/Safety'
 import Settings from './pages/Settings'
 import Wallet from './pages/Wallet'
+import Profile from './pages/Profile'
 import ToastContainer from './components/ToastContainer'
 import FollowOverlay from './components/FollowOverlay'
 import EscrowDrawer from './components/EscrowDrawer'
@@ -50,6 +51,7 @@ function AppShell() {
             <Route path="/safety" element={<Safety />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/wallet" element={<Wallet />} />
+            <Route path="/profile/:userId" element={<Profile />} />
           </Routes>
         </main>
         <MobileNav />
