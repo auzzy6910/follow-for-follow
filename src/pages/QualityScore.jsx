@@ -40,7 +40,7 @@ function ScoreGauge({ score, label, size = 'lg' }) {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className={`font-bold text-white ${size === 'lg' ? 'text-3xl' : 'text-lg'}`}>{score}</span>
+          <span className={`font-bold text-gray-900 ${size === 'lg' ? 'text-3xl' : 'text-lg'}`}>{score}</span>
         </div>
       </div>
       <p className={`text-gray-400 mt-2 ${size === 'lg' ? 'text-sm' : 'text-xs'}`}>{label}</p>
@@ -59,10 +59,10 @@ function AuditItem({ icon: Icon, label, status, detail }) {
   return (
     <div className="flex items-center gap-4 bg-dark-700 rounded-xl p-4">
       <div className="w-10 h-10 rounded-xl bg-dark-600 flex items-center justify-center">
-        <Icon size={18} className="text-gray-300" />
+        <Icon size={18} className="text-gray-700" />
       </div>
       <div className="flex-1">
-        <p className="text-white text-sm font-medium">{label}</p>
+        <p className="text-gray-900 text-sm font-medium">{label}</p>
         <p className="text-gray-500 text-xs">{detail}</p>
       </div>
       <div className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium ${statusColors[status]}`}>
@@ -126,7 +126,7 @@ export default function QualityScore() {
   return (
     <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
           <Sparkles size={24} className="text-blue-accent" /> AI Quality Score
         </h2>
         <p className="text-gray-400 text-xs sm:text-sm mt-1">AI-powered profile auditing to ensure high-quality community members</p>
@@ -142,7 +142,7 @@ export default function QualityScore() {
           <button
             onClick={runAudit}
             disabled={isAuditing}
-            className="mt-4 flex items-center gap-2 bg-blue-accent text-dark-900 font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-blue-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-4 flex items-center gap-2 bg-blue-accent text-white font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-blue-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isAuditing ? (
               <>
@@ -159,7 +159,7 @@ export default function QualityScore() {
         </div>
 
         <div className="lg:col-span-2 bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-          <h3 className="text-white font-semibold mb-4">Score Breakdown</h3>
+          <h3 className="text-gray-900 font-semibold mb-4">Score Breakdown</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             <ScoreGauge score={95} label="Profile Photo" size="sm" />
             <ScoreGauge score={82} label="Bio Quality" size="sm" />
@@ -172,36 +172,36 @@ export default function QualityScore() {
       {auditReport && (
         <div className="bg-dark-800 border border-blue-accent/20 rounded-2xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-white font-semibold flex items-center gap-2">
+            <h3 className="text-gray-900 font-semibold flex items-center gap-2">
               <ShieldCheck size={18} className="text-blue-accent" /> AI Audit Report
             </h3>
             <button
               onClick={() => setShowReport(!showReport)}
-              className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors"
+              className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-900 transition-colors"
             >
               <Eye size={14} />
               {showReport ? 'Collapse' : 'View Full Report'}
             </button>
           </div>
 
-          <p className="text-gray-300 text-sm mb-4">{auditReport.summary}</p>
+          <p className="text-gray-700 text-sm mb-4">{auditReport.summary}</p>
 
           {showReport && (
             <div className="space-y-4 mt-4">
               <div className="space-y-3">
-                <h4 className="text-white text-sm font-medium">Detailed Checks</h4>
+                <h4 className="text-gray-900 text-sm font-medium">Detailed Checks</h4>
                 {auditReport.checks.map((check, i) => (
                   <AuditItem key={i} icon={check.icon} label={check.label} status={check.status} detail={check.detail} />
                 ))}
               </div>
 
               <div className="bg-dark-700 rounded-xl p-4">
-                <h4 className="text-white text-sm font-medium mb-3 flex items-center gap-2">
+                <h4 className="text-gray-900 text-sm font-medium mb-3 flex items-center gap-2">
                   <Sparkles size={14} className="text-amber-400" /> Recommendations
                 </h4>
                 <div className="space-y-2">
                   {auditReport.recommendations.map((rec, i) => (
-                    <div key={i} className="flex items-start gap-2 text-gray-300 text-sm">
+                    <div key={i} className="flex items-start gap-2 text-gray-700 text-sm">
                       <Check size={14} className="text-blue-accent shrink-0 mt-0.5" />
                       {rec}
                     </div>
@@ -213,7 +213,7 @@ export default function QualityScore() {
                 <div className="bg-red-400/5 border border-red-400/20 rounded-xl p-4">
                   <h4 className="text-red-400 text-sm font-medium mb-2">Risk Flags</h4>
                   {auditReport.riskFlags.map((flag, i) => (
-                    <p key={i} className="text-gray-300 text-sm">{flag}</p>
+                    <p key={i} className="text-gray-700 text-sm">{flag}</p>
                   ))}
                 </div>
               )}
@@ -223,7 +223,7 @@ export default function QualityScore() {
       )}
 
       <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-        <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+        <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
           <ShieldCheck size={18} className="text-blue-accent" /> Profile Audit Results
         </h3>
         <div className="space-y-3">
@@ -237,7 +237,7 @@ export default function QualityScore() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
-          <h3 className="text-white font-semibold mb-4">Rejection Criteria</h3>
+          <h3 className="text-gray-900 font-semibold mb-4">Rejection Criteria</h3>
           <p className="text-gray-400 text-sm mb-4">Profiles that don't meet these standards are rejected from the platform:</p>
           <div className="space-y-2">
             {[
@@ -248,7 +248,7 @@ export default function QualityScore() {
               'Known bot patterns detected',
               'Account age less than 30 days',
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-2 text-gray-300 text-sm">
+              <div key={i} className="flex items-center gap-2 text-gray-700 text-sm">
                 <XCircle size={14} className="text-red-400 shrink-0" />
                 {item}
               </div>
@@ -257,7 +257,7 @@ export default function QualityScore() {
         </div>
 
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
-          <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
             <MessageSquare size={18} className="text-cyan-400" /> AI Comment Templates
           </h3>
           <p className="text-gray-400 text-sm mb-4">
@@ -271,7 +271,7 @@ export default function QualityScore() {
                 ''
               }`}>
                 <p className="text-gray-500 text-xs mb-1">{template.postContext}</p>
-                <p className="text-gray-200 text-sm italic mb-2">&ldquo;{template.text}&rdquo;</p>
+                <p className="text-gray-800 text-sm italic mb-2">&ldquo;{template.text}&rdquo;</p>
                 {template.status === 'pending' ? (
                   <div className="flex items-center gap-2">
                     <button

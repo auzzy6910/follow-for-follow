@@ -11,7 +11,7 @@ function TribeCard({ tribe }) {
           {tribe.icon}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-white font-semibold truncate">{tribe.name}</h3>
+          <h3 className="text-gray-900 font-semibold truncate">{tribe.name}</h3>
           <p className="text-gray-500 text-xs">{tribe.members.toLocaleString()} members</p>
         </div>
         <div className="text-right">
@@ -57,7 +57,7 @@ function CollaborationCard({ user1, user2 }) {
       <div className="flex items-center gap-3">
         <div className="flex-1 text-center">
           <img src={user1.avatar} alt="" className="w-14 h-14 rounded-full mx-auto object-cover border-2 border-dark-500 mb-2" />
-          <p className="text-white text-sm font-medium truncate">{user1.displayName}</p>
+          <p className="text-gray-900 text-sm font-medium truncate">{user1.displayName}</p>
           <p className="text-gray-500 text-xs">{(user1.followers / 1000).toFixed(1)}K followers</p>
         </div>
         <div className="flex flex-col items-center gap-1">
@@ -68,7 +68,7 @@ function CollaborationCard({ user1, user2 }) {
         </div>
         <div className="flex-1 text-center">
           <img src={user2.avatar} alt="" className="w-14 h-14 rounded-full mx-auto object-cover border-2 border-dark-500 mb-2" />
-          <p className="text-white text-sm font-medium truncate">{user2.displayName}</p>
+          <p className="text-gray-900 text-sm font-medium truncate">{user2.displayName}</p>
           <p className="text-gray-500 text-xs">{(user2.followers / 1000).toFixed(1)}K followers</p>
         </div>
       </div>
@@ -93,7 +93,7 @@ export default function Tribes() {
     <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
             <Users size={24} className="text-blue-accent" /> Niche Tribes
           </h2>
           <p className="text-gray-400 text-xs sm:text-sm mt-1">Join micro-communities for relevant, high-value followers</p>
@@ -110,7 +110,7 @@ export default function Tribes() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
-              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-white'
+              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-gray-900'
             }`}
           >
             {tab.label}
@@ -123,7 +123,7 @@ export default function Tribes() {
           <div className="bg-dark-800 border border-blue-accent/20 rounded-2xl p-4 sm:p-5">
             <div className="flex items-center gap-3 mb-2">
               <Star size={20} className="text-amber-400" />
-              <h3 className="text-white font-semibold">Why Tribes?</h3>
+              <h3 className="text-gray-900 font-semibold">Why Tribes?</h3>
             </div>
             <p className="text-gray-400 text-sm">
               Mass following is dead — niche following is the future. Follow people in your tribe and earn
@@ -149,7 +149,7 @@ export default function Tribes() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-white font-semibold">{tribe.name}</h3>
+                      <h3 className="text-gray-900 font-semibold">{tribe.name}</h3>
                       <span className="text-xs text-blue-accent bg-blue-accent/10 px-2 py-0.5 rounded-full">Joined</span>
                     </div>
                     <p className="text-gray-500 text-xs">{tribe.members.toLocaleString()} members</p>
@@ -172,7 +172,7 @@ export default function Tribes() {
                 </div>
                 <Link
                   to={`/tribes/${tribe.id}`}
-                  className="block w-full py-2 bg-dark-600 text-gray-300 font-medium rounded-xl hover:bg-dark-500 transition-colors text-sm text-center"
+                  className="block w-full py-2 bg-dark-600 text-gray-700 font-medium rounded-xl hover:bg-dark-500 transition-colors text-sm text-center"
                 >
                   View Tribe Details
                 </Link>
@@ -185,7 +185,7 @@ export default function Tribes() {
       {activeTab === 'collab' && (
         <div className="space-y-6">
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
-            <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-gray-900 font-semibold mb-2 flex items-center gap-2">
               <Handshake size={18} className="text-cyan-400" /> Collaboration Matching
             </h3>
             <p className="text-gray-400 text-sm">

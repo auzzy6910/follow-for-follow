@@ -68,7 +68,7 @@ function AppealModal({ penalty, onClose }) {
         <div className="flex items-center justify-between px-5 py-4 border-b border-dark-600">
           <div className="flex items-center gap-2">
             <Scale size={18} className="text-blue-accent" />
-            <h3 id="appeal-title" className="text-white font-semibold">
+            <h3 id="appeal-title" className="text-gray-900 font-semibold">
               Appeal this penalty
             </h3>
           </div>
@@ -76,24 +76,24 @@ function AppealModal({ penalty, onClose }) {
             type="button"
             onClick={onClose}
             aria-label="Close appeal form"
-            className="text-gray-500 hover:text-white p-1 -m-1"
+            className="text-gray-500 hover:text-gray-900 p-1 -m-1"
           >
             <X size={18} />
           </button>
         </div>
         <div className="px-5 py-4 space-y-3">
           <div className="bg-dark-700 rounded-xl p-3 text-sm">
-            <p className="text-white font-medium">{penalty.title}</p>
+            <p className="text-gray-900 font-medium">{penalty.title}</p>
             <p className="text-gray-400 text-xs mt-1">{penalty.reason}</p>
           </div>
-          <label className="block text-sm text-gray-300">
+          <label className="block text-sm text-gray-700">
             Why should this be overturned?
             <textarea
               value={text}
               onChange={e => setText(e.target.value)}
               rows={4}
               placeholder="Explain what happened. Reviewers usually respond within 24h."
-              className="mt-1 w-full bg-dark-700 border border-dark-500 rounded-lg p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
+              className="mt-1 w-full bg-dark-700 border border-dark-500 rounded-lg p-3 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
             />
           </label>
           <p className="text-gray-500 text-xs">
@@ -104,7 +104,7 @@ function AppealModal({ penalty, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            className="px-3 py-2 rounded-lg text-sm text-gray-300 bg-dark-700 border border-dark-500 hover:text-white"
+            className="px-3 py-2 rounded-lg text-sm text-gray-700 bg-dark-700 border border-dark-500 hover:text-gray-900"
           >
             Cancel
           </button>
@@ -112,7 +112,7 @@ function AppealModal({ penalty, onClose }) {
             type="button"
             onClick={handleSubmit}
             disabled={disabled}
-            className="px-4 py-2 rounded-lg text-sm font-semibold text-dark-900 bg-blue-accent hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-blue-accent hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Submit appeal
           </button>
@@ -134,7 +134,7 @@ export default function PenaltiesInbox() {
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
       <div className="flex items-start justify-between gap-3 flex-wrap mb-4">
         <div>
-          <h3 className="text-white font-semibold flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold flex items-center gap-2">
             <Inbox size={18} className="text-amber-400" /> Warnings &amp; Penalties
           </h3>
           <p className="text-gray-400 text-sm mt-1">
@@ -157,7 +157,7 @@ export default function PenaltiesInbox() {
       {penalties.length === 0 ? (
         <div className="bg-dark-700 rounded-xl p-6 flex items-center gap-3">
           <CheckCircle size={20} className="text-blue-accent" />
-          <p className="text-gray-300 text-sm">
+          <p className="text-gray-700 text-sm">
             No warnings or penalties on your account. Keep it up!
           </p>
         </div>
@@ -180,7 +180,7 @@ export default function PenaltiesInbox() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-white text-sm font-medium">{p.title}</p>
+                      <p className="text-gray-900 text-sm font-medium">{p.title}</p>
                       <span
                         className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${status.color}`}
                       >
@@ -205,14 +205,14 @@ export default function PenaltiesInbox() {
                       </button>
                     </div>
                     {expanded && (
-                      <div className="mt-3 bg-dark-800 rounded-lg p-3 text-sm text-gray-300 space-y-2">
+                      <div className="mt-3 bg-dark-800 rounded-lg p-3 text-sm text-gray-700 space-y-2">
                         <p>{p.reason}</p>
                         {p.appealText && (
                           <div className="bg-dark-700 rounded-lg p-2 text-xs">
                             <p className="text-gray-500 uppercase tracking-wide">
                               Your appeal ({p.appealedAt && formatDate(p.appealedAt)})
                             </p>
-                            <p className="text-gray-300 mt-1">{p.appealText}</p>
+                            <p className="text-gray-700 mt-1">{p.appealText}</p>
                           </div>
                         )}
                       </div>
@@ -222,7 +222,7 @@ export default function PenaltiesInbox() {
                     <button
                       type="button"
                       onClick={() => setAppealTarget(p)}
-                      className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-dark-900 bg-blue-accent hover:brightness-110"
+                      className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-accent hover:brightness-110"
                     >
                       <Scale size={12} /> Appeal
                     </button>

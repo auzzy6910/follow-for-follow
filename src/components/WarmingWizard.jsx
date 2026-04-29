@@ -66,7 +66,7 @@ function WizardBody() {
               <Sparkles size={22} className="text-blue-accent" />
             </div>
             <div>
-              <p className="text-white font-semibold">
+              <p className="text-gray-900 font-semibold">
                 Ramp up safely — avoid platform bans
               </p>
               <p className="text-gray-400 text-sm">
@@ -75,7 +75,7 @@ function WizardBody() {
               </p>
             </div>
           </div>
-          <div className="bg-dark-700 rounded-xl p-4 text-sm text-gray-300 space-y-2">
+          <div className="bg-dark-700 rounded-xl p-4 text-sm text-gray-700 space-y-2">
             <p>
               <span className="text-blue-accent font-semibold">Account age:</span>{' '}
               {userStats.accountAge} days
@@ -106,8 +106,8 @@ function WizardBody() {
                   onClick={() => toggleNiche(n.id)}
                   className={`flex items-center gap-2 rounded-xl px-3 py-2 border text-sm transition-colors ${
                     active
-                      ? 'border-blue-accent/60 bg-blue-accent/10 text-white'
-                      : 'border-dark-500 bg-dark-700 text-gray-300 hover:border-dark-400'
+                      ? 'border-blue-accent/60 bg-blue-accent/10 text-gray-900'
+                      : 'border-dark-500 bg-dark-700 text-gray-700 hover:border-dark-400'
                   }`}
                 >
                   <span>{n.icon}</span>
@@ -129,7 +129,7 @@ function WizardBody() {
           </p>
           <div className="bg-dark-700 rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-300 text-sm">Daily follows</span>
+              <span className="text-gray-700 text-sm">Daily follows</span>
               <span className="text-blue-accent text-sm font-semibold">
                 {dailyFollows} / {suggestedPhase.limit} max
               </span>
@@ -163,19 +163,19 @@ function WizardBody() {
       body: (
         <div className="space-y-4">
           <div className="bg-dark-700 rounded-xl p-4 space-y-2 text-sm">
-            <p className="text-gray-300">
+            <p className="text-gray-700">
               <span className="text-blue-accent font-semibold">Niches:</span>{' '}
               {selectedNiches.length === 0
                 ? 'Any (no filter)'
                 : selectedNiches.join(', ')}
             </p>
-            <p className="text-gray-300">
+            <p className="text-gray-700">
               <span className="text-blue-accent font-semibold">
                 Daily follows:
               </span>{' '}
               {dailyFollows}
             </p>
-            <p className="text-gray-300">
+            <p className="text-gray-700">
               <span className="text-blue-accent font-semibold">Phase:</span>{' '}
               {suggestedPhase.label}
             </p>
@@ -202,7 +202,7 @@ function WizardBody() {
         <div className="flex items-center justify-between px-5 py-4 border-b border-dark-600">
           <div className="flex items-center gap-2">
             <Activity size={18} className="text-blue-accent" />
-            <h2 id="warming-wizard-title" className="text-white font-semibold">
+            <h2 id="warming-wizard-title" className="text-gray-900 font-semibold">
               Account-Warming Wizard
             </h2>
           </div>
@@ -210,7 +210,7 @@ function WizardBody() {
             type="button"
             onClick={closeWarmingWizard}
             aria-label="Close wizard"
-            className="text-gray-500 hover:text-white p-1 -m-1"
+            className="text-gray-500 hover:text-gray-900 p-1 -m-1"
           >
             <X size={18} />
           </button>
@@ -227,7 +227,7 @@ function WizardBody() {
               />
             ))}
           </div>
-          <h3 className="text-white font-semibold text-lg mb-3">
+          <h3 className="text-gray-900 font-semibold text-lg mb-3">
             {current.title}
           </h3>
           <div className="pb-4">{current.body}</div>
@@ -237,7 +237,7 @@ function WizardBody() {
           <button
             type="button"
             onClick={handleSkip}
-            className="text-gray-400 text-sm hover:text-white"
+            className="text-gray-400 text-sm hover:text-gray-900"
           >
             Skip for now
           </button>
@@ -246,7 +246,7 @@ function WizardBody() {
               <button
                 type="button"
                 onClick={() => setStep(s => s - 1)}
-                className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm text-gray-300 bg-dark-700 border border-dark-500 hover:text-white"
+                className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm text-gray-700 bg-dark-700 border border-dark-500 hover:text-gray-900"
               >
                 <ChevronLeft size={14} /> Back
               </button>
@@ -255,7 +255,7 @@ function WizardBody() {
               <button
                 type="button"
                 onClick={() => setStep(s => s + 1)}
-                className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-dark-900 bg-blue-accent hover:brightness-110"
+                className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-white bg-blue-accent hover:brightness-110"
               >
                 Next <ChevronRight size={14} />
               </button>
@@ -263,7 +263,7 @@ function WizardBody() {
               <button
                 type="button"
                 onClick={handleFinish}
-                className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-dark-900 bg-blue-accent hover:brightness-110"
+                className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-white bg-blue-accent hover:brightness-110"
               >
                 Start warming
               </button>

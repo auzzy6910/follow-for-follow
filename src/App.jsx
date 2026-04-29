@@ -25,22 +25,22 @@ import InSiteLinkViewer from './components/InSiteLinkViewer'
 import { AuthGuardProvider } from './context/AuthGuardContext'
 
 function AppShell() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const closeMobileSidebar = () => setMobileSidebarOpen(false)
   const toggleSidebar = () => setSidebarOpen(o => !o)
 
   return (
-    <div className="flex h-screen overflow-hidden bg-dark-900">
-      <Sidebar
-        isOpen={sidebarOpen}
-        onToggle={toggleSidebar}
-        mobileOpen={mobileSidebarOpen}
-        onMobileClose={closeMobileSidebar}
-      />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Header onSidebarToggle={toggleSidebar} />
-        <main className="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6 pb-24 lg:pb-6">
+    <div className="flex flex-col h-screen overflow-hidden bg-[#f9fafb]">
+      <Header onSidebarToggle={() => setMobileSidebarOpen(true)} />
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar
+          isOpen={sidebarOpen}
+          onToggle={toggleSidebar}
+          mobileOpen={mobileSidebarOpen}
+          onMobileClose={closeMobileSidebar}
+        />
+        <main className="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-8 pb-24 lg:pb-8">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/explore" element={<Explore />} />

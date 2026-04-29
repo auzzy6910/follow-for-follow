@@ -103,7 +103,7 @@ export default function PostDetail() {
       {/* Top bar */}
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-1.5 text-gray-300 hover:text-white text-sm mb-4"
+        className="flex items-center gap-1.5 text-gray-700 hover:text-gray-900 text-sm mb-4"
       >
         <ArrowLeft size={18} /> Back
       </button>
@@ -130,7 +130,7 @@ export default function PostDetail() {
               />
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-white font-semibold text-sm group-hover:underline">
+                  <span className="text-gray-900 font-semibold text-sm group-hover:underline">
                     {creator.username}
                   </span>
                   {creator.isVerified && (
@@ -160,7 +160,7 @@ export default function PostDetail() {
 
           {/* Title + description */}
           <div className="flex items-center gap-2 mt-5 flex-wrap">
-            <h1 className="text-white text-xl sm:text-2xl font-bold">
+            <h1 className="text-gray-900 text-xl sm:text-2xl font-bold">
               {post.title}
             </h1>
             {post.paid ? (
@@ -173,7 +173,7 @@ export default function PostDetail() {
               </span>
             )}
           </div>
-          <p className="text-gray-300 text-sm mt-2 leading-relaxed whitespace-pre-line">
+          <p className="text-gray-700 text-sm mt-2 leading-relaxed whitespace-pre-line">
             {post.description}
           </p>
 
@@ -191,7 +191,7 @@ export default function PostDetail() {
               </span>
             )}
             {platform && (
-              <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-dark-600 text-gray-300">
+              <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-dark-600 text-gray-700">
                 {platform.icon} {platform.name}
               </span>
             )}
@@ -234,12 +234,12 @@ export default function PostDetail() {
 
           {/* Engagement asks */}
           <div className="mt-6">
-            <h3 className="text-white text-sm font-semibold mb-2">
+            <h3 className="text-gray-900 text-sm font-semibold mb-2">
               Engagement asks
             </h3>
             <p className="text-gray-400 text-xs mb-3">
               Engage with the creator&apos;s last{' '}
-              <span className="text-white font-medium">
+              <span className="text-gray-900 font-medium">
                 {post.postsToEngage}
               </span>{' '}
               {post.postsToEngage === 1 ? 'post' : 'posts'}.
@@ -277,8 +277,8 @@ export default function PostDetail() {
                   isClosed
                     ? 'bg-dark-600 text-gray-400 cursor-not-allowed'
                     : isFollowing
-                      ? 'bg-dark-600 text-gray-300'
-                      : 'bg-sky-500 text-white hover:bg-sky-400'
+                      ? 'bg-dark-600 text-gray-700'
+                      : 'bg-sky-500 text-gray-900 hover:bg-sky-400'
                 }`}
               >
                 {isFollowing ? (
@@ -302,7 +302,7 @@ export default function PostDetail() {
             {creator && (
               <Link
                 to={`/profile/${creator.id}`}
-                className="px-4 py-2.5 rounded-xl text-sm font-semibold bg-dark-700 text-white hover:bg-dark-600"
+                className="px-4 py-2.5 rounded-xl text-sm font-semibold bg-dark-700 text-gray-900 hover:bg-dark-600"
               >
                 View profile
               </Link>
@@ -321,7 +321,7 @@ function RequirementCard({ icon, label, value, hint }) {
         {icon}
         <span>{label}</span>
       </div>
-      <div className="mt-1.5 text-white text-base font-bold">{value}</div>
+      <div className="mt-1.5 text-gray-900 text-base font-bold">{value}</div>
       {hint && <div className="text-[11px] text-gray-500 mt-0.5">{hint}</div>}
     </div>
   )

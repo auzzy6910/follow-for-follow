@@ -68,7 +68,7 @@ export default function InSiteLinkViewer() {
             <span className="text-xs text-gray-400 shrink-0">
               {platformLabel(post.platform)}
             </span>
-            <h3 className="text-white text-sm sm:text-base font-semibold truncate">
+            <h3 className="text-gray-900 text-sm sm:text-base font-semibold truncate">
               @{post.username}
             </h3>
             {post.paid ? (
@@ -86,7 +86,7 @@ export default function InSiteLinkViewer() {
               href={post.profileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white p-1"
+              className="text-gray-400 hover:text-gray-900 p-1"
               aria-label="Open in new tab"
               title="Open in new tab"
             >
@@ -94,7 +94,7 @@ export default function InSiteLinkViewer() {
             </a>
             <button
               onClick={closeLinkViewer}
-              className="text-gray-400 hover:text-white p-1"
+              className="text-gray-400 hover:text-gray-900 p-1"
               aria-label="Close"
             >
               <X size={18} />
@@ -154,8 +154,8 @@ export default function InSiteLinkViewer() {
               onClick={() => setPostFollow(post, !isFollowing)}
               className={`shrink-0 inline-flex items-center gap-2 text-sm font-semibold rounded-xl px-4 py-2 transition-colors ${
                 isFollowing
-                  ? 'bg-dark-600 text-gray-200 hover:bg-dark-500'
-                  : 'bg-blue-accent text-dark-900 hover:bg-blue-accent/90'
+                  ? 'bg-dark-600 text-gray-800 hover:bg-dark-500'
+                  : 'bg-blue-accent text-white hover:bg-blue-accent/90'
               }`}
             >
               {isFollowing ? (
@@ -188,7 +188,7 @@ function FrameFallback({ post }) {
       <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-accent/30 to-cyan-400/20 flex items-center justify-center text-blue-accent text-2xl font-bold">
         @
       </div>
-      <h4 className="mt-3 text-white font-semibold">@{post.username}</h4>
+      <h4 className="mt-3 text-gray-900 font-semibold">@{post.username}</h4>
       <p className="text-gray-400 text-xs mt-1 capitalize">
         {platformLabel(post.platform)}
       </p>
@@ -201,7 +201,7 @@ function FrameFallback({ post }) {
         href={post.profileUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold bg-blue-accent text-dark-900 px-4 py-2 rounded-xl hover:bg-blue-accent/90"
+        className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold bg-blue-accent text-white px-4 py-2 rounded-xl hover:bg-blue-accent/90"
       >
         <ExternalLink size={14} /> Open in new tab
       </a>

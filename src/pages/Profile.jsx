@@ -120,11 +120,11 @@ export default function Profile() {
       <div className="flex items-center justify-between mb-5">
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-1.5 text-gray-300 hover:text-white text-sm"
+          className="flex items-center gap-1.5 text-gray-700 hover:text-gray-900 text-sm"
         >
           <ArrowLeft size={18} /> Back
         </button>
-        <button className="text-gray-400 hover:text-white">
+        <button className="text-gray-400 hover:text-gray-900">
           <SettingsIcon size={18} />
         </button>
       </div>
@@ -147,7 +147,7 @@ export default function Profile() {
           {/* Username row */}
           <div className="flex flex-wrap items-center gap-3 mb-3 md:mb-4 justify-center md:justify-start">
             <div className="flex items-center gap-1.5">
-              <h1 className="text-white text-xl sm:text-2xl font-light">
+              <h1 className="text-gray-900 text-xl sm:text-2xl font-light">
                 {user.username}
               </h1>
               {user.isVerified && (
@@ -161,7 +161,7 @@ export default function Profile() {
               {isOwnProfile ? (
                 <button
                   onClick={() => setCreateOpen(true)}
-                  className="text-sm font-semibold py-1.5 px-4 rounded-lg bg-blue-accent text-dark-900 hover:bg-blue-accent/90 transition-colors flex items-center gap-1.5"
+                  className="text-sm font-semibold py-1.5 px-4 rounded-lg bg-blue-accent text-white hover:bg-blue-accent/90 transition-colors flex items-center gap-1.5"
                 >
                   <Plus size={14} /> New F4F post
                 </button>
@@ -171,8 +171,8 @@ export default function Profile() {
                   disabled={isFollowing}
                   className={`text-sm font-semibold py-1.5 px-4 rounded-lg transition-colors flex items-center gap-1 ${
                     isFollowing
-                      ? 'bg-dark-600 text-gray-300 hover:bg-dark-500'
-                      : 'bg-sky-500 text-white hover:bg-sky-400'
+                      ? 'bg-dark-600 text-gray-700 hover:bg-dark-500'
+                      : 'bg-sky-500 text-gray-900 hover:bg-sky-400'
                   }`}
                 >
                   {isFollowing ? (
@@ -185,14 +185,14 @@ export default function Profile() {
                   )}
                 </button>
               )}
-              <button className="text-sm font-semibold py-1.5 px-4 rounded-lg bg-dark-600 text-white hover:bg-dark-500 transition-colors">
+              <button className="text-sm font-semibold py-1.5 px-4 rounded-lg bg-dark-600 text-gray-900 hover:bg-dark-500 transition-colors">
                 Message
               </button>
             </div>
           </div>
 
           {/* Stats row */}
-          <div className="flex justify-center md:justify-start gap-6 sm:gap-10 mb-3 md:mb-4 text-white">
+          <div className="flex justify-center md:justify-start gap-6 sm:gap-10 mb-3 md:mb-4 text-gray-900">
             <div className="text-center md:text-left">
               <span className="font-bold">{userF4FPosts.length}</span>
               <span className="text-gray-400 text-sm ml-1">F4F posts</span>
@@ -211,11 +211,11 @@ export default function Profile() {
 
           {/* Display name + bio */}
           <div className="text-center md:text-left">
-            <p className="text-white font-semibold text-sm">
+            <p className="text-gray-900 font-semibold text-sm">
               {user.displayName}
             </p>
             {niche && (
-              <p className="text-gray-300 text-sm mt-0.5">
+              <p className="text-gray-700 text-sm mt-0.5">
                 <span style={{ color: niche.color }}>
                   {niche.icon} {niche.name}
                 </span>
@@ -228,7 +228,7 @@ export default function Profile() {
               </p>
             )}
             {user.bio && (
-              <p className="text-gray-300 text-sm mt-1 whitespace-pre-line">
+              <p className="text-gray-700 text-sm mt-1 whitespace-pre-line">
                 {user.bio}
               </p>
             )}
@@ -250,7 +250,7 @@ export default function Profile() {
                 {h.emoji}
               </div>
             </div>
-            <span className="text-gray-300 text-xs">{h.label}</span>
+            <span className="text-gray-700 text-xs">{h.label}</span>
           </div>
         ))}
       </div>
@@ -306,7 +306,7 @@ export default function Profile() {
                 alt=""
                 className="w-full h-full object-cover transition-transform group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 text-white text-sm font-semibold">
+              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 text-gray-900 text-sm font-semibold">
                 <span>❤ {formatCount(post.likes)}</span>
                 <span>💬 {formatCount(post.comments)}</span>
               </div>
@@ -336,8 +336,8 @@ function TabButton({ active, onClick, icon, label }) {
       onClick={onClick}
       className={`flex items-center gap-2 py-3 text-xs font-semibold tracking-widest uppercase ${
         active
-          ? 'text-white border-t border-white -mt-px'
-          : 'text-gray-500 hover:text-gray-300'
+          ? 'text-gray-900 border-t border-white -mt-px'
+          : 'text-gray-500 hover:text-gray-700'
       }`}
     >
       {icon} {label}
@@ -358,7 +358,7 @@ function F4FPostsTab({ posts, niches, platforms, isOwnProfile, onCreate }) {
         {isOwnProfile && (
           <button
             onClick={onCreate}
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg bg-blue-accent text-dark-900 hover:bg-blue-accent/90"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg bg-blue-accent text-white hover:bg-blue-accent/90"
           >
             <Plus size={14} /> Create your first F4F post
           </button>
@@ -405,7 +405,7 @@ function PostCard({ post, niche, platform }) {
           </span>
         )}
         {platform && (
-          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-dark-600 text-gray-300">
+          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-dark-600 text-gray-700">
             {platform.icon} {platform.name}
           </span>
         )}
@@ -416,7 +416,7 @@ function PostCard({ post, niche, platform }) {
         )}
       </div>
 
-      <h3 className="text-white text-sm font-semibold leading-snug line-clamp-2">
+      <h3 className="text-gray-900 text-sm font-semibold leading-snug line-clamp-2">
         {post.title}
       </h3>
       <p className="text-gray-400 text-xs mt-1 line-clamp-2">

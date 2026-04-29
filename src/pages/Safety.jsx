@@ -32,7 +32,7 @@ export default function Safety() {
   return (
     <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
           <Shield size={24} className="text-blue-accent" /> Safety & Anti-Bot Controls
         </h2>
         <p className="text-gray-400 text-xs sm:text-sm mt-1">
@@ -43,12 +43,12 @@ export default function Safety() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <Gauge size={20} className="text-blue-accent mb-2" />
-          <p className="text-lg sm:text-xl font-bold text-white">{USER_STATS.dailyFollowsRemaining}/{USER_STATS.dailyFollowLimit}</p>
+          <p className="text-lg sm:text-xl font-bold text-gray-900">{USER_STATS.dailyFollowsRemaining}/{USER_STATS.dailyFollowLimit}</p>
           <p className="text-gray-500 text-xs">Daily follows remaining</p>
         </div>
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <Clock size={20} className={cooldownRemaining ? 'text-amber-400 mb-2 animate-pulse' : 'text-cyan-400 mb-2'} />
-          <p className="text-lg sm:text-xl font-bold text-white">
+          <p className="text-lg sm:text-xl font-bold text-gray-900">
             {cooldownRemaining ?? `${cooldownMin}-${cooldownMax}s`}
           </p>
           <p className="text-gray-500 text-xs">
@@ -57,25 +57,25 @@ export default function Safety() {
         </div>
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <Activity size={20} className="text-amber-400 mb-2" />
-          <p className="text-lg sm:text-xl font-bold text-white">{USER_STATS.unfollowRate}%</p>
+          <p className="text-lg sm:text-xl font-bold text-gray-900">{USER_STATS.unfollowRate}%</p>
           <p className="text-gray-500 text-xs">Your unfollow rate</p>
         </div>
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <Shield size={20} className="text-blue-accent mb-2" />
-          <p className="text-lg sm:text-xl font-bold text-white">{USER_STATS.trustScore}%</p>
+          <p className="text-lg sm:text-xl font-bold text-gray-900">{USER_STATS.trustScore}%</p>
           <p className="text-gray-500 text-xs">Trust score</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-          <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
             <Lock size={18} /> Action Limits
           </h3>
           <div className="space-y-5">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-gray-300 text-sm">Max follows per hour</label>
+                <label className="text-gray-700 text-sm">Max follows per hour</label>
                 <span className="text-blue-accent text-sm font-semibold">{actionLimitPerHour}</span>
               </div>
               <input
@@ -93,7 +93,7 @@ export default function Safety() {
             </div>
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-gray-300 text-sm">Cooldown between actions</label>
+                <label className="text-gray-700 text-sm">Cooldown between actions</label>
                 <span className="text-blue-accent text-sm font-semibold">{cooldownMin}-{cooldownMax}s</span>
               </div>
               <div className="flex gap-3">
@@ -105,7 +105,7 @@ export default function Safety() {
                     onChange={e => setCooldownMin(Number(e.target.value))}
                     min="10"
                     max="60"
-                    className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2 text-sm text-white mt-1 focus:outline-none focus:border-blue-accent/50"
+                    className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2 text-sm text-gray-900 mt-1 focus:outline-none focus:border-blue-accent/50"
                   />
                 </div>
                 <div className="flex-1">
@@ -116,7 +116,7 @@ export default function Safety() {
                     onChange={e => setCooldownMax(Number(e.target.value))}
                     min="15"
                     max="120"
-                    className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2 text-sm text-white mt-1 focus:outline-none focus:border-blue-accent/50"
+                    className="w-full bg-dark-700 border border-dark-500 rounded-lg px-3 py-2 text-sm text-gray-900 mt-1 focus:outline-none focus:border-blue-accent/50"
                   />
                 </div>
               </div>
@@ -130,7 +130,7 @@ export default function Safety() {
             </div>
             <div className="bg-dark-700 rounded-xl p-3 flex items-center justify-between gap-3 flex-wrap">
               <div className="min-w-0">
-                <p className="text-white text-sm font-medium flex items-center gap-2">
+                <p className="text-gray-900 text-sm font-medium flex items-center gap-2">
                   <Clock size={14} className={cooldownRemaining ? 'text-amber-400' : 'text-gray-400'} />
                   Live cooldown
                 </p>
@@ -144,7 +144,7 @@ export default function Safety() {
                 <button
                   type="button"
                   onClick={clearCooldown}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-dark-900 bg-amber-400 hover:brightness-110"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-amber-400 hover:brightness-110"
                 >
                   Clear cooldown
                 </button>
@@ -152,7 +152,7 @@ export default function Safety() {
                 <button
                   type="button"
                   onClick={() => startCooldown(90)}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-dark-900 bg-blue-accent hover:brightness-110"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-accent hover:brightness-110"
                 >
                   <Play size={12} /> Start 90s cooldown
                 </button>
@@ -164,7 +164,7 @@ export default function Safety() {
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
           <div className="flex items-start justify-between gap-3 mb-4 flex-wrap">
             <div>
-              <h3 className="text-white font-semibold flex items-center gap-2">
+              <h3 className="text-gray-900 font-semibold flex items-center gap-2">
                 <Activity size={18} /> Account Warming
               </h3>
               <p className="text-gray-400 text-sm mt-1">
@@ -175,7 +175,7 @@ export default function Safety() {
             <button
               type="button"
               onClick={openWarmingWizard}
-              className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-dark-900 bg-blue-accent hover:brightness-110 shrink-0"
+              className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-white bg-blue-accent hover:brightness-110 shrink-0"
             >
               <Sparkles size={14} /> {warmingPlan ? 'Re-run wizard' : 'Run warming wizard'}
             </button>
@@ -183,7 +183,7 @@ export default function Safety() {
           {warmingPlan && (
             <div className="bg-blue-accent/10 border border-blue-accent/30 rounded-xl p-3 mb-3 text-sm">
               <p className="text-blue-accent font-semibold">Warming plan active</p>
-              <p className="text-gray-300 text-xs mt-1">
+              <p className="text-gray-700 text-xs mt-1">
                 Target: {warmingPlan.dailyFollows} follows/day ·{' '}
                 Phase: {warmingPlan.phase}
                 {warmingPlan.niches.length > 0 &&
@@ -203,11 +203,11 @@ export default function Safety() {
                 USER_STATS.accountAge >= [1, 4, 8, 15, 30][i] && USER_STATS.accountAge < ([4, 8, 15, 30, 999][i])
                   ? 'border border-blue-accent/30' : ''
               }`}>
-                <div className="w-10 h-10 rounded-lg bg-dark-600 flex items-center justify-center text-white text-xs font-bold">
+                <div className="w-10 h-10 rounded-lg bg-dark-600 flex items-center justify-center text-gray-900 text-xs font-bold">
                   {phase.limit}
                 </div>
                 <div className="flex-1">
-                  <p className="text-white text-sm font-medium">{phase.day}</p>
+                  <p className="text-gray-900 text-sm font-medium">{phase.day}</p>
                   <p className="text-gray-500 text-xs">{phase.label} - {phase.limit} follows/day max</p>
                 </div>
                 {USER_STATS.accountAge >= [1, 4, 8, 15, 30][i] && USER_STATS.accountAge < ([4, 8, 15, 30, 999][i]) && (
@@ -224,7 +224,7 @@ export default function Safety() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-          <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
             <UserX size={18} className="text-red-400" /> Unfollow Detection
           </h3>
           <p className="text-gray-400 text-sm mb-4">
@@ -244,7 +244,7 @@ export default function Safety() {
                   <Ban size={16} className="text-red-400 shrink-0" />
                 )}
                 <div className="flex-1">
-                  <p className="text-white text-sm font-medium">{item.label}</p>
+                  <p className="text-gray-900 text-sm font-medium">{item.label}</p>
                   <p className="text-gray-500 text-xs">{item.action}</p>
                 </div>
               </div>
@@ -253,7 +253,7 @@ export default function Safety() {
         </div>
 
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-          <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
             <Eye size={18} className="text-purple-400" /> Shadow Check System
           </h3>
           <p className="text-gray-400 text-sm mb-4">
@@ -269,7 +269,7 @@ export default function Safety() {
               <div key={i} className="flex items-center gap-3 bg-dark-700 rounded-xl p-3">
                 <div className="w-2 h-2 rounded-full bg-blue-accent" />
                 <div className="flex-1">
-                  <p className="text-white text-sm font-medium">{item.label}</p>
+                  <p className="text-gray-900 text-sm font-medium">{item.label}</p>
                   <p className="text-gray-500 text-xs">{item.desc}</p>
                 </div>
                 <span className="text-blue-accent text-xs font-medium">Active</span>
@@ -282,7 +282,7 @@ export default function Safety() {
       <PenaltiesInbox />
 
       <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
-        <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+        <h3 className="text-gray-900 font-semibold mb-2 flex items-center gap-2">
           <AlertTriangle size={18} className="text-amber-400" /> Report System
         </h3>
         <p className="text-gray-400 text-sm mb-4">
@@ -291,7 +291,7 @@ export default function Safety() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {['Dead / Inactive Account', 'Offensive Content', 'Suspicious / Bot Activity'].map((type, i) => (
             <button key={i} className="bg-dark-700 border border-dark-500 rounded-xl p-4 text-left hover:border-amber-400/30 transition-colors">
-              <p className="text-white text-sm font-medium mb-1">{type}</p>
+              <p className="text-gray-900 text-sm font-medium mb-1">{type}</p>
               <p className="text-gray-500 text-xs">Click to submit a report</p>
             </button>
           ))}

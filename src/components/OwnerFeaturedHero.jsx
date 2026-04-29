@@ -41,25 +41,25 @@ function FeaturedCard({ user, isOwner }) {
           />
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-[10px] sm:text-xs font-semibold text-dark-900 bg-blue-accent px-2 py-0.5 rounded-full">
+              <span className="text-[10px] sm:text-xs font-semibold text-white bg-blue-accent px-2 py-0.5 rounded-full">
                 {isOwner ? 'YOUR PROFILE' : 'FEATURED'}
               </span>
               <span className="text-[10px] sm:text-xs font-medium text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full flex items-center gap-1">
                 <Star size={10} /> {TIER_LABELS[user.tier] || 'Rookie'}
               </span>
             </div>
-            <h2 className="text-base sm:text-xl font-bold text-white truncate">
+            <h2 className="text-base sm:text-xl font-bold text-gray-900 truncate">
               {user.displayName}
             </h2>
             <p className="text-gray-400 text-xs sm:text-sm truncate">
               @{user.username}
             </p>
-            <p className="hidden sm:block text-gray-300 text-sm mt-1 line-clamp-1">
+            <p className="hidden sm:block text-gray-700 text-sm mt-1 line-clamp-1">
               {user.bio}
             </p>
           </div>
           <div className="text-right shrink-0">
-            <p className="text-lg sm:text-2xl font-bold text-white">
+            <p className="text-lg sm:text-2xl font-bold text-gray-900">
               {formatFollowers(user.followers)}
             </p>
             <p className="text-gray-400 text-xs sm:text-sm">followers</p>
@@ -74,10 +74,10 @@ function SignInPrompt() {
   const { requireAuth } = useAuthGuard()
   return (
     <div className="rounded-2xl bg-dark-800 border border-dark-600 p-6 sm:p-8 text-center">
-      <div className="inline-flex w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-accent to-cyan-400 items-center justify-center text-dark-900 font-bold text-xl mb-3">
+      <div className="inline-flex w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-accent to-cyan-400 items-center justify-center text-white font-bold text-xl mb-3">
         F4F
       </div>
-      <h2 className="text-lg sm:text-xl font-bold text-white">
+      <h2 className="text-lg sm:text-xl font-bold text-gray-900">
         Sign up to claim your featured spot
       </h2>
       <p className="text-gray-400 text-sm mt-1 max-w-md mx-auto">
@@ -88,14 +88,14 @@ function SignInPrompt() {
         <button
           type="button"
           onClick={() => requireAuth(() => {})}
-          className="inline-flex items-center gap-1.5 bg-blue-accent text-dark-900 font-semibold text-sm px-4 py-2 rounded-xl hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-1.5 bg-blue-accent text-white font-semibold text-sm px-4 py-2 rounded-xl hover:opacity-90 transition-opacity"
         >
           <UserPlus size={16} /> Sign up
         </button>
         <button
           type="button"
           onClick={() => requireAuth(() => {})}
-          className="inline-flex items-center gap-1.5 bg-dark-700 border border-dark-500 text-gray-200 text-sm px-4 py-2 rounded-xl hover:bg-dark-600 transition-colors"
+          className="inline-flex items-center gap-1.5 bg-dark-700 border border-dark-500 text-gray-800 text-sm px-4 py-2 rounded-xl hover:bg-dark-600 transition-colors"
         >
           <LogIn size={16} /> Sign in
         </button>
@@ -180,14 +180,14 @@ function ProfileSetupForm({ ownerData, onComplete }) {
       className="rounded-2xl bg-dark-800 border border-dark-600 p-5 sm:p-6"
     >
       <div className="flex items-center gap-2 mb-1">
-        <span className="text-[10px] sm:text-xs font-semibold text-dark-900 bg-blue-accent px-2 py-0.5 rounded-full">
+        <span className="text-[10px] sm:text-xs font-semibold text-white bg-blue-accent px-2 py-0.5 rounded-full">
           YOUR PROFILE
         </span>
         <span className="text-[10px] sm:text-xs font-medium text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full flex items-center gap-1">
           <Star size={10} /> Setup
         </span>
       </div>
-      <h2 className="text-lg sm:text-xl font-bold text-white">
+      <h2 className="text-lg sm:text-xl font-bold text-gray-900">
         Tell the community about yourself
       </h2>
       <p className="text-gray-400 text-sm mt-1">
@@ -211,7 +211,7 @@ function ProfileSetupForm({ ownerData, onComplete }) {
             onChange={update('displayName')}
             required
             placeholder="e.g., Alex Chen"
-            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/60"
+            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/60"
           />
         </div>
         <div>
@@ -228,7 +228,7 @@ function ProfileSetupForm({ ownerData, onComplete }) {
             onChange={update('username')}
             required
             placeholder="@yourhandle"
-            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/60"
+            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/60"
           />
         </div>
       </div>
@@ -247,7 +247,7 @@ function ProfileSetupForm({ ownerData, onComplete }) {
           onChange={update('bio')}
           required
           placeholder="Tell the community what you create and who you serve."
-          className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/60 resize-none"
+          className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/60 resize-none"
         />
       </div>
 
@@ -270,7 +270,7 @@ function ProfileSetupForm({ ownerData, onComplete }) {
               value={form.avatar}
               onChange={update('avatar')}
               placeholder="https://..."
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-9 pr-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/60"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-9 pr-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/60"
             />
           </div>
         </div>
@@ -287,7 +287,7 @@ function ProfileSetupForm({ ownerData, onComplete }) {
             value={form.cover}
             onChange={update('cover')}
             placeholder="https://..."
-            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/60"
+            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/60"
           />
         </div>
       </div>
@@ -304,7 +304,7 @@ function ProfileSetupForm({ ownerData, onComplete }) {
             id="owner-niche"
             value={form.niche}
             onChange={update('niche')}
-            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/60"
+            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-blue-accent/60"
           >
             {NICHES.map((n) => (
               <option key={n.id} value={n.id}>
@@ -324,7 +324,7 @@ function ProfileSetupForm({ ownerData, onComplete }) {
             id="owner-platform"
             value={form.platform}
             onChange={update('platform')}
-            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/60"
+            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-blue-accent/60"
           >
             {PLATFORMS.map((p) => (
               <option key={p.id} value={p.id}>
@@ -346,7 +346,7 @@ function ProfileSetupForm({ ownerData, onComplete }) {
             value={form.location}
             onChange={update('location')}
             placeholder="e.g., Nairobi, Kenya"
-            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/60"
+            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/60"
           />
         </div>
       </div>
@@ -364,7 +364,7 @@ function ProfileSetupForm({ ownerData, onComplete }) {
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center gap-2 bg-blue-accent text-dark-900 font-semibold text-sm px-4 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
+          className="inline-flex items-center gap-2 bg-blue-accent text-white font-semibold text-sm px-4 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
         >
           {submitting ? (
             <Loader2 size={16} className="animate-spin" />

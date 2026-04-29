@@ -107,14 +107,14 @@ export default function Settings() {
   return (
     <div className="max-w-4xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
           <SettingsIcon size={24} className="text-blue-accent" /> Settings
         </h2>
         <p className="text-gray-400 text-xs sm:text-sm mt-1">Manage your account preferences and connected platforms</p>
       </div>
 
       <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-        <h3 className="text-white font-semibold mb-1 flex items-center gap-2">
+        <h3 className="text-gray-900 font-semibold mb-1 flex items-center gap-2">
           <User size={18} /> Profile Settings
         </h3>
         <p className="text-gray-400 text-xs sm:text-sm mb-4">
@@ -140,7 +140,7 @@ export default function Settings() {
                   className="w-16 h-16 rounded-full object-cover border border-dark-500"
                 />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-accent to-cyan-400 flex items-center justify-center text-dark-900 font-bold text-xl">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-accent to-cyan-400 flex items-center justify-center text-white font-bold text-xl">
                   {(profileForm.displayName || ownerData?.email || 'U')
                     .charAt(0)
                     .toUpperCase()}
@@ -155,7 +155,7 @@ export default function Settings() {
                   value={profileForm.avatar}
                   onChange={updateProfileField('avatar')}
                   placeholder="https://..."
-                  className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
+                  className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
                 />
               </div>
             </div>
@@ -170,7 +170,7 @@ export default function Settings() {
                   value={profileForm.displayName}
                   onChange={updateProfileField('displayName')}
                   placeholder="e.g., Alex Chen"
-                  className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
+                  className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
                 />
               </div>
               <div>
@@ -183,7 +183,7 @@ export default function Settings() {
                   value={profileForm.username}
                   onChange={updateProfileField('username')}
                   placeholder="@yourhandle"
-                  className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
+                  className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
                 />
               </div>
             </div>
@@ -197,7 +197,7 @@ export default function Settings() {
                 value={profileForm.bio}
                 onChange={updateProfileField('bio')}
                 placeholder="Tell the community about yourself..."
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50 resize-none"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50 resize-none"
               />
             </div>
             <div>
@@ -209,7 +209,7 @@ export default function Settings() {
                 value={profileForm.cover}
                 onChange={updateProfileField('cover')}
                 placeholder="https://..."
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -220,7 +220,7 @@ export default function Settings() {
                 <select
                   value={profileForm.niche}
                   onChange={updateProfileField('niche')}
-                  className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50 appearance-none"
+                  className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-blue-accent/50 appearance-none"
                 >
                   <option value="">Select a niche…</option>
                   {NICHES.map((n) => (
@@ -239,7 +239,7 @@ export default function Settings() {
                   value={profileForm.location}
                   onChange={updateProfileField('location')}
                   placeholder="e.g., Nairobi, Kenya"
-                  className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
+                  className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
                 />
               </div>
             </div>
@@ -255,7 +255,7 @@ export default function Settings() {
               type="button"
               onClick={handleSaveProfile}
               disabled={profileFormDisabled}
-              className="inline-flex items-center gap-2 bg-blue-accent text-dark-900 font-semibold text-sm px-4 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
+              className="inline-flex items-center gap-2 bg-blue-accent text-white font-semibold text-sm px-4 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60"
             >
               {savingProfile && <Loader2 size={16} className="animate-spin" />}
               Save profile
@@ -265,7 +265,7 @@ export default function Settings() {
       </div>
 
       <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-        <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+        <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
           <Link size={18} /> Connected Platforms (OAuth)
         </h3>
         <p className="text-gray-400 text-sm mb-4">Securely connect via OAuth. We never ask for your password.</p>
@@ -274,7 +274,7 @@ export default function Settings() {
             <div key={platform.id} className="flex items-center gap-4 bg-dark-700 rounded-xl p-4">
               <span className="text-2xl">{platform.icon}</span>
               <div className="flex-1">
-                <p className="text-white text-sm font-medium">{platform.name}</p>
+                <p className="text-gray-900 text-sm font-medium">{platform.name}</p>
                 <p className="text-gray-500 text-xs">{i < 2 ? 'Connected' : 'Not connected'}</p>
               </div>
               <button className={`text-sm font-medium px-4 py-2 rounded-xl transition-colors ${
@@ -290,7 +290,7 @@ export default function Settings() {
       </div>
 
       <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-        <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+        <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
           <Bell size={18} /> Notifications & Preferences
         </h3>
         <div className="space-y-4">
@@ -298,7 +298,7 @@ export default function Settings() {
             <div key={setting.key} className="flex items-center gap-4">
               <setting.icon size={18} className="text-gray-400 shrink-0" />
               <div className="flex-1">
-                <p className="text-white text-sm font-medium">{setting.label}</p>
+                <p className="text-gray-900 text-sm font-medium">{setting.label}</p>
                 <p className="text-gray-500 text-xs">{setting.desc}</p>
               </div>
               <ToggleSwitch
@@ -320,7 +320,7 @@ export default function Settings() {
                   onChange={e => updateSetting('dwellTimeDuration', parseInt(e.target.value, 10))}
                   className="flex-1 accent-blue-500"
                 />
-                <span className="text-white text-sm font-medium w-8 text-right">{settings.dwellTimeDuration}s</span>
+                <span className="text-gray-900 text-sm font-medium w-8 text-right">{settings.dwellTimeDuration}s</span>
               </div>
             </div>
           )}
@@ -330,11 +330,11 @@ export default function Settings() {
       <div className="flex gap-3">
         <button
           onClick={() => notify('Settings saved.', 'success')}
-          className="px-6 py-2.5 bg-blue-accent text-dark-900 font-semibold rounded-xl hover:bg-blue-accent/90 transition-colors"
+          className="px-6 py-2.5 bg-blue-accent text-white font-semibold rounded-xl hover:bg-blue-accent/90 transition-colors"
         >
           Save Changes
         </button>
-        <button className="px-6 py-2.5 bg-dark-700 text-gray-300 font-medium rounded-xl hover:bg-dark-600 transition-colors">
+        <button className="px-6 py-2.5 bg-dark-700 text-gray-700 font-medium rounded-xl hover:bg-dark-600 transition-colors">
           Cancel
         </button>
       </div>
