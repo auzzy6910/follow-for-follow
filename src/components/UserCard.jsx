@@ -20,15 +20,28 @@ export default function UserCard({ user }) {
   const NICHES = useNiches()
   const PLATFORMS = usePlatforms()
   const ALL_USERS = useUsers()
-  const { followUser, activeFollows } = useAppContext()
+  const {
+    followUser,
+    activeFollows,
+    pendingFollowBacks,
+    consumeFollowBack,
+  } = useAppContext()
   const { requireAuth } = useAuthGuard()
 
   const isFollowing = !!activeFollows[user.id]
   const niche = NICHES.find(n => n.id === user.niche)
   const platform = PLATFORMS.find(p => p.id === user.platform)
+  const owedFollowBack = pendingFollowBacks.find(fb => fb.user.id === user.id)
 
   const handleFollow = () => {
     requireAuth(() => followUser(user, ALL_USERS))
+  }
+
+  const handleFollowBack = () => {
+    requireAuth(() => {
+      followUser(user, ALL_USERS)
+      if (owedFollowBack) consumeFollowBack(owedFollowBack.id)
+    })
   }
 
   return (
@@ -97,7 +110,7 @@ export default function UserCard({ user }) {
         </div>
       )}
 
-      {/* Follow / Message buttons (Instagram-style) */}
+      {/* Follow / Follow back / Profile buttons (Instagram-style) */}
       <div className="mt-3 sm:mt-4 flex items-center gap-2 w-full">
         <button
           onClick={handleFollow}
@@ -117,6 +130,15 @@ export default function UserCard({ user }) {
             <span>Follow</span>
           )}
         </button>
+        {owedFollowBack && !isFollowing && (
+          <button
+            onClick={handleFollowBack}
+            className="flex-1 min-w-0 text-[12px] sm:text-sm font-bold py-1.5 sm:py-2 px-2 rounded-lg bg-gradient-to-r from-pink-500 to-amber-400 text-dark-900 hover:opacity-90 follow-back-pulse"
+            title="They followed you — follow back"
+          >
+            Follow back
+          </button>
+        )}
         <Link
           to={`/profile/${user.id}`}
           className="flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg bg-dark-600 text-white hover:bg-dark-500 transition-colors text-center"

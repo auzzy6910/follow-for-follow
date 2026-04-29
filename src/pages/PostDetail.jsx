@@ -159,9 +159,20 @@ export default function PostDetail() {
           )}
 
           {/* Title + description */}
-          <h1 className="text-white text-xl sm:text-2xl font-bold mt-5">
-            {post.title}
-          </h1>
+          <div className="flex items-center gap-2 mt-5 flex-wrap">
+            <h1 className="text-white text-xl sm:text-2xl font-bold">
+              {post.title}
+            </h1>
+            {post.paid ? (
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/40">
+                BUY
+              </span>
+            ) : (
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-accent/15 text-blue-accent border border-blue-accent/40">
+                F4F
+              </span>
+            )}
+          </div>
           <p className="text-gray-300 text-sm mt-2 leading-relaxed whitespace-pre-line">
             {post.description}
           </p>

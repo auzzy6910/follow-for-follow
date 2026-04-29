@@ -7,6 +7,7 @@ import {
   PENALTIES,
   INBOX_NOTIFICATIONS,
   F4F_POSTS,
+  PENDING_FOLLOW_BACKS,
 } from '../data/mockData'
 import { AppContext } from './useAppContext'
 
@@ -68,6 +69,15 @@ const initialState = {
   warmingPlan: null,
   cooldownTick: 0,
   f4fPosts: [...F4F_POSTS],
+  // Tracks which posted accounts the current user has followed, whether the
+  // follow met the poster's requirements ("counted") and whether the poster
+  // has reciprocated ("followedBack").
+  postFollows: {},
+  // Pending follow-backs the current user owes after someone followed them.
+  // Drives the animated "Follow back" button.
+  pendingFollowBacks: [...PENDING_FOLLOW_BACKS],
+  // In-site link viewer modal state.
+  linkViewerPostId: null,
 }
 
 function reducer(state, action) {
@@ -454,6 +464,81 @@ function reducer(state, action) {
         f4fPosts: state.f4fPosts.filter(p => p.id !== action.postId),
       }
 
+    case 'SET_POST_FOLLOW': {
+      const next = { ...state.postFollows }
+      if (action.followed) {
+        next[action.postId] = {
+          followed: true,
+          counted: !!action.counted,
+          followedBack: state.postFollows[action.postId]?.followedBack ?? false,
+          followedAt: Date.now(),
+          paid: !!action.paid,
+        }
+      } else {
+        delete next[action.postId]
+      }
+      const credited =
+        action.followed && action.counted && action.rewardCredits > 0
+      const debited =
+        !action.followed &&
+        state.postFollows[action.postId]?.counted &&
+        action.rewardCredits > 0
+      const creditDelta = credited
+        ? action.rewardCredits
+        : debited
+          ? -action.rewardCredits
+          : 0
+      const newHistory = creditDelta
+        ? [
+            {
+              id: generateId(),
+              type: creditDelta > 0 ? 'earned' : 'spent',
+              amount: Math.abs(creditDelta),
+              action: credited
+                ? `Followed @${action.username} (verified, +${creditDelta} cr)`
+                : `Unfollowed @${action.username} (credit reversed)`,
+              timestamp: 'Just now',
+            },
+            ...state.creditHistory,
+          ]
+        : state.creditHistory
+      return {
+        ...state,
+        postFollows: next,
+        userStats: {
+          ...state.userStats,
+          totalCredits: state.userStats.totalCredits + creditDelta,
+        },
+        creditHistory: newHistory,
+      }
+    }
+
+    case 'OPEN_LINK_VIEWER':
+      return { ...state, linkViewerPostId: action.postId }
+
+    case 'CLOSE_LINK_VIEWER':
+      return { ...state, linkViewerPostId: null }
+
+    case 'CONSUME_FOLLOW_BACK':
+      return {
+        ...state,
+        pendingFollowBacks: state.pendingFollowBacks.filter(
+          fb => fb.id !== action.id,
+        ),
+      }
+
+    case 'RECIPROCATE_POST_FOLLOW': {
+      const existing = state.postFollows[action.postId]
+      if (!existing) return state
+      return {
+        ...state,
+        postFollows: {
+          ...state.postFollows,
+          [action.postId]: { ...existing, followedBack: true },
+        },
+      }
+    }
+
     default:
       return state
   }
@@ -656,6 +741,56 @@ export function AppProvider({ children }) {
     [notify],
   )
 
+  const setPostFollow = useCallback(
+    (post, followed) => {
+      const userFollowers = state.userStats.followers ?? 0
+      const meetsRequirement =
+        !post.minFollowers || userFollowers >= post.minFollowers
+      const counted = followed && meetsRequirement
+      dispatch({
+        type: 'SET_POST_FOLLOW',
+        postId: post.id,
+        username: post.username || 'creator',
+        followed,
+        counted,
+        paid: !!post.paid,
+        rewardCredits: post.rewardCredits || 0,
+      })
+      if (followed) {
+        if (counted) {
+          notify(
+            `Follow verified — @${post.username}. +${post.rewardCredits || 0} cr awarded.`,
+            'success',
+          )
+        } else {
+          notify(
+            `You followed @${post.username} but didn't meet the ${post.minFollowers?.toLocaleString?.() || post.minFollowers}-follower requirement, so it doesn't count.`,
+            'warning',
+          )
+        }
+      } else {
+        notify(`Unfollowed @${post.username}.`, 'info')
+      }
+    },
+    [notify, state.userStats.followers],
+  )
+
+  const openLinkViewer = useCallback(postId => {
+    dispatch({ type: 'OPEN_LINK_VIEWER', postId })
+  }, [])
+
+  const closeLinkViewer = useCallback(() => {
+    dispatch({ type: 'CLOSE_LINK_VIEWER' })
+  }, [])
+
+  const consumeFollowBack = useCallback(id => {
+    dispatch({ type: 'CONSUME_FOLLOW_BACK', id })
+  }, [])
+
+  const reciprocatePostFollow = useCallback(postId => {
+    dispatch({ type: 'RECIPROCATE_POST_FOLLOW', postId })
+  }, [])
+
   const saveWarmingPlan = useCallback(
     plan => {
       dispatch({ type: 'SAVE_WARMING_PLAN', plan })
@@ -710,6 +845,11 @@ export function AppProvider({ children }) {
     saveWarmingPlan,
     createF4FPost,
     deleteF4FPost,
+    setPostFollow,
+    openLinkViewer,
+    closeLinkViewer,
+    consumeFollowBack,
+    reciprocatePostFollow,
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>

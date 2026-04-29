@@ -274,6 +274,8 @@ export const USER_STATS = {
   nextCooldownReset: null,
   accountAge: 45,
   unfollowRate: 3.2,
+  followers: 4280,
+  following: 612,
 };
 
 export const PENALTIES = [
@@ -467,7 +469,108 @@ function buildPostsFor(user, baseIndex) {
   });
 }
 
+const LINK_POST_SEEDS = [
+  {
+    creatorId: USERS[0].id,
+    platform: 'instagram',
+    username: 'CryptoKingNairobi',
+    profileUrl: 'https://instagram.com/CryptoKingNairobi',
+    title: '@CryptoKingNairobi',
+    description: 'Daily Web3 alpha and trading setups. F4F if you post in crypto.',
+    minFollowers: 500,
+    rewardCredits: 60,
+    paid: false,
+  },
+  {
+    creatorId: USERS[2].id,
+    platform: 'twitter',
+    username: 'DesignDailyHQ',
+    profileUrl: 'https://x.com/DesignDailyHQ',
+    title: '@DesignDailyHQ',
+    description: 'Curated UI/UX inspiration. Need 1k+ followers for follow-back.',
+    minFollowers: 1000,
+    rewardCredits: 75,
+    paid: false,
+  },
+  {
+    creatorId: USERS[4].id,
+    platform: 'tiktok',
+    username: 'MusicVibesOnly',
+    profileUrl: 'https://tiktok.com/@MusicVibesOnly',
+    title: '@MusicVibesOnly',
+    description: 'Bedroom-pop drops every Friday. F4F + duet my latest sound.',
+    minFollowers: 250,
+    rewardCredits: 50,
+    paid: false,
+  },
+  {
+    creatorId: USERS[6].id,
+    platform: 'youtube',
+    username: 'BizGrowthHack',
+    profileUrl: 'https://youtube.com/@BizGrowthHack',
+    title: '@BizGrowthHack',
+    description: 'Bought slot — instant guaranteed follow from 60K-strong audience.',
+    minFollowers: 0,
+    rewardCredits: 0,
+    paid: true,
+  },
+  {
+    creatorId: USERS[8].id,
+    platform: 'linkedin',
+    username: 'CodeCraft_Dev',
+    profileUrl: 'https://linkedin.com/in/CodeCraft_Dev',
+    title: '@CodeCraft_Dev',
+    description: 'Full-stack devs only. Will engage 3 of your most recent posts.',
+    minFollowers: 200,
+    rewardCredits: 45,
+    paid: false,
+  },
+  {
+    creatorId: USERS[3].id,
+    platform: 'threads',
+    username: 'GameStreamPro',
+    profileUrl: 'https://threads.net/@GameStreamPro',
+    title: '@GameStreamPro',
+    description: 'Esports + retro gaming. F4F welcomed — no minimum.',
+    minFollowers: 0,
+    rewardCredits: 30,
+    paid: false,
+  },
+]
+
+export const LINK_POSTS = LINK_POST_SEEDS.map((seed, i) => ({
+  ...seed,
+  id: `link-post-${i + 1}`,
+  type: 'link',
+  capacity: 100,
+  filledCount: Math.floor(Math.random() * 20),
+  createdAt: new Date(Date.now() - i * 1000 * 60 * 60 * 5).toISOString(),
+  status: 'active',
+  tags: [seed.platform, seed.paid ? 'buy' : 'f4f'],
+  niche: USERS.find(u => u.id === seed.creatorId)?.niche ?? 'tech',
+  engagementAsks: ['like'],
+  postsToEngage: 1,
+}))
+
+export const PENDING_FOLLOW_BACKS = [
+  {
+    id: 'fb-1',
+    user: USERS[1],
+    platform: USERS[1].platform,
+    profileUrl: `https://instagram.com/${USERS[1].username}`,
+    followedAt: Date.now() - 1000 * 60 * 30,
+  },
+  {
+    id: 'fb-2',
+    user: USERS[5],
+    platform: USERS[5].platform,
+    profileUrl: `https://x.com/${USERS[5].username}`,
+    followedAt: Date.now() - 1000 * 60 * 60 * 2,
+  },
+]
+
 export const F4F_POSTS = [
+  ...LINK_POSTS,
   ...buildPostsFor(FEATURED_USER, 0),
   ...USERS.flatMap((u, i) => buildPostsFor(u, i + 1)),
 ];
