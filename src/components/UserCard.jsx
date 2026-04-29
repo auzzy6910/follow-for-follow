@@ -130,11 +130,11 @@ export default function UserCard({ user }) {
             <span>Follow</span>
           )}
         </button>
-        {owedFollowBack && !isFollowing && (
+        {!isFollowing && (
           <button
             onClick={handleFollowBack}
             className="flex-1 min-w-0 text-[12px] sm:text-sm font-bold py-1.5 sm:py-2 px-2 rounded-lg bg-gradient-to-r from-pink-500 to-amber-400 text-white hover:opacity-90 follow-back-pulse"
-            title="They followed you — follow back"
+            title={owedFollowBack ? 'They followed you — follow back' : 'Follow back'}
           >
             Follow back
           </button>

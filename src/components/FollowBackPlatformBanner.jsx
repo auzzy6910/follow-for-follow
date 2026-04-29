@@ -21,7 +21,7 @@ export default function FollowBackPlatformBanner() {
           <UserPlus size={36} className="text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-bold text-xl sm:text-3xl leading-tight">Follow Back Banner</p>
+          <p className="font-bold text-xl sm:text-3xl leading-tight">Follow back</p>
           <p className="text-white/90 text-base sm:text-lg mt-1.5">
             @SarahStyle just followed you! Follow back to earn 50 cr.
           </p>
