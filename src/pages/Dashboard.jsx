@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Play, Gift } from 'lucide-react'
+import { Clock, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Play } from 'lucide-react'
 import {
   useUsers,
   useTribes,
@@ -78,34 +78,6 @@ function MobileVisibilityToggle({ visible, onToggle, label }) {
     >
       {visible ? <Eye size={18} /> : <EyeOff size={18} />}
     </button>
-  )
-}
-
-function StatCard({ icon: Icon, label, value, change, positive, to }) {
-  const inner = (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 card-hover h-full">
-      <div className="flex items-center justify-between mb-3">
-        <div className="w-10 h-10 rounded-xl bg-blue-accent/10 flex items-center justify-center">
-          <Icon size={20} className="text-blue-accent" />
-        </div>
-        <span className={`flex items-center gap-1 text-xs font-medium ${positive ? 'text-blue-400' : 'text-red-400'}`}>
-          {positive ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
-          {change}
-        </span>
-      </div>
-      <p className="text-xl sm:text-2xl font-bold text-gray-900">{value}</p>
-      <p className="text-gray-500 text-xs sm:text-sm mt-1">{label}</p>
-    </div>
-  )
-  if (!to) return inner
-  return (
-    <Link
-      to={to}
-      aria-label={`${label} — view more`}
-      className="block focus:outline-none focus:ring-2 focus:ring-blue-accent/50 rounded-2xl"
-    >
-      {inner}
-    </Link>
   )
 }
 
@@ -385,39 +357,6 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-5 sm:space-y-6 max-w-7xl mx-auto">
-      <div className="hidden md:grid md:grid-cols-4 gap-3 sm:gap-4">
-        <StatCard
-          icon={Gift}
-          label="Earn"
-          value={USER_STATS.dailyFollowsRemaining}
-          change="Find accounts"
-          positive
-          to="/explore"
-        />
-        <StatCard
-          icon={Users}
-          label="Followers Gained"
-          value={USER_STATS.totalFollowersGained.toLocaleString()}
-          change="+12.5%"
-          positive
-        />
-        <StatCard
-          icon={Coins}
-          label="Credits Balance"
-          value={USER_STATS.totalCredits.toLocaleString()}
-          change="+340"
-          positive
-          to="/credits"
-        />
-        <StatCard
-          icon={Flame}
-          label="Day Streak"
-          value={USER_STATS.streak}
-          change="+1"
-          positive
-        />
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="lg:col-span-2">
           <FeaturedHero />
