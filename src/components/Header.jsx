@@ -22,7 +22,12 @@ export default function Header({ onSidebarToggle }) {
         <Menu size={18} />
       </button>
 
-      <div className="flex items-center gap-3 shrink-0">
+      <div className="flex items-center gap-2 shrink-0">
+        <img
+          src="/logo.png"
+          alt="Follow for Follow logo"
+          className="w-8 h-8 rounded-full object-cover shrink-0"
+        />
         <span className="text-lg sm:text-xl font-black text-[#af101a] tracking-tight uppercase">Follow for Follow</span>
       </div>
 
@@ -71,7 +76,7 @@ export default function Header({ onSidebarToggle }) {
             onClick={() => void signOut()}
             aria-label="Sign out"
             title="Sign out"
-            className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
+            className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-lg bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
           >
             <LogOut size={16} />
             <span className="hidden sm:inline">Sign out</span>
@@ -80,19 +85,12 @@ export default function Header({ onSidebarToggle }) {
           <button
             type="button"
             onClick={openModal}
-            className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
+            className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-lg bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
           >
             <LogIn size={16} />
-            <span className="hidden sm:inline">Sign In</span>
+            <span>Sign In</span>
           </button>
         )}
-
-        <button
-          className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 shrink-0"
-          aria-label="Profile"
-        >
-          <img src="/logo.png" alt="Profile" className="w-full h-full object-cover" />
-        </button>
       </div>
     </header>
   )
