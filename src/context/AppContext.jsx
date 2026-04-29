@@ -12,6 +12,8 @@ import {
 import { AppContext } from './useAppContext'
 
 const WARMING_WIZARD_STORAGE_KEY = 'ff:warming-wizard-dismissed'
+const SETTINGS_STORAGE_KEY = 'ff:settings'
+const CONNECTED_SOCIALS_STORAGE_KEY = 'ff:connected-socials'
 
 const PLATFORM_URLS = {
   instagram: 'https://instagram.com/',
@@ -35,6 +37,42 @@ function readWarmingWizardDismissed() {
   }
 }
 
+function readJSON(key, fallback) {
+  if (typeof window === 'undefined') return fallback
+  try {
+    const raw = window.localStorage.getItem(key)
+    if (!raw) return fallback
+    const parsed = JSON.parse(raw)
+    return parsed ?? fallback
+  } catch {
+    return fallback
+  }
+}
+
+function writeJSON(key, value) {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value))
+  } catch {
+    // ignore storage errors
+  }
+}
+
+const DEFAULT_SETTINGS = {
+  dwellTimeEnabled: true,
+  dwellTimeDuration: 20,
+  notifications: true,
+  emailAlerts: false,
+  autoVerify: true,
+  darkMode: true,
+  proxyProtection: true,
+  privateProfile: false,
+  showLocation: true,
+  weeklyDigest: true,
+  engagementTrainOptIn: true,
+  dailyFollowGoal: 25,
+}
+
 const initialState = {
   userStats: { ...USER_STATS },
   creditHistory: [...CREDIT_HISTORY],
@@ -45,14 +83,10 @@ const initialState = {
   notifications: [],
   activeFollows: {},
   settings: {
-    dwellTimeEnabled: true,
-    dwellTimeDuration: 20,
-    notifications: true,
-    emailAlerts: false,
-    autoVerify: true,
-    darkMode: true,
-    proxyProtection: true,
+    ...DEFAULT_SETTINGS,
+    ...readJSON(SETTINGS_STORAGE_KEY, {}),
   },
+  connectedSocials: readJSON(CONNECTED_SOCIALS_STORAGE_KEY, []),
   escrowDrawerOpen: false,
   escrowDrawerTxId: null,
   walletModal: null,
@@ -190,6 +224,24 @@ function reducer(state, action) {
       return {
         ...state,
         settings: { ...state.settings, [action.key]: action.value },
+      }
+
+    case 'CONNECT_SOCIAL': {
+      const without = state.connectedSocials.filter(
+        s => s.platform !== action.social.platform,
+      )
+      return {
+        ...state,
+        connectedSocials: [...without, action.social],
+      }
+    }
+
+    case 'DISCONNECT_SOCIAL':
+      return {
+        ...state,
+        connectedSocials: state.connectedSocials.filter(
+          s => s.platform !== action.platform,
+        ),
       }
 
     case 'OPEN_ESCROW_DRAWER':
@@ -806,6 +858,15 @@ export function AppProvider({ children }) {
     },
     [notify],
   )
+
+  // Persist preference state to localStorage so it survives reloads.
+  useEffect(() => {
+    writeJSON(SETTINGS_STORAGE_KEY, state.settings)
+  }, [state.settings])
+
+  useEffect(() => {
+    writeJSON(CONNECTED_SOCIALS_STORAGE_KEY, state.connectedSocials)
+  }, [state.connectedSocials])
 
   // Cooldown ticker: keeps `cooldownTick` incrementing while cooldown is
   // active so dependent components re-render each second. Auto-clears the
