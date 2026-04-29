@@ -12,7 +12,7 @@ export default function Header({ onSidebarToggle }) {
   const unreadCount = inboxNotifications.filter(n => !n.read).length
 
   return (
-    <header className="bg-white border-b border-gray-200 flex items-center h-16 pl-4 sm:pl-6 pr-0 gap-4 shrink-0">
+    <header className="bg-white border-b border-gray-200 flex items-center h-20 pl-4 sm:pl-6 pr-0 gap-4 shrink-0">
       <button
         type="button"
         onClick={onSidebarToggle}
@@ -35,75 +35,73 @@ export default function Header({ onSidebarToggle }) {
         />
       </div>
 
-      <div className="ml-auto flex items-center gap-2 sm:gap-2.5 pr-2 sm:pr-3">
-        <div
-          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-[#af101a]/10 text-[#af101a] text-sm font-semibold shrink-0"
-          title="Credits"
-        >
-          <Wallet size={16} strokeWidth={2.5} />
-          <span className="tabular-nums">{userStats.totalCredits.toLocaleString()}</span>
+      <div className="ml-auto flex flex-col items-end gap-1.5 pr-2 sm:pr-3">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <div
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-[#af101a]/10 text-[#af101a] text-sm font-semibold shrink-0"
+            title="Credits"
+          >
+            <Wallet size={14} strokeWidth={2.5} />
+            <span className="tabular-nums">{userStats.totalCredits.toLocaleString()}</span>
+          </div>
+
+          <div className="relative shrink-0">
+            <button
+              type="button"
+              onClick={toggleNotificationCenter}
+              className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-[#af101a] transition-colors"
+              aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`}
+              aria-haspopup="dialog"
+            >
+              <Bell size={16} />
+              {unreadCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 min-w-4 h-4 px-1 rounded-full bg-[#af101a] text-white text-[10px] font-bold flex items-center justify-center">
+                  {unreadCount > 9 ? '9+' : unreadCount}
+                </span>
+              )}
+            </button>
+            <NotificationCenter />
+          </div>
+
+          {isAuthenticated ? (
+            <button
+              type="button"
+              onClick={() => void signOut()}
+              aria-label="Sign out"
+              title="Sign out"
+              className="inline-flex items-center gap-1.5 h-8 px-3 sm:px-4 rounded-full bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
+            >
+              <LogOut size={14} />
+              <span className="hidden sm:inline">Sign out</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={openModal}
+              className="inline-flex items-center gap-1.5 h-8 px-3 sm:px-4 rounded-full bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
+            >
+              <LogIn size={14} />
+              <span className="hidden sm:inline">Sign In</span>
+            </button>
+          )}
+
+          <button
+            type="button"
+            aria-label="Profile"
+            title="Profile"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-[#af101a] border border-gray-200 transition-colors shrink-0"
+          >
+            <User size={16} />
+          </button>
         </div>
 
         <div
-          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-orange-100 text-orange-600 text-sm font-semibold shrink-0"
+          className="inline-flex items-center gap-1.5 h-7 px-3 rounded-full bg-orange-100 text-orange-600 text-xs font-semibold shrink-0"
           title="Daily streak"
         >
-          <Flame size={16} strokeWidth={2.5} />
-          <span className="tabular-nums">
-            {userStats.streak}
-            <span className="hidden sm:inline"> days</span>
-            <span className="sm:hidden">d</span>
-          </span>
+          <Flame size={14} strokeWidth={2.5} />
+          <span className="tabular-nums">{userStats.streak} days</span>
         </div>
-
-        <div className="relative shrink-0">
-          <button
-            type="button"
-            onClick={toggleNotificationCenter}
-            className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-[#af101a] transition-colors"
-            aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`}
-            aria-haspopup="dialog"
-          >
-            <Bell size={18} />
-            {unreadCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 min-w-4 h-4 px-1 rounded-full bg-[#af101a] text-white text-[10px] font-bold flex items-center justify-center">
-                {unreadCount > 9 ? '9+' : unreadCount}
-              </span>
-            )}
-          </button>
-          <NotificationCenter />
-        </div>
-
-        {isAuthenticated ? (
-          <button
-            type="button"
-            onClick={() => void signOut()}
-            aria-label="Sign out"
-            title="Sign out"
-            className="inline-flex items-center gap-1.5 h-9 px-3 sm:px-4 rounded-full bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
-          >
-            <LogOut size={16} />
-            <span className="hidden sm:inline">Sign out</span>
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={openModal}
-            className="inline-flex items-center gap-1.5 h-9 px-3 sm:px-4 rounded-full bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
-          >
-            <LogIn size={16} />
-            <span className="hidden sm:inline">Sign In</span>
-          </button>
-        )}
-
-        <button
-          type="button"
-          aria-label="Profile"
-          title="Profile"
-          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-[#af101a] border border-gray-200 transition-colors shrink-0"
-        >
-          <User size={18} />
-        </button>
       </div>
     </header>
   )
