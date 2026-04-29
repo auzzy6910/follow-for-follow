@@ -68,7 +68,13 @@ export default function Profile() {
   const FEATURED = useFeaturedUser()
   const NICHES = useNiches()
   const PLATFORMS = usePlatforms()
-  const { followUser, activeFollows, f4fPosts } = useAppContext()
+  const {
+    followUser,
+    activeFollows,
+    f4fPosts,
+    pendingFollowBacks,
+    consumeFollowBack,
+  } = useAppContext()
   const { requireAuth } = useAuthGuard()
   const [activeTab, setActiveTab] = useState('f4f')
   const [createOpen, setCreateOpen] = useState(false)
@@ -110,8 +116,17 @@ export default function Profile() {
   const isFollowing = !!activeFollows[user.id]
   const isOwnProfile = FEATURED?.id === user.id
 
+  const owedFollowBack = pendingFollowBacks.find(fb => fb.user.id === user.id)
+
   const handleFollow = () => {
     requireAuth(() => followUser(user, ALL_USERS))
+  }
+
+  const handleFollowBack = () => {
+    requireAuth(() => {
+      followUser(user, ALL_USERS)
+      if (owedFollowBack) consumeFollowBack(owedFollowBack.id)
+    })
   }
 
   return (
@@ -166,26 +181,37 @@ export default function Profile() {
                   <Plus size={14} /> New F4F post
                 </button>
               ) : (
-                <button
-                  onClick={handleFollow}
-                  disabled={isFollowing}
-                  className={`text-sm font-semibold py-1.5 px-4 rounded-lg transition-colors flex items-center gap-1 ${
-                    isFollowing
-                      ? 'bg-dark-600 text-gray-700 hover:bg-dark-500'
-                      : 'bg-sky-500 text-gray-900 hover:bg-sky-400'
-                  }`}
-                >
-                  {isFollowing ? (
-                    <>
-                      <Loader size={14} className="animate-spin" />
-                      <span>Following</span>
-                    </>
-                  ) : (
-                    <span>Follow</span>
+                <>
+                  <button
+                    onClick={handleFollow}
+                    disabled={isFollowing}
+                    className={`flex-1 min-w-0 text-sm font-semibold py-1.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-1 ${
+                      isFollowing
+                        ? 'bg-dark-600 text-gray-700 hover:bg-dark-500'
+                        : 'bg-sky-500 text-gray-900 hover:bg-sky-400'
+                    }`}
+                  >
+                    {isFollowing ? (
+                      <>
+                        <Loader size={14} className="animate-spin" />
+                        <span>Following</span>
+                      </>
+                    ) : (
+                      <span>Follow</span>
+                    )}
+                  </button>
+                  {!isFollowing && (
+                    <button
+                      onClick={handleFollowBack}
+                      className="flex-1 min-w-0 text-sm font-bold py-1.5 px-4 rounded-lg bg-gradient-to-r from-pink-500 to-amber-400 text-white hover:opacity-90 follow-back-pulse"
+                      title={owedFollowBack ? 'They followed you — follow back' : 'Follow back'}
+                    >
+                      Follow back
+                    </button>
                   )}
-                </button>
+                </>
               )}
-              <button className="text-sm font-semibold py-1.5 px-4 rounded-lg bg-dark-600 text-gray-900 hover:bg-dark-500 transition-colors">
+              <button className="flex-1 min-w-0 text-sm font-semibold py-1.5 px-4 rounded-lg bg-dark-600 text-gray-900 hover:bg-dark-500 transition-colors">
                 Message
               </button>
             </div>

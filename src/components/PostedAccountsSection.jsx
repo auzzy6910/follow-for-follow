@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Plus, Bell, Sparkles } from 'lucide-react'
+import { Plus, Bell } from 'lucide-react'
 import { useAppContext } from '../context/useAppContext'
 import { platformLabel } from '../utils/platformDetect'
 import { useAuthGuard } from '../context/useAuthGuard'
@@ -12,16 +12,7 @@ export default function PostedAccountsSection() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4 gap-2">
-        <div className="min-w-0">
-          <h3 className="text-gray-900 font-semibold text-lg flex items-center gap-2">
-            <Sparkles size={16} className="text-blue-accent" /> Follow for Follow
-          </h3>
-          <p className="text-gray-500 text-xs mt-0.5">
-            Accounts posted by the community — open in-site, follow, and the
-            checkbox auto-ticks.
-          </p>
-        </div>
+      <div className="flex items-center justify-end mb-4 gap-2">
         <button
           type="button"
           onClick={() => requireAuth(() => setPostModalOpen(true))}
