@@ -23,7 +23,7 @@ export default function Header({ onSidebarToggle }) {
       </button>
 
       <div className="flex items-center gap-3 shrink-0">
-        <span className="text-xl font-extrabold text-[#af101a] tracking-tight">GrowthCore</span>
+        <span className="text-xl font-extrabold text-[#af101a] tracking-tight whitespace-nowrap">Follow for Follow</span>
       </div>
 
       <div className="hidden md:flex items-center bg-gray-100 rounded-lg px-3 py-1.5 w-72 shrink-0">

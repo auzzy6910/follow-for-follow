@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Sparkles, Play, Gift } from 'lucide-react'
+import { Users, Coins, Flame, ArrowUpRight, ArrowDownRight, Clock, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Play, Gift } from 'lucide-react'
 import {
   useUsers,
   useTribes,
@@ -7,12 +7,12 @@ import {
   useQuests,
   useSavedSearches,
   useDeleteSearch,
-  useRecommendations,
 } from '../hooks/useAppData'
 import { Link, useNavigate } from 'react-router-dom'
 import UserCard from '../components/UserCard'
 import OwnerFeaturedHero from '../components/OwnerFeaturedHero'
 import PostedAccountsSection from '../components/PostedAccountsSection'
+import FollowBackPlatformBanner from '../components/FollowBackPlatformBanner'
 import { useAppContext } from '../context/useAppContext'
 
 function formatCooldownRemaining(cooldownUntil) {
@@ -238,7 +238,6 @@ function ActiveQuests() {
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-gray-900 font-semibold">Daily Quests</h3>
         <div className="flex items-center gap-3">
-          <Link to="/gamification" className="text-blue-accent text-xs hover:underline">View All</Link>
           <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="daily quests" />
         </div>
       </div>
@@ -339,38 +338,6 @@ function SavedSearches() {
   )
 }
 
-function Recommendations() {
-  const recs = useRecommendations()
-  const [visible, setVisible] = useState(true)
-
-  if (recs.length === 0) return null
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <Sparkles size={18} className="text-blue-accent" />
-          <h3 className="text-gray-900 font-semibold text-lg">People Like You</h3>
-        </div>
-        <div className="flex items-center gap-3">
-          <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
-            Explore More <ChevronRight size={16} />
-          </Link>
-          <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="recommendations" />
-        </div>
-      </div>
-      <p className={`text-gray-400 text-sm mb-3 ${visible ? '' : 'hidden md:block'}`}>
-        {recs.length} users found
-      </p>
-      <div className={`grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 ${visible ? '' : 'hidden md:grid'}`}>
-        {recs.map(user => (
-          <UserCard key={user.id} user={user} />
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function UserCards() {
   const USERS = useUsers()
   return (
@@ -434,7 +401,6 @@ export default function Dashboard() {
           value={USER_STATS.totalFollowersGained.toLocaleString()}
           change="+12.5%"
           positive
-          to="/gamification"
         />
         <StatCard
           icon={Coins}
@@ -450,7 +416,6 @@ export default function Dashboard() {
           value={USER_STATS.streak}
           change="+1"
           positive
-          to="/gamification"
         />
       </div>
 
@@ -465,12 +430,11 @@ export default function Dashboard() {
 
       <PostedAccountsSection />
 
+      <FollowBackPlatformBanner />
+
       <SpotlightUsers />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        <div className="lg:col-span-2">
-          <Recommendations />
-        </div>
         <SavedSearches />
       </div>
 

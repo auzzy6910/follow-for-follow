@@ -6,11 +6,8 @@ import MobileNav from './components/MobileNav'
 import Dashboard from './pages/Dashboard'
 import Explore from './pages/Explore'
 import Credits from './pages/Credits'
-import GoldenHour from './pages/GoldenHour'
-import QualityScore from './pages/QualityScore'
 import Tribes from './pages/Tribes'
 import TribeDetail from './pages/TribeDetail'
-import Gamification from './pages/Gamification'
 import Safety from './pages/Safety'
 import Settings from './pages/Settings'
 import Wallet from './pages/Wallet'
@@ -45,11 +42,8 @@ function AppShell() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/credits" element={<Credits />} />
-            <Route path="/golden-hour" element={<GoldenHour />} />
-            <Route path="/quality" element={<QualityScore />} />
             <Route path="/tribes" element={<Tribes />} />
             <Route path="/tribes/:tribeId" element={<TribeDetail />} />
-            <Route path="/gamification" element={<Gamification />} />
             <Route path="/safety" element={<Safety />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/wallet" element={<Wallet />} />

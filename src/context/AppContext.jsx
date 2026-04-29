@@ -59,8 +59,6 @@ const initialState = {
   claimedQuests: {},
   claimedStreaks: {},
   tierUpCelebration: null,
-  qualityAudit: null,
-  commentTemplates: [],
   penalties: PENALTIES.map(p => ({ ...p })),
   inboxNotifications: INBOX_NOTIFICATIONS.map(n => ({ ...n })),
   notificationCenterOpen: false,
@@ -268,7 +266,6 @@ function reducer(state, action) {
             body: `+${action.reward} cr for "${action.questTitle}".`,
             createdAt: Date.now(),
             read: false,
-            link: '/gamification',
           },
           ...state.inboxNotifications,
         ].slice(0, 50),
@@ -312,37 +309,6 @@ function reducer(state, action) {
 
     case 'DISMISS_CELEBRATION':
       return { ...state, tierUpCelebration: null }
-
-    case 'RUN_QUALITY_AUDIT':
-      return {
-        ...state,
-        qualityAudit: {
-          running: true,
-          startedAt: Date.now(),
-          report: null,
-        },
-      }
-
-    case 'COMPLETE_QUALITY_AUDIT':
-      return {
-        ...state,
-        qualityAudit: {
-          running: false,
-          startedAt: state.qualityAudit?.startedAt ?? null,
-          report: action.report,
-        },
-      }
-
-    case 'SET_COMMENT_TEMPLATES':
-      return { ...state, commentTemplates: action.templates }
-
-    case 'UPDATE_COMMENT_TEMPLATE':
-      return {
-        ...state,
-        commentTemplates: state.commentTemplates.map(t =>
-          t.id === action.templateId ? { ...t, status: action.status } : t,
-        ),
-      }
 
     case 'START_COOLDOWN':
       return {
