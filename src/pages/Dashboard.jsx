@@ -359,7 +359,10 @@ function Recommendations() {
           <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="recommendations" />
         </div>
       </div>
-      <div className={`grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 ${visible ? '' : 'hidden md:grid'}`}>
+      <p className={`text-gray-400 text-sm mb-3 ${visible ? '' : 'hidden md:block'}`}>
+        {recs.length} users found
+      </p>
+      <div className={`grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 ${visible ? '' : 'hidden md:grid'}`}>
         {recs.map(user => (
           <UserCard key={user.id} user={user} />
         ))}
