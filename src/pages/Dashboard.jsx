@@ -238,7 +238,6 @@ function ActiveQuests() {
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-gray-900 font-semibold">Daily Quests</h3>
         <div className="flex items-center gap-3">
-          <Link to="/gamification" className="text-blue-accent text-xs hover:underline">View All</Link>
           <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="daily quests" />
         </div>
       </div>
@@ -434,7 +433,6 @@ export default function Dashboard() {
           value={USER_STATS.totalFollowersGained.toLocaleString()}
           change="+12.5%"
           positive
-          to="/gamification"
         />
         <StatCard
           icon={Coins}
@@ -450,7 +448,6 @@ export default function Dashboard() {
           value={USER_STATS.streak}
           change="+1"
           positive
-          to="/gamification"
         />
       </div>
 

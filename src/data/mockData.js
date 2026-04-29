@@ -346,7 +346,6 @@ export const INBOX_NOTIFICATIONS = [
     body: "You finished 'Follow 5 users in Tech tribe' — claim +50 cr.",
     createdAt: Date.now() - 1000 * 60 * 60 * 2,
     read: false,
-    link: '/gamification',
   },
   {
     id: 'n4',

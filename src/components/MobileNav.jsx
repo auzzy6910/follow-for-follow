@@ -3,7 +3,6 @@ import {
   LayoutDashboard,
   Compass,
   Coins,
-  Clock,
   Users,
 } from 'lucide-react'
 
@@ -11,7 +10,6 @@ const items = [
   { path: '/', label: 'Home', icon: LayoutDashboard },
   { path: '/explore', label: 'Explore', icon: Compass },
   { path: '/credits', label: 'Credits', icon: Coins },
-  { path: '/golden-hour', label: 'Boost', icon: Clock },
   { path: '/tribes', label: 'Tribes', icon: Users },
 ]
 

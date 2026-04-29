@@ -198,13 +198,6 @@ export default function Credits() {
             </button>
           </div>
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6 card-hover">
-            <h3 className="text-gray-900 font-semibold mb-2">Golden Hour Engagement</h3>
-            <p className="text-gray-400 text-sm mb-4">Participate in scheduled engagement trains. Earn credits for dwell time.</p>
-            <button className="w-full py-2.5 bg-cyan-400/10 text-cyan-400 font-semibold rounded-xl border border-cyan-400/30 hover:bg-cyan-400/20 transition-colors">
-              Join a Session
-            </button>
-          </div>
-          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6 card-hover">
             <h3 className="text-gray-900 font-semibold mb-2">Maintain Streaks</h3>
             <p className="text-gray-400 text-sm mb-4">7-day streak: +200 cr, 30-day streak: +1000 cr bonuses.</p>
             <div className="flex items-center gap-2">

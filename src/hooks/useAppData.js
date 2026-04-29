@@ -8,9 +8,7 @@ import {
   FEATURED_USER,
   TRIBES,
   QUESTS,
-  LEADERBOARD,
   ESCROW_TRANSACTIONS,
-  GOLDEN_HOUR_SESSIONS,
   CREDIT_HISTORY,
   USER_STATS,
 } from '../data/mockData'
@@ -30,12 +28,8 @@ export const useFeaturedUser = () =>
   useWithFallback(api.data.getFeaturedUser, FEATURED_USER)
 export const useTribes = () => useWithFallback(api.data.getTribes, TRIBES)
 export const useQuests = () => useWithFallback(api.data.getQuests, QUESTS)
-export const useLeaderboard = () =>
-  useWithFallback(api.data.getLeaderboard, LEADERBOARD)
 export const useEscrowTransactions = () =>
   useWithFallback(api.data.getEscrowTransactions, ESCROW_TRANSACTIONS)
-export const useGoldenHourSessions = () =>
-  useWithFallback(api.data.getGoldenHourSessions, GOLDEN_HOUR_SESSIONS)
 export const useCreditHistory = () =>
   useWithFallback(api.data.getCreditHistory, CREDIT_HISTORY)
 export const useUserStats = () =>
