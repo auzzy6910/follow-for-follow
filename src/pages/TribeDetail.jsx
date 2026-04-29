@@ -19,12 +19,12 @@ function MemberRow({ member, onFollow }) {
       <div className="flex items-center gap-2">
         <span className={`text-xs px-2 py-0.5 rounded-full ${
           member.tier === 'legend' ? 'bg-amber-400/10 text-amber-400' :
-          member.tier === 'influencer' ? 'bg-green-accent/10 text-green-accent' :
+          member.tier === 'influencer' ? 'bg-blue-accent/10 text-blue-accent' :
           'bg-dark-500 text-gray-400'
         }`}>{member.tier}</span>
         <button
           onClick={() => onFollow(member)}
-          className="text-xs bg-green-accent/10 text-green-accent px-3 py-1.5 rounded-lg hover:bg-green-accent/20 transition-colors flex items-center gap-1"
+          className="text-xs bg-blue-accent/10 text-blue-accent px-3 py-1.5 rounded-lg hover:bg-blue-accent/20 transition-colors flex items-center gap-1"
         >
           <UserPlus size={12} /> Follow
         </button>
@@ -70,7 +70,7 @@ function ChatMessage({ msg, isOwn }) {
       <div className={`max-w-[75%] ${isOwn ? 'items-end' : ''}`}>
         {!isOwn && <p className="text-gray-500 text-xs mb-0.5">{msg.displayName}</p>}
         <div className={`rounded-2xl px-3 py-2 text-sm ${
-          isOwn ? 'bg-green-accent/20 text-green-accent rounded-br-md' : 'bg-dark-600 text-gray-300 rounded-bl-md'
+          isOwn ? 'bg-blue-accent/20 text-blue-accent rounded-br-md' : 'bg-dark-600 text-gray-300 rounded-bl-md'
         }`}>
           {msg.text}
         </div>
@@ -150,7 +150,7 @@ export default function TribeDetail() {
     return (
       <div className="max-w-4xl mx-auto text-center py-20">
         <p className="text-gray-400">Tribe not found.</p>
-        <Link to="/tribes" className="text-green-accent text-sm mt-2 inline-block hover:underline">← Back to Tribes</Link>
+        <Link to="/tribes" className="text-blue-accent text-sm mt-2 inline-block hover:underline">← Back to Tribes</Link>
       </div>
     )
   }
@@ -199,7 +199,7 @@ export default function TribeDetail() {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h2 className="text-xl sm:text-2xl font-bold text-white">{tribe.name}</h2>
-              {joined && <span className="text-xs bg-green-accent/10 text-green-accent px-2 py-0.5 rounded-full">Joined</span>}
+              {joined && <span className="text-xs bg-blue-accent/10 text-blue-accent px-2 py-0.5 rounded-full">Joined</span>}
             </div>
             <p className="text-gray-400 text-sm mt-1">{tribe.description}</p>
             <div className="flex items-center gap-4 mt-2 flex-wrap">
@@ -207,13 +207,13 @@ export default function TribeDetail() {
                 <Users size={14} /> {tribe.members.toLocaleString()} members
               </span>
               <span className="text-gray-500 text-xs flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-green-accent animate-pulse" />
+                <div className="w-2 h-2 rounded-full bg-blue-accent animate-pulse" />
                 {tribe.activeNow} active now
               </span>
               <span className="text-amber-400 text-xs font-medium flex items-center gap-1">
                 <Star size={12} /> 2× credit bonus
               </span>
-              <span className="text-green-accent text-xs flex items-center gap-1">
+              <span className="text-blue-accent text-xs flex items-center gap-1">
                 <Sparkles size={12} /> +{tribe.weeklyGrowth}% this week
               </span>
             </div>
@@ -223,7 +223,7 @@ export default function TribeDetail() {
             className={`px-5 py-2.5 font-semibold rounded-xl transition-colors flex items-center gap-2 shrink-0 ${
               joined
                 ? 'bg-red-400/10 text-red-400 hover:bg-red-400/20'
-                : 'bg-green-accent text-dark-900 hover:bg-green-accent/90'
+                : 'bg-blue-accent text-dark-900 hover:bg-blue-accent/90'
             }`}
           >
             {joined ? <><UserMinus size={16} /> Leave</> : <><UserPlus size={16} /> Join Tribe</>}
@@ -249,7 +249,7 @@ export default function TribeDetail() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
-              activeTab === tab.id ? 'bg-green-accent/10 text-green-accent' : 'text-gray-400 hover:text-white'
+              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-white'
             }`}
           >
             {tab.label}
@@ -280,7 +280,7 @@ export default function TribeDetail() {
       {activeTab === 'chat' && (
         <div className="bg-dark-800 border border-dark-600 rounded-2xl flex flex-col" style={{ height: '460px' }}>
           <div className="flex items-center gap-2 px-4 py-3 border-b border-dark-600">
-            <MessageSquare size={16} className="text-green-accent" />
+            <MessageSquare size={16} className="text-blue-accent" />
             <span className="text-white text-sm font-medium">{tribe.name} Chat</span>
             <span className="text-gray-500 text-xs ml-auto">{tribe.activeNow} online</span>
           </div>
@@ -297,11 +297,11 @@ export default function TribeDetail() {
               onChange={e => setChatInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSendChat()}
               placeholder="Type a message..."
-              className="flex-1 bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/50"
+              className="flex-1 bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
             />
             <button
               onClick={handleSendChat}
-              className="bg-green-accent text-dark-900 p-2.5 rounded-xl hover:bg-green-accent/90 transition-colors"
+              className="bg-blue-accent text-dark-900 p-2.5 rounded-xl hover:bg-blue-accent/90 transition-colors"
             >
               <Send size={16} />
             </button>

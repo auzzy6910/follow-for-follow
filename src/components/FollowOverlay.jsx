@@ -19,11 +19,11 @@ export default function FollowOverlay() {
         return (
           <div
             key={follow.userId}
-            className="bg-dark-800 border border-green-accent/30 rounded-2xl p-4 shadow-xl"
+            className="bg-dark-800 border border-blue-accent/30 rounded-2xl p-4 shadow-xl"
           >
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <Clock size={16} className="text-green-accent" />
+                <Clock size={16} className="text-blue-accent" />
                 <span className="text-white text-sm font-medium">
                   Verifying @{follow.username}
                 </span>
@@ -61,7 +61,7 @@ export default function FollowOverlay() {
                   {remaining > 0 ? (
                     <span>{remaining}s remaining</span>
                   ) : (
-                    <span className="text-green-accent">Completing…</span>
+                    <span className="text-blue-accent">Completing…</span>
                   )}
                 </div>
               </>

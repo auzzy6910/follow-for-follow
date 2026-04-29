@@ -30,14 +30,14 @@ export default function MobileNav() {
             className={({ isActive }) =>
               `flex-1 basis-0 min-w-0 flex flex-col items-center justify-center gap-0.5 py-1.5 px-0.5 transition-colors ${
                 isActive
-                  ? 'text-green-accent'
+                  ? 'text-blue-accent'
                   : 'text-gray-400 hover:text-white'
               }`
             }
           >
             {({ isActive }) => (
               <>
-                <Icon size={18} className={isActive ? 'drop-shadow-[0_0_6px_var(--color-green-glow)]' : ''} />
+                <Icon size={18} className={isActive ? 'drop-shadow-[0_0_6px_var(--color-blue-glow)]' : ''} />
                 <span className="text-[9px] xs:text-[10px] font-medium leading-none truncate max-w-full">{label}</span>
               </>
             )}

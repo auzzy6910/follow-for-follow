@@ -77,3 +77,15 @@ export function useRecommendations() {
   const data = useQuery(api.data.getRecommendations)
   return data ?? USERS.slice(0, 6)
 }
+
+export function useOwnerProfile() {
+  // Returns:
+  //   undefined → loading
+  //   null      → unauthenticated (no signed-up user)
+  //   { userId, email, profile }
+  return useQuery(api.ownerProfile.getOwnerProfile)
+}
+
+export function useSetOwnerProfile() {
+  return useMutation(api.ownerProfile.setOwnerProfile)
+}

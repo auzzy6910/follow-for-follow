@@ -15,14 +15,14 @@ function TribeCard({ tribe }) {
           <p className="text-gray-500 text-xs">{tribe.members.toLocaleString()} members</p>
         </div>
         <div className="text-right">
-          <p className="text-green-accent text-sm font-semibold">+{tribe.weeklyGrowth}%</p>
+          <p className="text-blue-accent text-sm font-semibold">+{tribe.weeklyGrowth}%</p>
           <p className="text-gray-500 text-xs">this week</p>
         </div>
       </div>
       <p className="text-gray-400 text-sm mb-4">{tribe.description}</p>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-1">
-          <div className="w-2 h-2 rounded-full bg-green-accent animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-blue-accent animate-pulse" />
           <span className="text-gray-400 text-xs">{tribe.activeNow} active now</span>
         </div>
         <span className="text-amber-400 text-xs font-medium flex items-center gap-1">
@@ -39,7 +39,7 @@ function TribeCard({ tribe }) {
       </div>
       <Link
         to={`/tribes/${tribe.id}`}
-        className="block w-full py-2.5 bg-green-accent/10 text-green-accent font-semibold rounded-xl hover:bg-green-accent/20 transition-colors text-sm text-center"
+        className="block w-full py-2.5 bg-blue-accent/10 text-blue-accent font-semibold rounded-xl hover:bg-blue-accent/20 transition-colors text-sm text-center"
       >
         View Tribe
       </Link>
@@ -94,7 +94,7 @@ export default function Tribes() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-            <Users size={24} className="text-green-accent" /> Niche Tribes
+            <Users size={24} className="text-blue-accent" /> Niche Tribes
           </h2>
           <p className="text-gray-400 text-xs sm:text-sm mt-1">Join micro-communities for relevant, high-value followers</p>
         </div>
@@ -110,7 +110,7 @@ export default function Tribes() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
-              activeTab === tab.id ? 'bg-green-accent/10 text-green-accent' : 'text-gray-400 hover:text-white'
+              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-white'
             }`}
           >
             {tab.label}
@@ -120,7 +120,7 @@ export default function Tribes() {
 
       {activeTab === 'browse' && (
         <div className="space-y-6">
-          <div className="bg-dark-800 border border-green-accent/20 rounded-2xl p-4 sm:p-5">
+          <div className="bg-dark-800 border border-blue-accent/20 rounded-2xl p-4 sm:p-5">
             <div className="flex items-center gap-3 mb-2">
               <Star size={20} className="text-amber-400" />
               <h3 className="text-white font-semibold">Why Tribes?</h3>
@@ -142,7 +142,7 @@ export default function Tribes() {
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             {TRIBES.slice(0, 3).map(tribe => (
-              <div key={tribe.id} className="bg-dark-800 border border-green-accent/20 rounded-2xl p-4 sm:p-5">
+              <div key={tribe.id} className="bg-dark-800 border border-blue-accent/20 rounded-2xl p-4 sm:p-5">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ backgroundColor: `${tribe.color}15` }}>
                     {tribe.icon}
@@ -150,7 +150,7 @@ export default function Tribes() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <h3 className="text-white font-semibold">{tribe.name}</h3>
-                      <span className="text-xs text-green-accent bg-green-accent/10 px-2 py-0.5 rounded-full">Joined</span>
+                      <span className="text-xs text-blue-accent bg-blue-accent/10 px-2 py-0.5 rounded-full">Joined</span>
                     </div>
                     <p className="text-gray-500 text-xs">{tribe.members.toLocaleString()} members</p>
                   </div>
@@ -158,7 +158,7 @@ export default function Tribes() {
                 </div>
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   <div className="text-center bg-dark-700 rounded-lg p-2">
-                    <p className="text-green-accent font-bold text-lg">127</p>
+                    <p className="text-blue-accent font-bold text-lg">127</p>
                     <p className="text-gray-500 text-xs">Follows Given</p>
                   </div>
                   <div className="text-center bg-dark-700 rounded-lg p-2">

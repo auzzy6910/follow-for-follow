@@ -20,9 +20,9 @@ const STATUS_CONFIG = {
   },
   released: {
     icon: CheckCircle,
-    color: 'text-green-accent',
-    bg: 'bg-green-accent/10',
-    border: 'border-green-accent/30',
+    color: 'text-blue-accent',
+    bg: 'bg-blue-accent/10',
+    border: 'border-blue-accent/30',
     label: 'Released',
     desc: 'Follow verified for 30 days. Credits released.',
   },
@@ -182,7 +182,7 @@ export default function EscrowDrawer() {
               href={`https://instagram.com/${tx.user.username}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-2.5 bg-dark-700 border border-dark-500 text-gray-300 rounded-xl hover:border-green-accent/50 hover:text-white transition-colors text-sm"
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-dark-700 border border-dark-500 text-gray-300 rounded-xl hover:border-blue-accent/50 hover:text-white transition-colors text-sm"
             >
               <ExternalLink size={14} /> View Profile
             </a>
@@ -202,7 +202,7 @@ export default function EscrowDrawer() {
 function TimelineItem({ label, date, status }) {
   const dotColor =
     status === 'done'
-      ? 'bg-green-accent'
+      ? 'bg-blue-accent'
       : status === 'active'
         ? 'bg-amber-400 animate-pulse'
         : status === 'error'

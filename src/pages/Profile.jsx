@@ -161,7 +161,7 @@ export default function Profile() {
               {isOwnProfile ? (
                 <button
                   onClick={() => setCreateOpen(true)}
-                  className="text-sm font-semibold py-1.5 px-4 rounded-lg bg-green-accent text-dark-900 hover:bg-green-accent/90 transition-colors flex items-center gap-1.5"
+                  className="text-sm font-semibold py-1.5 px-4 rounded-lg bg-blue-accent text-dark-900 hover:bg-blue-accent/90 transition-colors flex items-center gap-1.5"
                 >
                   <Plus size={14} /> New F4F post
                 </button>
@@ -358,7 +358,7 @@ function F4FPostsTab({ posts, niches, platforms, isOwnProfile, onCreate }) {
         {isOwnProfile && (
           <button
             onClick={onCreate}
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg bg-green-accent text-dark-900 hover:bg-green-accent/90"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-lg bg-blue-accent text-dark-900 hover:bg-blue-accent/90"
           >
             <Plus size={14} /> Create your first F4F post
           </button>
@@ -390,7 +390,7 @@ function PostCard({ post, niche, platform }) {
   return (
     <Link
       to={`/posts/${post.id}`}
-      className="block bg-dark-800 border border-dark-600 rounded-2xl p-4 hover:border-green-accent/40 transition-colors"
+      className="block bg-dark-800 border border-dark-600 rounded-2xl p-4 hover:border-blue-accent/40 transition-colors"
     >
       <div className="flex items-center gap-2 mb-2">
         {niche && (
@@ -437,7 +437,7 @@ function PostCard({ post, niche, platform }) {
 
       <div className="mt-2 w-full bg-dark-700 rounded-full h-1">
         <div
-          className="bg-green-accent h-1 rounded-full"
+          className="bg-blue-accent h-1 rounded-full"
           style={{ width: `${filledPct}%` }}
         />
       </div>

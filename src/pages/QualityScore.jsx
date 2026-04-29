@@ -12,7 +12,7 @@ function ScoreGauge({ score, label, size = 'lg' }) {
   const radius = size === 'lg' ? 60 : 36
   const circumference = 2 * Math.PI * radius
   const offset = circumference - (score / 100) * circumference
-  const color = score >= 80 ? '#39ff14' : score >= 60 ? '#ffb800' : '#ff4444'
+  const color = score >= 80 ? '#1e90ff' : score >= 60 ? '#ffb800' : '#ff4444'
 
   return (
     <div className="flex flex-col items-center">
@@ -50,7 +50,7 @@ function ScoreGauge({ score, label, size = 'lg' }) {
 
 function AuditItem({ icon: Icon, label, status, detail }) {
   const statusColors = {
-    pass: 'text-green-accent bg-green-accent/10',
+    pass: 'text-blue-accent bg-blue-accent/10',
     warning: 'text-amber-400 bg-amber-400/10',
     fail: 'text-red-400 bg-red-400/10',
   }
@@ -127,7 +127,7 @@ export default function QualityScore() {
     <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div>
         <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <Sparkles size={24} className="text-green-accent" /> AI Quality Score
+          <Sparkles size={24} className="text-blue-accent" /> AI Quality Score
         </h2>
         <p className="text-gray-400 text-xs sm:text-sm mt-1">AI-powered profile auditing to ensure high-quality community members</p>
       </div>
@@ -135,14 +135,14 @@ export default function QualityScore() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center">
           <ScoreGauge score={USER_STATS.qualityScore} label="Overall Quality Score" />
-          <p className="text-green-accent text-sm font-medium mt-3">
+          <p className="text-blue-accent text-sm font-medium mt-3">
             {USER_STATS.qualityScore >= 80 ? 'Excellent' : USER_STATS.qualityScore >= 60 ? 'Good' : 'Needs Work'}
           </p>
           <p className="text-gray-400 text-xs text-center mt-1">Your profile meets all quality criteria</p>
           <button
             onClick={runAudit}
             disabled={isAuditing}
-            className="mt-4 flex items-center gap-2 bg-green-accent text-dark-900 font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-green-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-4 flex items-center gap-2 bg-blue-accent text-dark-900 font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-blue-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isAuditing ? (
               <>
@@ -170,10 +170,10 @@ export default function QualityScore() {
       </div>
 
       {auditReport && (
-        <div className="bg-dark-800 border border-green-accent/20 rounded-2xl p-4 sm:p-6">
+        <div className="bg-dark-800 border border-blue-accent/20 rounded-2xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-white font-semibold flex items-center gap-2">
-              <ShieldCheck size={18} className="text-green-accent" /> AI Audit Report
+              <ShieldCheck size={18} className="text-blue-accent" /> AI Audit Report
             </h3>
             <button
               onClick={() => setShowReport(!showReport)}
@@ -202,7 +202,7 @@ export default function QualityScore() {
                 <div className="space-y-2">
                   {auditReport.recommendations.map((rec, i) => (
                     <div key={i} className="flex items-start gap-2 text-gray-300 text-sm">
-                      <Check size={14} className="text-green-accent shrink-0 mt-0.5" />
+                      <Check size={14} className="text-blue-accent shrink-0 mt-0.5" />
                       {rec}
                     </div>
                   ))}
@@ -224,7 +224,7 @@ export default function QualityScore() {
 
       <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-          <ShieldCheck size={18} className="text-green-accent" /> Profile Audit Results
+          <ShieldCheck size={18} className="text-blue-accent" /> Profile Audit Results
         </h3>
         <div className="space-y-3">
           <AuditItem icon={Image} label="Profile Picture" status="pass" detail="High-quality, real photo detected" />
@@ -266,7 +266,7 @@ export default function QualityScore() {
           <div className="space-y-3">
             {commentTemplates.map(template => (
               <div key={template.id} className={`bg-dark-700 rounded-xl p-3 ${
-                template.status === 'accepted' ? 'border border-green-accent/20' :
+                template.status === 'accepted' ? 'border border-blue-accent/20' :
                 template.status === 'rejected' ? 'border border-red-400/20 opacity-60' :
                 ''
               }`}>
@@ -276,7 +276,7 @@ export default function QualityScore() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleTemplateAction(template.id, 'accepted')}
-                      className="flex items-center gap-1 text-xs bg-green-accent/10 text-green-accent px-2.5 py-1.5 rounded-lg hover:bg-green-accent/20 transition-colors"
+                      className="flex items-center gap-1 text-xs bg-blue-accent/10 text-blue-accent px-2.5 py-1.5 rounded-lg hover:bg-blue-accent/20 transition-colors"
                     >
                       <ThumbsUp size={12} /> Accept
                     </button>
@@ -289,7 +289,7 @@ export default function QualityScore() {
                   </div>
                 ) : (
                   <span className={`text-xs font-medium px-2 py-1 rounded-lg ${
-                    template.status === 'accepted' ? 'bg-green-accent/10 text-green-accent' : 'bg-red-400/10 text-red-400'
+                    template.status === 'accepted' ? 'bg-blue-accent/10 text-blue-accent' : 'bg-red-400/10 text-red-400'
                   }`}>
                     {template.status === 'accepted' ? 'Accepted' : 'Rejected'}
                   </span>

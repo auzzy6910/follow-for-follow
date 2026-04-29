@@ -101,7 +101,7 @@ export default function Explore() {
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-dark-700 border border-dark-500 rounded-xl text-gray-300 hover:text-white hover:border-green-accent/50 transition-colors shrink-0"
+          className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-dark-700 border border-dark-500 rounded-xl text-gray-300 hover:text-white hover:border-blue-accent/50 transition-colors shrink-0"
         >
           <Filter size={16} />
           <span className="text-sm hidden sm:inline">Filters</span>
@@ -118,7 +118,7 @@ export default function Explore() {
               placeholder="Search by username or display name..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-4 sm:pl-10 sm:pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/50"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-4 sm:pl-10 sm:pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
             />
           </div>
 
@@ -128,7 +128,7 @@ export default function Explore() {
               <select
                 value={selectedNiche}
                 onChange={e => setSelectedNiche(e.target.value)}
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-accent/50 appearance-none"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50 appearance-none"
               >
                 <option value="all">All Niches</option>
                 {NICHES.map(n => (
@@ -141,7 +141,7 @@ export default function Explore() {
               <select
                 value={selectedPlatform}
                 onChange={e => setSelectedPlatform(e.target.value)}
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-accent/50 appearance-none"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50 appearance-none"
               >
                 <option value="all">All Platforms</option>
                 {PLATFORMS.map(p => (
@@ -154,7 +154,7 @@ export default function Explore() {
               <select
                 value={selectedTier}
                 onChange={e => setSelectedTier(e.target.value)}
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-accent/50 appearance-none"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50 appearance-none"
               >
                 <option value="all">All Tiers</option>
                 <option value="rookie">Rookie</option>
@@ -169,7 +169,7 @@ export default function Explore() {
                 <select
                   value={selectedLocation}
                   onChange={e => setSelectedLocation(e.target.value)}
-                  className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-8 pr-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-accent/50 appearance-none"
+                  className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-8 pr-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50 appearance-none"
                 >
                   <option value="all">All Locations</option>
                   {LOCATIONS.map(loc => (
@@ -188,7 +188,7 @@ export default function Explore() {
             {hasActiveFilters && (
               <button
                 onClick={handleSaveSearch}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-green-accent border border-green-accent/30 rounded-lg hover:bg-green-accent/10 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-accent border border-blue-accent/30 rounded-lg hover:bg-blue-accent/10 transition-colors"
               >
                 <Bookmark size={14} />
                 {saveLabel || 'Save Search'}
@@ -208,7 +208,7 @@ export default function Explore() {
 
       {status === 'LoadingMore' && (
         <div className="flex justify-center py-6">
-          <Loader size={24} className="animate-spin text-green-accent" />
+          <Loader size={24} className="animate-spin text-blue-accent" />
         </div>
       )}
 
@@ -218,7 +218,7 @@ export default function Explore() {
         <div className="flex justify-center">
           <button
             onClick={handleLoadMore}
-            className="px-6 py-2.5 bg-dark-700 border border-dark-500 rounded-xl text-sm text-gray-300 hover:text-white hover:border-green-accent/50 transition-colors"
+            className="px-6 py-2.5 bg-dark-700 border border-dark-500 rounded-xl text-sm text-gray-300 hover:text-white hover:border-blue-accent/50 transition-colors"
           >
             Load More
           </button>

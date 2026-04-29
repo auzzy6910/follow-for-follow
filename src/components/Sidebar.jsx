@@ -55,7 +55,7 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
           />
           <div className="overflow-hidden">
             <h1 className="text-white font-bold text-lg leading-tight whitespace-nowrap">Follow</h1>
-            <p className="text-green-accent text-xs font-medium leading-tight whitespace-nowrap">for Follow</p>
+            <p className="text-blue-accent text-xs font-medium leading-tight whitespace-nowrap">for Follow</p>
           </div>
           {/* Mobile close button */}
           <button
@@ -85,7 +85,7 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
                   isActive
-                    ? 'bg-green-accent/10 text-green-accent'
+                    ? 'bg-blue-accent/10 text-blue-accent'
                     : 'text-gray-400 hover:text-white hover:bg-dark-600'
                 }`
               }
@@ -105,7 +105,7 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${
                   isActive
-                    ? 'bg-green-accent/10 text-green-accent'
+                    ? 'bg-blue-accent/10 text-blue-accent'
                     : 'text-gray-400 hover:text-white hover:bg-dark-600'
                 }`
               }
@@ -125,7 +125,7 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
           ) : (
             <button
               onClick={openModal}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-green-accent hover:bg-green-accent/10 transition-all duration-200 w-full"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-blue-accent hover:bg-blue-accent/10 transition-all duration-200 w-full"
             >
               <LogIn size={20} className="shrink-0" />
               <span className="text-sm font-medium">Sign in</span>

@@ -1,7 +1,7 @@
 import { mutation } from "./_generated/server";
 
 const NICHES = [
-  { slug: "tech", name: "Tech & Dev", icon: "💻", color: "#39ff14" },
+  { slug: "tech", name: "Tech & Dev", icon: "💻", color: "#1e90ff" },
   { slug: "crypto", name: "Crypto & Web3", icon: "🪙", color: "#f7931a" },
   { slug: "fitness", name: "Fitness", icon: "💪", color: "#ff4444" },
   { slug: "art", name: "Art & Design", icon: "🎨", color: "#9b59b6" },

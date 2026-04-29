@@ -5,8 +5,8 @@ import { useAppContext } from '../context/useAppContext'
 const VARIANTS = {
   success: {
     icon: CheckCircle,
-    bg: 'bg-green-accent/10 border-green-accent/30',
-    text: 'text-green-accent',
+    bg: 'bg-blue-accent/10 border-blue-accent/30',
+    text: 'text-blue-accent',
   },
   error: {
     icon: XCircle,

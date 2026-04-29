@@ -18,7 +18,7 @@ function LiveCounter({ base }) {
     return () => clearInterval(iv)
   }, [])
   return (
-    <span className="text-green-accent font-bold tabular-nums">{count}</span>
+    <span className="text-blue-accent font-bold tabular-nums">{count}</span>
   )
 }
 
@@ -45,7 +45,7 @@ function PostChecklist({ onComplete }) {
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-white font-semibold flex items-center gap-2">
-          <CheckCircle2 size={18} className="text-green-accent" /> Post-Completion Checklist
+          <CheckCircle2 size={18} className="text-blue-accent" /> Post-Completion Checklist
         </h3>
         <span className="text-xs text-gray-400">{completedCount}/{checks.length} done</span>
       </div>
@@ -61,22 +61,22 @@ function PostChecklist({ onComplete }) {
             key={check.id}
             onClick={() => toggle(check.id)}
             className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-colors ${
-              check.done ? 'bg-green-accent/5' : 'bg-dark-700 hover:bg-dark-600'
+              check.done ? 'bg-blue-accent/5' : 'bg-dark-700 hover:bg-dark-600'
             }`}
           >
             {check.done
-              ? <CheckCircle2 size={18} className="text-green-accent shrink-0" />
+              ? <CheckCircle2 size={18} className="text-blue-accent shrink-0" />
               : <Circle size={18} className="text-gray-500 shrink-0" />
             }
-            <span className={`text-sm ${check.done ? 'text-green-accent line-through' : 'text-gray-300'}`}>
+            <span className={`text-sm ${check.done ? 'text-blue-accent line-through' : 'text-gray-300'}`}>
               {check.label}
             </span>
           </button>
         ))}
       </div>
       {completedCount === checks.length && (
-        <div className="mt-4 p-3 bg-green-accent/10 rounded-xl text-center">
-          <p className="text-green-accent text-sm font-semibold">All tasks complete! +100 bonus credits earned 🎉</p>
+        <div className="mt-4 p-3 bg-blue-accent/10 rounded-xl text-center">
+          <p className="text-blue-accent text-sm font-semibold">All tasks complete! +100 bonus credits earned 🎉</p>
         </div>
       )}
     </div>
@@ -110,7 +110,7 @@ function ScheduleForm({ platforms, onSchedule }) {
           <select
             value={platform}
             onChange={e => setPlatform(e.target.value)}
-            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-accent/50 appearance-none"
+            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50 appearance-none"
           >
             {platforms.map(p => (
               <option key={p.id} value={p.id}>{p.icon} {p.name}</option>
@@ -126,7 +126,7 @@ function ScheduleForm({ platforms, onSchedule }) {
               value={postUrl}
               onChange={e => setPostUrl(e.target.value)}
               placeholder="https://instagram.com/p/..."
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-8 pr-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/50"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-8 pr-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
             />
           </div>
         </div>
@@ -137,7 +137,7 @@ function ScheduleForm({ platforms, onSchedule }) {
               type="date"
               value={dateTime.split('T')[0] || ''}
               onChange={e => setDateTime(e.target.value + 'T' + (dateTime.split('T')[1] || '12:00'))}
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-accent/50"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50"
             />
           </div>
           <div>
@@ -146,13 +146,13 @@ function ScheduleForm({ platforms, onSchedule }) {
               type="time"
               value={dateTime.split('T')[1] || ''}
               onChange={e => setDateTime((dateTime.split('T')[0] || '') + 'T' + e.target.value)}
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-green-accent/50"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50"
             />
           </div>
         </div>
         <div>
           <label className="text-gray-400 text-xs font-medium mb-1.5 block">
-            Credits to Spend: <span className="text-green-accent font-semibold">{credits} cr</span>
+            Credits to Spend: <span className="text-blue-accent font-semibold">{credits} cr</span>
             <span className="text-gray-500 ml-1">(≈ {Math.floor(credits / 10)} participants)</span>
           </label>
           <input
@@ -162,7 +162,7 @@ function ScheduleForm({ platforms, onSchedule }) {
             step="10"
             value={credits}
             onChange={e => setCredits(Number(e.target.value))}
-            className="w-full accent-green-500"
+            className="w-full accent-blue-500"
           />
           <div className="flex justify-between text-gray-500 text-xs mt-1">
             <span>50 cr (5 users)</span>
@@ -172,7 +172,7 @@ function ScheduleForm({ platforms, onSchedule }) {
         <button
           onClick={handleSubmit}
           disabled={!postUrl || !dateTime}
-          className="w-full py-3 bg-green-accent text-dark-900 font-semibold rounded-xl hover:bg-green-accent/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full py-3 bg-blue-accent text-dark-900 font-semibold rounded-xl hover:bg-blue-accent/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           <Calendar size={16} /> Schedule Post
         </button>
@@ -194,12 +194,12 @@ function EngagementTrain({ session, platform, onJoin }) {
 
   return (
     <div className={`bg-dark-800 border rounded-2xl p-4 sm:p-5 ${
-      isLive ? 'border-amber-400/40' : isUpcoming ? 'border-green-accent/30' : 'border-dark-600'
+      isLive ? 'border-amber-400/40' : isUpcoming ? 'border-blue-accent/30' : 'border-dark-600'
     }`}>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
           <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 ${
-            isLive ? 'bg-amber-400/10' : isUpcoming ? 'bg-green-accent/10' : 'bg-dark-600'
+            isLive ? 'bg-amber-400/10' : isUpcoming ? 'bg-blue-accent/10' : 'bg-dark-600'
           }`}>
             {platform?.icon}
           </div>
@@ -212,7 +212,7 @@ function EngagementTrain({ session, platform, onJoin }) {
                 </span>
               )}
               {isUpcoming && (
-                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-green-accent/10 text-green-accent">
+                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-blue-accent/10 text-blue-accent">
                   upcoming
                 </span>
               )}
@@ -248,14 +248,14 @@ function EngagementTrain({ session, platform, onJoin }) {
             className={`w-full sm:w-auto px-5 py-2.5 font-semibold rounded-xl transition-colors flex items-center justify-center gap-2 shrink-0 ${
               isLive
                 ? 'bg-amber-400 text-dark-900 hover:bg-amber-400/90'
-                : 'bg-green-accent text-dark-900 hover:bg-green-accent/90'
+                : 'bg-blue-accent text-dark-900 hover:bg-blue-accent/90'
             }`}
           >
             <Play size={16} /> {isLive ? 'Join Now' : 'Join Train'}
           </button>
         )}
         {joined && (
-          <span className="text-green-accent text-sm font-medium flex items-center gap-1">
+          <span className="text-blue-accent text-sm font-medium flex items-center gap-1">
             <CheckCircle2 size={16} /> Joined
           </span>
         )}
@@ -328,8 +328,8 @@ export default function GoldenHour() {
         </div>
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-green-accent/10 flex items-center justify-center shrink-0">
-              <Users size={20} className="text-green-accent" />
+            <div className="w-10 h-10 rounded-xl bg-blue-accent/10 flex items-center justify-center shrink-0">
+              <Users size={20} className="text-blue-accent" />
             </div>
             <div className="min-w-0">
               <p className="text-lg sm:text-xl font-bold text-white">
@@ -363,7 +363,7 @@ export default function GoldenHour() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
-              activeTab === tab.id ? 'bg-green-accent/10 text-green-accent' : 'text-gray-400 hover:text-white'
+              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-white'
             }`}
           >
             {tab.label}
@@ -405,8 +405,8 @@ export default function GoldenHour() {
                 const plat = PLATFORMS.find(p => p.id === s.platform)
                 const t = new Date(s.scheduledTime)
                 return (
-                  <div key={s.id} className="bg-dark-800 border border-green-accent/20 rounded-2xl p-4 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-green-accent/10 flex items-center justify-center text-xl shrink-0">
+                  <div key={s.id} className="bg-dark-800 border border-blue-accent/20 rounded-2xl p-4 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-blue-accent/10 flex items-center justify-center text-xl shrink-0">
                       {plat?.icon}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -417,7 +417,7 @@ export default function GoldenHour() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-green-accent text-xs font-medium">{s.credits} cr</p>
+                      <p className="text-blue-accent text-xs font-medium">{s.credits} cr</p>
                       <p className="text-gray-500 text-xs">≈{Math.floor(s.credits / 10)} users</p>
                     </div>
                   </div>
@@ -456,8 +456,8 @@ export default function GoldenHour() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-green-accent text-sm font-bold">+30 cr</p>
-                    <button className="mt-2 text-xs bg-green-accent/10 text-green-accent px-3 py-1.5 rounded-lg hover:bg-green-accent/20 transition-colors flex items-center gap-1">
+                    <p className="text-blue-accent text-sm font-bold">+30 cr</p>
+                    <button className="mt-2 text-xs bg-blue-accent/10 text-blue-accent px-3 py-1.5 rounded-lg hover:bg-blue-accent/20 transition-colors flex items-center gap-1">
                       <Eye size={12} /> View & Engage
                     </button>
                   </div>

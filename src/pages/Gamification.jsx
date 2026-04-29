@@ -7,7 +7,7 @@ import { LEADERBOARD_DAILY, LEADERBOARD_ALLTIME, FEATURED_USER } from '../data/m
 function TierBadge({ tier }) {
   const tierConfig = {
     rookie: { color: 'text-gray-400 border-gray-500 bg-gray-500/10', label: 'Rookie', limit: '10/day', icon: Star },
-    influencer: { color: 'text-green-accent border-green-accent bg-green-accent/10', label: 'Influencer', limit: '50/day', icon: Crown },
+    influencer: { color: 'text-blue-accent border-blue-accent bg-blue-accent/10', label: 'Influencer', limit: '50/day', icon: Crown },
     legend: { color: 'text-amber-400 border-amber-400 bg-amber-400/10', label: 'Legend', limit: '5x Priority', icon: Trophy },
   }
   const config = tierConfig[tier]
@@ -25,7 +25,7 @@ function TierUpModal({ celebration, onDismiss }) {
   if (!celebration) return null
 
   const tierLabels = { rookie: 'Rookie', influencer: 'Influencer', legend: 'Legend' }
-  const tierColors = { rookie: 'text-gray-400', influencer: 'text-green-accent', legend: 'text-amber-400' }
+  const tierColors = { rookie: 'text-gray-400', influencer: 'text-blue-accent', legend: 'text-amber-400' }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
@@ -61,7 +61,7 @@ function TierUpModal({ celebration, onDismiss }) {
         </p>
         <button
           onClick={onDismiss}
-          className="w-full bg-green-accent text-dark-900 font-semibold py-3 rounded-xl hover:bg-green-accent/90 transition-colors"
+          className="w-full bg-blue-accent text-dark-900 font-semibold py-3 rounded-xl hover:bg-blue-accent/90 transition-colors"
         >
           Awesome!
         </button>
@@ -125,7 +125,7 @@ export default function Gamification() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-2 mb-2">
-            <Crown size={18} className="text-green-accent" />
+            <Crown size={18} className="text-blue-accent" />
             <span className="text-gray-400 text-xs sm:text-sm">Current Tier</span>
           </div>
           <TierBadge tier={USER_STATS.tier} />
@@ -164,7 +164,7 @@ export default function Gamification() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
-              activeTab === tab.id ? 'bg-green-accent/10 text-green-accent' : 'text-gray-400 hover:text-white'
+              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-white'
             }`}
           >
             {tab.label}
@@ -189,7 +189,7 @@ export default function Gamification() {
                   onClick={() => setLeaderboardRange(range.id)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                     leaderboardRange === range.id
-                      ? 'bg-green-accent/10 text-green-accent'
+                      ? 'bg-blue-accent/10 text-blue-accent'
                       : 'text-gray-400 hover:text-white'
                   }`}
                 >
@@ -214,7 +214,7 @@ export default function Gamification() {
                 </div>
                 <div className="hidden md:block"><TierBadge tier={user.tier} /></div>
                 <div className="text-right min-w-[64px] sm:min-w-[80px]">
-                  <p className="text-green-accent text-xs sm:text-sm font-bold">+{user.weeklyFollowers.toLocaleString()}</p>
+                  <p className="text-blue-accent text-xs sm:text-sm font-bold">+{user.weeklyFollowers.toLocaleString()}</p>
                   <p className="text-gray-500 text-[10px] sm:text-xs">followers</p>
                 </div>
                 <div className="hidden sm:block text-right min-w-[60px]">
@@ -224,19 +224,19 @@ export default function Gamification() {
               </div>
             ))}
 
-            <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-4 bg-green-accent/5 border-t-2 border-green-accent/20">
-              <span className="w-8 text-center font-bold text-green-accent">#{currentUserRank}</span>
-              <img src={currentUserEntry.avatar} alt="" className="w-10 h-10 rounded-full object-cover ring-2 ring-green-accent/40" />
+            <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-4 bg-blue-accent/5 border-t-2 border-blue-accent/20">
+              <span className="w-8 text-center font-bold text-blue-accent">#{currentUserRank}</span>
+              <img src={currentUserEntry.avatar} alt="" className="w-10 h-10 rounded-full object-cover ring-2 ring-blue-accent/40" />
               <div className="flex-1 min-w-0">
                 <p className="text-white text-sm font-medium truncate flex items-center gap-1.5">
                   {currentUserEntry.displayName}
-                  <span className="text-[10px] bg-green-accent/10 text-green-accent px-1.5 py-0.5 rounded-full font-medium">You</span>
+                  <span className="text-[10px] bg-blue-accent/10 text-blue-accent px-1.5 py-0.5 rounded-full font-medium">You</span>
                 </p>
                 <p className="text-gray-500 text-xs">@{currentUserEntry.username}</p>
               </div>
               <div className="hidden md:block"><TierBadge tier={currentUserEntry.tier} /></div>
               <div className="text-right min-w-[64px] sm:min-w-[80px]">
-                <p className="text-green-accent text-xs sm:text-sm font-bold">+{currentUserEntry.weeklyFollowers.toLocaleString()}</p>
+                <p className="text-blue-accent text-xs sm:text-sm font-bold">+{currentUserEntry.weeklyFollowers.toLocaleString()}</p>
                 <p className="text-gray-500 text-[10px] sm:text-xs">followers</p>
               </div>
               <div className="hidden sm:block text-right min-w-[60px]">
@@ -256,7 +256,7 @@ export default function Gamification() {
               const isClaimed = claimedQuests[quest.id]
               return (
                 <div key={quest.id} className={`bg-dark-800 border rounded-2xl p-4 sm:p-5 ${
-                  isClaimed ? 'border-green-accent/30 opacity-75' : isComplete ? 'border-green-accent/30' : 'border-dark-600'
+                  isClaimed ? 'border-blue-accent/30 opacity-75' : isComplete ? 'border-blue-accent/30' : 'border-dark-600'
                 }`}>
                   <div className="flex items-center justify-between mb-3">
                     <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${
@@ -280,18 +280,18 @@ export default function Gamification() {
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500 text-xs">{quest.progress}/{quest.total} completed</span>
                     {isClaimed ? (
-                      <span className="text-xs text-green-accent font-medium bg-green-accent/10 px-3 py-1.5 rounded-lg">
+                      <span className="text-xs text-blue-accent font-medium bg-blue-accent/10 px-3 py-1.5 rounded-lg">
                         Claimed
                       </span>
                     ) : isComplete ? (
                       <button
                         onClick={() => handleClaimQuest(quest)}
-                        className="text-xs bg-green-accent text-dark-900 font-semibold px-3 py-1.5 rounded-lg hover:bg-green-accent/90 transition-colors cursor-pointer"
+                        className="text-xs bg-blue-accent text-dark-900 font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-accent/90 transition-colors cursor-pointer"
                       >
                         Claim Reward
                       </button>
                     ) : (
-                      <button className="text-xs bg-green-accent/10 text-green-accent font-medium px-3 py-1.5 rounded-lg hover:bg-green-accent/20 transition-colors">
+                      <button className="text-xs bg-blue-accent/10 text-blue-accent font-medium px-3 py-1.5 rounded-lg hover:bg-blue-accent/20 transition-colors">
                         Continue
                       </button>
                     )}
@@ -307,7 +307,7 @@ export default function Gamification() {
         <div className="space-y-4">
           {[
             { tier: 'rookie', name: 'Rookie', color: 'gray-400', limit: '10 follows/day', desc: 'New members start here. Build trust and earn credits.', perks: ['10 follows per day', 'Standard credit earning', 'Access to all tribes'] },
-            { tier: 'influencer', name: 'Influencer', color: 'green-accent', limit: '50 follows/day', desc: 'High trust members with proven engagement history.', perks: ['50 follows per day', '1.5x credit earning', 'Priority in tribe feeds', 'Collaboration matching'] },
+            { tier: 'influencer', name: 'Influencer', color: 'blue-accent', limit: '50 follows/day', desc: 'High trust members with proven engagement history.', perks: ['50 follows per day', '1.5x credit earning', 'Priority in tribe feeds', 'Collaboration matching'] },
             { tier: 'legend', name: 'Legend', color: 'amber-400', limit: 'Unlimited + Priority', desc: 'Elite members with legendary engagement and trust.', perks: ['Unlimited follows', '2x credit earning', '5x Priority pools', 'Golden Hour priority', 'VIP support', 'Custom tribe creation'] },
           ].map(t => (
             <div key={t.tier} className={`bg-dark-800 border rounded-2xl p-4 sm:p-6 ${
@@ -316,7 +316,7 @@ export default function Gamification() {
               <div className="flex items-center gap-4 mb-4">
                 <TierBadge tier={t.tier} />
                 {t.tier === USER_STATS.tier && (
-                  <span className="text-green-accent text-xs font-medium bg-green-accent/10 px-2 py-0.5 rounded-full">Current</span>
+                  <span className="text-blue-accent text-xs font-medium bg-blue-accent/10 px-2 py-0.5 rounded-full">Current</span>
                 )}
               </div>
               <h3 className="text-white font-semibold text-lg mb-1">{t.name}</h3>
@@ -356,7 +356,7 @@ export default function Gamification() {
                 onClick={() => {
                   notify('Daily streak maintained! Keep it up!', 'success')
                 }}
-                className="bg-green-accent text-dark-900 font-semibold text-sm px-4 py-2 rounded-lg hover:bg-green-accent/90 transition-colors shrink-0"
+                className="bg-blue-accent text-dark-900 font-semibold text-sm px-4 py-2 rounded-lg hover:bg-blue-accent/90 transition-colors shrink-0"
               >
                 Claim Today
               </button>
@@ -366,7 +366,7 @@ export default function Gamification() {
               {Array.from({ length: 30 }, (_, i) => (
                 <div key={i} className={`h-8 rounded-lg flex items-center justify-center text-xs font-medium ${
                   i < USER_STATS.streak
-                    ? 'bg-green-accent/20 text-green-accent'
+                    ? 'bg-blue-accent/20 text-blue-accent'
                     : i === USER_STATS.streak
                     ? 'bg-amber-400/20 text-amber-400 border border-amber-400/30'
                     : 'bg-dark-600 text-gray-600'
@@ -386,19 +386,19 @@ export default function Gamification() {
               const isClaimable = !isClaimed && milestone.status === 'claimable'
               return (
                 <div key={milestone.days} className={`bg-dark-800 border rounded-2xl p-4 sm:p-5 ${
-                  isClaimed ? 'border-green-accent/30' : 'border-dark-600'
+                  isClaimed ? 'border-blue-accent/30' : 'border-dark-600'
                 }`}>
                   <div className="text-center">
                     <p className="text-3xl font-bold text-white mb-1">{milestone.days}</p>
                     <p className="text-gray-400 text-sm mb-3">day streak</p>
                     <p className="text-amber-400 font-bold text-lg mb-3">+{milestone.reward} cr</p>
                     {isClaimed && (
-                      <span className="text-green-accent text-sm font-medium bg-green-accent/10 px-3 py-1.5 rounded-lg">Claimed</span>
+                      <span className="text-blue-accent text-sm font-medium bg-blue-accent/10 px-3 py-1.5 rounded-lg">Claimed</span>
                     )}
                     {isClaimable && (
                       <button
                         onClick={() => handleClaimStreak(milestone)}
-                        className="text-sm bg-green-accent text-dark-900 font-semibold px-4 py-2 rounded-lg hover:bg-green-accent/90 transition-colors cursor-pointer"
+                        className="text-sm bg-blue-accent text-dark-900 font-semibold px-4 py-2 rounded-lg hover:bg-blue-accent/90 transition-colors cursor-pointer"
                       >
                         Claim Now
                       </button>

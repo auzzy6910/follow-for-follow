@@ -34,7 +34,7 @@ const SEVERITY_META = {
 const STATUS_META = {
   active: { label: 'Active', color: 'text-amber-400 bg-amber-400/10' },
   appealed: { label: 'Under review', color: 'text-cyan-400 bg-cyan-400/10' },
-  overturned: { label: 'Overturned', color: 'text-green-accent bg-green-accent/10' },
+  overturned: { label: 'Overturned', color: 'text-blue-accent bg-blue-accent/10' },
   expired: { label: 'Expired', color: 'text-gray-400 bg-dark-600' },
 }
 
@@ -67,7 +67,7 @@ function AppealModal({ penalty, onClose }) {
       <div className="bg-dark-800 border border-dark-500 rounded-2xl w-full max-w-md overflow-hidden">
         <div className="flex items-center justify-between px-5 py-4 border-b border-dark-600">
           <div className="flex items-center gap-2">
-            <Scale size={18} className="text-green-accent" />
+            <Scale size={18} className="text-blue-accent" />
             <h3 id="appeal-title" className="text-white font-semibold">
               Appeal this penalty
             </h3>
@@ -93,7 +93,7 @@ function AppealModal({ penalty, onClose }) {
               onChange={e => setText(e.target.value)}
               rows={4}
               placeholder="Explain what happened. Reviewers usually respond within 24h."
-              className="mt-1 w-full bg-dark-700 border border-dark-500 rounded-lg p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-green-accent/50"
+              className="mt-1 w-full bg-dark-700 border border-dark-500 rounded-lg p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
             />
           </label>
           <p className="text-gray-500 text-xs">
@@ -112,7 +112,7 @@ function AppealModal({ penalty, onClose }) {
             type="button"
             onClick={handleSubmit}
             disabled={disabled}
-            className="px-4 py-2 rounded-lg text-sm font-semibold text-dark-900 bg-green-accent hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-lg text-sm font-semibold text-dark-900 bg-blue-accent hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Submit appeal
           </button>
@@ -156,7 +156,7 @@ export default function PenaltiesInbox() {
 
       {penalties.length === 0 ? (
         <div className="bg-dark-700 rounded-xl p-6 flex items-center gap-3">
-          <CheckCircle size={20} className="text-green-accent" />
+          <CheckCircle size={20} className="text-blue-accent" />
           <p className="text-gray-300 text-sm">
             No warnings or penalties on your account. Keep it up!
           </p>
@@ -199,7 +199,7 @@ export default function PenaltiesInbox() {
                       <button
                         type="button"
                         onClick={() => setExpandedId(expanded ? null : p.id)}
-                        className="text-green-accent hover:underline"
+                        className="text-blue-accent hover:underline"
                       >
                         {expanded ? 'Hide details' : 'View details'}
                       </button>
@@ -222,7 +222,7 @@ export default function PenaltiesInbox() {
                     <button
                       type="button"
                       onClick={() => setAppealTarget(p)}
-                      className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-dark-900 bg-green-accent hover:brightness-110"
+                      className="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-dark-900 bg-blue-accent hover:brightness-110"
                     >
                       <Scale size={12} /> Appeal
                     </button>
