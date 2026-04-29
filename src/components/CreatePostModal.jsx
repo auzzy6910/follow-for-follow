@@ -78,11 +78,11 @@ export default function CreatePostModal({ open, onClose, defaults }) {
         <div className="flex items-center justify-between px-5 py-4 border-b border-dark-600 sticky top-0 bg-dark-800 z-10">
           <div className="flex items-center gap-2">
             <Sparkles size={18} className="text-blue-accent" />
-            <h2 className="text-white text-base font-semibold">New F4F post</h2>
+            <h2 className="text-gray-900 text-base font-semibold">New F4F post</h2>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white"
+            className="text-gray-400 hover:text-gray-900"
             aria-label="Close"
           >
             <X size={18} />
@@ -96,7 +96,7 @@ export default function CreatePostModal({ open, onClose, defaults }) {
               value={title}
               onChange={e => setTitle(e.target.value)}
               placeholder="e.g. Tech mutuals — building in public"
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent"
               maxLength={80}
             />
           </Field>
@@ -107,7 +107,7 @@ export default function CreatePostModal({ open, onClose, defaults }) {
               onChange={e => setDescription(e.target.value)}
               rows={3}
               placeholder="Who you want, what you give back, and how engagement should look."
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent resize-none"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent resize-none"
               maxLength={400}
             />
           </Field>
@@ -117,7 +117,7 @@ export default function CreatePostModal({ open, onClose, defaults }) {
               <select
                 value={niche}
                 onChange={e => setNiche(e.target.value)}
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-accent"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-blue-accent"
               >
                 {NICHES.map(n => (
                   <option key={n.id} value={n.id}>
@@ -131,7 +131,7 @@ export default function CreatePostModal({ open, onClose, defaults }) {
               <select
                 value={platform}
                 onChange={e => setPlatform(e.target.value)}
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-accent"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-blue-accent"
               >
                 {PLATFORMS.map(p => (
                   <option key={p.id} value={p.id}>
@@ -170,7 +170,7 @@ export default function CreatePostModal({ open, onClose, defaults }) {
                 max={1000}
                 value={capacity}
                 onChange={e => setCapacity(e.target.value)}
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-accent"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-blue-accent"
               />
             </Field>
 
@@ -181,7 +181,7 @@ export default function CreatePostModal({ open, onClose, defaults }) {
                 max={10}
                 value={postsToEngage}
                 onChange={e => setPostsToEngage(e.target.value)}
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-accent"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-blue-accent"
               />
             </Field>
           </div>
@@ -198,7 +198,7 @@ export default function CreatePostModal({ open, onClose, defaults }) {
                     className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
                       active
                         ? 'bg-blue-accent/15 border-blue-accent text-blue-accent'
-                        : 'bg-dark-700 border-dark-500 text-gray-300 hover:text-white hover:border-dark-400'
+                        : 'bg-dark-700 border-dark-500 text-gray-700 hover:text-gray-900 hover:border-dark-400'
                     }`}
                   >
                     <span className="mr-1">{opt.icon}</span>
@@ -217,13 +217,13 @@ export default function CreatePostModal({ open, onClose, defaults }) {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-dark-700"
+              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-dark-700"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-xl text-sm font-semibold bg-blue-accent text-dark-900 hover:bg-blue-accent/90"
+              className="px-4 py-2 rounded-xl text-sm font-semibold bg-blue-accent text-white hover:bg-blue-accent/90"
             >
               Publish post
             </button>
@@ -253,7 +253,7 @@ function PresetNumberInput({ value, onChange, presets, formatLabel }) {
         min={0}
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-accent"
+        className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-blue-accent"
       />
       <div className="flex flex-wrap gap-1.5">
         {presets.map(p => (
@@ -264,7 +264,7 @@ function PresetNumberInput({ value, onChange, presets, formatLabel }) {
             className={`text-[11px] px-2 py-0.5 rounded-full border transition-colors ${
               Number(value) === p
                 ? 'bg-blue-accent/15 border-blue-accent text-blue-accent'
-                : 'bg-dark-700 border-dark-500 text-gray-400 hover:text-white'
+                : 'bg-dark-700 border-dark-500 text-gray-400 hover:text-gray-900'
             }`}
           >
             {formatLabel(p)}

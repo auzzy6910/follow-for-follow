@@ -66,7 +66,7 @@ export default function PostedAccountsSection() {
     <div>
       <div className="flex items-center justify-between mb-4 gap-2">
         <div className="min-w-0">
-          <h3 className="text-white font-semibold text-lg flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold text-lg flex items-center gap-2">
             <Sparkles size={16} className="text-blue-accent" /> Follow for Follow
           </h3>
           <p className="text-gray-500 text-xs mt-0.5">
@@ -77,7 +77,7 @@ export default function PostedAccountsSection() {
         <button
           type="button"
           onClick={() => requireAuth(() => setPostModalOpen(true))}
-          className="shrink-0 inline-flex items-center gap-1.5 bg-blue-accent text-dark-900 text-sm font-semibold rounded-xl px-3 py-2 hover:bg-blue-accent/90"
+          className="shrink-0 inline-flex items-center gap-1.5 bg-blue-accent text-white text-sm font-semibold rounded-xl px-3 py-2 hover:bg-blue-accent/90"
         >
           <Plus size={14} /> Post link
         </button>
@@ -135,7 +135,7 @@ export default function PostedAccountsSection() {
 
         {grouped.length === 0 && (
           <div className="bg-dark-800 border border-dashed border-dark-500 rounded-2xl p-6 text-center">
-            <p className="text-gray-300 text-sm font-medium">
+            <p className="text-gray-700 text-sm font-medium">
               No accounts posted yet for this platform.
             </p>
             <p className="text-gray-500 text-xs mt-1">
@@ -161,7 +161,7 @@ function PlatformChip({ label, count, active, onClick }) {
       className={`shrink-0 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
         active
           ? 'bg-blue-accent/15 border-blue-accent text-blue-accent'
-          : 'bg-dark-700 border-dark-500 text-gray-300 hover:text-white'
+          : 'bg-dark-700 border-dark-500 text-gray-700 hover:text-gray-900'
       }`}
     >
       {label}
@@ -194,7 +194,7 @@ function PostedAccountRow({ post, follow, userFollowers, onToggle, onOpen }) {
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <p className="text-white text-sm font-semibold truncate">
+          <p className="text-gray-900 text-sm font-semibold truncate">
             @{post.username}
           </p>
           {post.paid ? (
@@ -231,7 +231,7 @@ function PostedAccountRow({ post, follow, userFollowers, onToggle, onOpen }) {
         <button
           type="button"
           onClick={onOpen}
-          className="inline-flex items-center justify-center gap-1 text-xs font-medium bg-dark-700 border border-dark-500 text-gray-200 hover:text-white hover:border-blue-accent/40 rounded-lg px-2.5 py-1.5"
+          className="inline-flex items-center justify-center gap-1 text-xs font-medium bg-dark-700 border border-dark-500 text-gray-800 hover:text-gray-900 hover:border-blue-accent/40 rounded-lg px-2.5 py-1.5"
         >
           <Eye size={12} /> Open
         </button>
@@ -283,7 +283,7 @@ function FollowBackChip({ fb, onClick }) {
         className="w-7 h-7 rounded-full object-cover"
       />
       <div className="text-left">
-        <p className="text-white text-xs font-semibold leading-tight">
+        <p className="text-gray-900 text-xs font-semibold leading-tight">
           @{fb.user.username}
         </p>
         <p className="text-gray-500 text-[10px] leading-tight">
@@ -293,7 +293,7 @@ function FollowBackChip({ fb, onClick }) {
       <button
         type="button"
         onClick={onClick}
-        className="ml-1 inline-flex items-center gap-1 text-[11px] font-bold rounded-lg bg-gradient-to-r from-pink-500 to-amber-400 text-dark-900 px-2.5 py-1.5 follow-back-pulse"
+        className="ml-1 inline-flex items-center gap-1 text-[11px] font-bold rounded-lg bg-gradient-to-r from-pink-500 to-amber-400 text-white px-2.5 py-1.5 follow-back-pulse"
       >
         Follow back
       </button>

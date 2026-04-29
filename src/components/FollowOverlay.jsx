@@ -24,7 +24,7 @@ export default function FollowOverlay() {
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <Clock size={16} className="text-blue-accent" />
-                <span className="text-white text-sm font-medium">
+                <span className="text-gray-900 text-sm font-medium">
                   Verifying @{follow.username}
                 </span>
               </div>

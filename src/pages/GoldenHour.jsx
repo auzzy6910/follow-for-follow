@@ -44,7 +44,7 @@ function PostChecklist({ onComplete }) {
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-semibold flex items-center gap-2">
+        <h3 className="text-gray-900 font-semibold flex items-center gap-2">
           <CheckCircle2 size={18} className="text-blue-accent" /> Post-Completion Checklist
         </h3>
         <span className="text-xs text-gray-400">{completedCount}/{checks.length} done</span>
@@ -68,7 +68,7 @@ function PostChecklist({ onComplete }) {
               ? <CheckCircle2 size={18} className="text-blue-accent shrink-0" />
               : <Circle size={18} className="text-gray-500 shrink-0" />
             }
-            <span className={`text-sm ${check.done ? 'text-blue-accent line-through' : 'text-gray-300'}`}>
+            <span className={`text-sm ${check.done ? 'text-blue-accent line-through' : 'text-gray-700'}`}>
               {check.label}
             </span>
           </button>
@@ -98,7 +98,7 @@ function ScheduleForm({ platforms, onSchedule }) {
 
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-      <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+      <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
         <Plus size={18} /> Schedule Your Post
       </h3>
       <p className="text-gray-400 text-sm mb-6">
@@ -110,7 +110,7 @@ function ScheduleForm({ platforms, onSchedule }) {
           <select
             value={platform}
             onChange={e => setPlatform(e.target.value)}
-            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50 appearance-none"
+            className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-blue-accent/50 appearance-none"
           >
             {platforms.map(p => (
               <option key={p.id} value={p.id}>{p.icon} {p.name}</option>
@@ -126,7 +126,7 @@ function ScheduleForm({ platforms, onSchedule }) {
               value={postUrl}
               onChange={e => setPostUrl(e.target.value)}
               placeholder="https://instagram.com/p/..."
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-8 pr-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl pl-8 pr-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
             />
           </div>
         </div>
@@ -137,7 +137,7 @@ function ScheduleForm({ platforms, onSchedule }) {
               type="date"
               value={dateTime.split('T')[0] || ''}
               onChange={e => setDateTime(e.target.value + 'T' + (dateTime.split('T')[1] || '12:00'))}
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-blue-accent/50"
             />
           </div>
           <div>
@@ -146,7 +146,7 @@ function ScheduleForm({ platforms, onSchedule }) {
               type="time"
               value={dateTime.split('T')[1] || ''}
               onChange={e => setDateTime((dateTime.split('T')[0] || '') + 'T' + e.target.value)}
-              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-accent/50"
+              className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-blue-accent/50"
             />
           </div>
         </div>
@@ -172,7 +172,7 @@ function ScheduleForm({ platforms, onSchedule }) {
         <button
           onClick={handleSubmit}
           disabled={!postUrl || !dateTime}
-          className="w-full py-3 bg-blue-accent text-dark-900 font-semibold rounded-xl hover:bg-blue-accent/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full py-3 bg-blue-accent text-white font-semibold rounded-xl hover:bg-blue-accent/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           <Calendar size={16} /> Schedule Post
         </button>
@@ -205,7 +205,7 @@ function EngagementTrain({ session, platform, onJoin }) {
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h4 className="text-white font-semibold text-sm sm:text-base">{platform?.name} Engagement Train</h4>
+              <h4 className="text-gray-900 font-semibold text-sm sm:text-base">{platform?.name} Engagement Train</h4>
               {isLive && (
                 <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 flex items-center gap-1">
                   <Flame size={10} /> LIVE
@@ -247,8 +247,8 @@ function EngagementTrain({ session, platform, onJoin }) {
             onClick={handleJoin}
             className={`w-full sm:w-auto px-5 py-2.5 font-semibold rounded-xl transition-colors flex items-center justify-center gap-2 shrink-0 ${
               isLive
-                ? 'bg-amber-400 text-dark-900 hover:bg-amber-400/90'
-                : 'bg-blue-accent text-dark-900 hover:bg-blue-accent/90'
+                ? 'bg-amber-400 text-white hover:bg-amber-400/90'
+                : 'bg-blue-accent text-white hover:bg-blue-accent/90'
             }`}
           >
             <Play size={16} /> {isLive ? 'Join Now' : 'Join Train'}
@@ -306,7 +306,7 @@ export default function GoldenHour() {
   return (
     <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
           <Zap size={24} className="text-amber-400" /> Golden Hour Boost
         </h2>
         <p className="text-gray-400 text-xs sm:text-sm mt-1">
@@ -321,7 +321,7 @@ export default function GoldenHour() {
               <Clock size={20} className="text-amber-400" />
             </div>
             <div className="min-w-0">
-              <p className="text-lg sm:text-xl font-bold text-white">60-90 min</p>
+              <p className="text-lg sm:text-xl font-bold text-gray-900">60-90 min</p>
               <p className="text-gray-500 text-xs">Critical engagement window</p>
             </div>
           </div>
@@ -332,7 +332,7 @@ export default function GoldenHour() {
               <Users size={20} className="text-blue-accent" />
             </div>
             <div className="min-w-0">
-              <p className="text-lg sm:text-xl font-bold text-white">
+              <p className="text-lg sm:text-xl font-bold text-gray-900">
                 <LiveCounter base={50} />+
               </p>
               <p className="text-gray-500 text-xs">Users per engagement train</p>
@@ -345,7 +345,7 @@ export default function GoldenHour() {
               <Timer size={20} className="text-cyan-400" />
             </div>
             <div className="min-w-0">
-              <p className="text-lg sm:text-xl font-bold text-white">15-30 sec</p>
+              <p className="text-lg sm:text-xl font-bold text-gray-900">15-30 sec</p>
               <p className="text-gray-500 text-xs">Min dwell time per post</p>
             </div>
           </div>
@@ -363,7 +363,7 @@ export default function GoldenHour() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
-              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-white'
+              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-gray-900'
             }`}
           >
             {tab.label}
@@ -391,7 +391,7 @@ export default function GoldenHour() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <ScheduleForm platforms={PLATFORMS} onSchedule={handleSchedule} />
           <div className="space-y-4">
-            <h3 className="text-white font-semibold flex items-center gap-2">
+            <h3 className="text-gray-900 font-semibold flex items-center gap-2">
               <Calendar size={16} /> Your Scheduled Posts
             </h3>
             {scheduled.length === 0 ? (
@@ -410,7 +410,7 @@ export default function GoldenHour() {
                       {plat?.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-white text-sm font-medium">{plat?.name}</p>
+                      <p className="text-gray-900 text-sm font-medium">{plat?.name}</p>
                       <p className="text-gray-500 text-xs">
                         {t.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} at{' '}
                         {t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
@@ -437,7 +437,7 @@ export default function GoldenHour() {
       {activeTab === 'dwell' && (
         <div className="space-y-4">
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-            <h3 className="text-white font-semibold mb-2">Dwell Time Tasks</h3>
+            <h3 className="text-gray-900 font-semibold mb-2">Dwell Time Tasks</h3>
             <p className="text-gray-400 text-sm mb-4">
               Stay on a post for 15-30 seconds before claiming credits. This ensures genuine engagement that algorithms reward.
             </p>
@@ -448,7 +448,7 @@ export default function GoldenHour() {
                     <Eye size={24} className="text-gray-500" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-white text-sm font-medium">Post #{i} from @user{i * 3}</p>
+                    <p className="text-gray-900 text-sm font-medium">Post #{i} from @user{i * 3}</p>
                     <p className="text-gray-500 text-xs">Platform: Instagram</p>
                     <div className="flex items-center gap-2 mt-2">
                       <Timer size={12} className="text-amber-400" />
@@ -467,7 +467,7 @@ export default function GoldenHour() {
           </div>
 
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
-            <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-gray-900 font-semibold mb-2 flex items-center gap-2">
               <MessageSquare size={18} className="text-cyan-400" /> AI Comment Suggestions
             </h3>
             <p className="text-gray-400 text-sm mb-4">
@@ -480,7 +480,7 @@ export default function GoldenHour() {
                 '"Great breakdown of the DeFi landscape. The comparison chart really helps visualize the differences."'
               ].map((comment, i) => (
                 <div key={i} className="bg-dark-700 rounded-xl p-3 flex items-center gap-3">
-                  <span className="text-gray-300 text-sm flex-1 italic">{comment}</span>
+                  <span className="text-gray-700 text-sm flex-1 italic">{comment}</span>
                   <button className="text-xs bg-cyan-400/10 text-cyan-400 px-3 py-1.5 rounded-lg hover:bg-cyan-400/20 transition-colors shrink-0">
                     Copy
                   </button>

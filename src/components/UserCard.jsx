@@ -59,7 +59,7 @@ export default function UserCard({ user }) {
 
       {/* Username + verified badge */}
       <div className="mt-3 flex items-center justify-center gap-1 min-w-0 w-full">
-        <h4 className="text-white text-sm sm:text-base font-semibold truncate min-w-0">
+        <h4 className="text-gray-900 text-sm sm:text-base font-semibold truncate min-w-0">
           {user.username}
         </h4>
         {user.isVerified && (
@@ -68,12 +68,12 @@ export default function UserCard({ user }) {
       </div>
 
       {/* Display name */}
-      <p className="text-gray-300 text-[11px] sm:text-xs font-medium truncate w-full">
+      <p className="text-gray-700 text-[11px] sm:text-xs font-medium truncate w-full">
         {user.displayName}
       </p>
 
       {/* Stats row: posts | followers | following */}
-      <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-1 w-full text-white">
+      <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-1 w-full text-gray-900">
         <Stat value={formatCount(user.posts ?? 0)} label="posts" />
         <Stat value={formatCount(user.followers)} label="followers" />
         <Stat value={formatCount(user.following ?? 0)} label="following" />
@@ -97,7 +97,7 @@ export default function UserCard({ user }) {
           </span>
         )}
         {platform && (
-          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-dark-600 text-gray-300">
+          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-dark-600 text-gray-700">
             {platform.icon} {platform.name}
           </span>
         )}
@@ -117,8 +117,8 @@ export default function UserCard({ user }) {
           disabled={isFollowing}
           className={`flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg transition-colors flex items-center justify-center gap-1 ${
             isFollowing
-              ? 'bg-dark-600 text-gray-300 hover:bg-dark-500'
-              : 'bg-sky-500 text-white hover:bg-sky-400'
+              ? 'bg-dark-600 text-gray-700 hover:bg-dark-500'
+              : 'bg-sky-500 text-gray-900 hover:bg-sky-400'
           }`}
         >
           {isFollowing ? (
@@ -133,7 +133,7 @@ export default function UserCard({ user }) {
         {owedFollowBack && !isFollowing && (
           <button
             onClick={handleFollowBack}
-            className="flex-1 min-w-0 text-[12px] sm:text-sm font-bold py-1.5 sm:py-2 px-2 rounded-lg bg-gradient-to-r from-pink-500 to-amber-400 text-dark-900 hover:opacity-90 follow-back-pulse"
+            className="flex-1 min-w-0 text-[12px] sm:text-sm font-bold py-1.5 sm:py-2 px-2 rounded-lg bg-gradient-to-r from-pink-500 to-amber-400 text-white hover:opacity-90 follow-back-pulse"
             title="They followed you — follow back"
           >
             Follow back
@@ -141,7 +141,7 @@ export default function UserCard({ user }) {
         )}
         <Link
           to={`/profile/${user.id}`}
-          className="flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg bg-dark-600 text-white hover:bg-dark-500 transition-colors text-center"
+          className="flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg bg-dark-600 text-gray-900 hover:bg-dark-500 transition-colors text-center"
         >
           Profile
         </Link>
@@ -153,7 +153,7 @@ export default function UserCard({ user }) {
 function Stat({ value, label }) {
   return (
     <div className="flex flex-col items-center min-w-0">
-      <span className="text-white text-sm sm:text-base font-bold leading-tight truncate max-w-full">
+      <span className="text-gray-900 text-sm sm:text-base font-bold leading-tight truncate max-w-full">
         {value}
       </span>
       <span className="text-gray-500 text-[10px] sm:text-xs leading-tight">{label}</span>

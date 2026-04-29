@@ -13,7 +13,7 @@ function MemberRow({ member, onFollow }) {
     <div className="flex items-center gap-3 p-3 bg-dark-700 rounded-xl hover:bg-dark-600 transition-colors">
       <img src={member.avatar} alt="" className="w-10 h-10 rounded-full object-cover border-2 border-dark-500" />
       <div className="flex-1 min-w-0">
-        <p className="text-white text-sm font-medium truncate">{member.displayName}</p>
+        <p className="text-gray-900 text-sm font-medium truncate">{member.displayName}</p>
         <p className="text-gray-500 text-xs">@{member.username} · {(member.followers / 1000).toFixed(1)}K</p>
       </div>
       <div className="flex items-center gap-2">
@@ -39,14 +39,14 @@ function FeedPost({ post }) {
       <div className="flex items-center gap-3 mb-3">
         <img src={post.avatar} alt="" className="w-9 h-9 rounded-full object-cover" />
         <div className="flex-1 min-w-0">
-          <p className="text-white text-sm font-medium">{post.displayName}</p>
+          <p className="text-gray-900 text-sm font-medium">{post.displayName}</p>
           <p className="text-gray-500 text-xs">{post.time}</p>
         </div>
         {post.pinned && (
           <span className="text-xs bg-amber-400/10 text-amber-400 px-2 py-0.5 rounded-full">Pinned</span>
         )}
       </div>
-      <p className="text-gray-300 text-sm mb-3">{post.content}</p>
+      <p className="text-gray-700 text-sm mb-3">{post.content}</p>
       {post.link && (
         <a href={post.link} target="_blank" rel="noopener noreferrer"
           className="text-cyan-400 text-xs flex items-center gap-1 hover:underline mb-3">
@@ -70,7 +70,7 @@ function ChatMessage({ msg, isOwn }) {
       <div className={`max-w-[75%] ${isOwn ? 'items-end' : ''}`}>
         {!isOwn && <p className="text-gray-500 text-xs mb-0.5">{msg.displayName}</p>}
         <div className={`rounded-2xl px-3 py-2 text-sm ${
-          isOwn ? 'bg-blue-accent/20 text-blue-accent rounded-br-md' : 'bg-dark-600 text-gray-300 rounded-bl-md'
+          isOwn ? 'bg-blue-accent/20 text-blue-accent rounded-br-md' : 'bg-dark-600 text-gray-700 rounded-bl-md'
         }`}>
           {msg.text}
         </div>
@@ -86,7 +86,7 @@ function CollabSuggestion({ user1, user2, matchPct }) {
       <div className="flex items-center gap-3">
         <div className="flex-1 text-center">
           <img src={user1.avatar} alt="" className="w-12 h-12 rounded-full mx-auto object-cover border-2 border-dark-500 mb-1" />
-          <p className="text-white text-xs font-medium truncate">{user1.displayName}</p>
+          <p className="text-gray-900 text-xs font-medium truncate">{user1.displayName}</p>
           <p className="text-gray-500 text-xs">{(user1.followers / 1000).toFixed(1)}K</p>
         </div>
         <div className="flex flex-col items-center gap-1">
@@ -97,7 +97,7 @@ function CollabSuggestion({ user1, user2, matchPct }) {
         </div>
         <div className="flex-1 text-center">
           <img src={user2.avatar} alt="" className="w-12 h-12 rounded-full mx-auto object-cover border-2 border-dark-500 mb-1" />
-          <p className="text-white text-xs font-medium truncate">{user2.displayName}</p>
+          <p className="text-gray-900 text-xs font-medium truncate">{user2.displayName}</p>
           <p className="text-gray-500 text-xs">{(user2.followers / 1000).toFixed(1)}K</p>
         </div>
       </div>
@@ -186,7 +186,7 @@ export default function TribeDetail() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-5">
-      <Link to="/tribes" className="text-gray-400 text-sm flex items-center gap-1 hover:text-white transition-colors">
+      <Link to="/tribes" className="text-gray-400 text-sm flex items-center gap-1 hover:text-gray-900 transition-colors">
         <ArrowLeft size={16} /> Back to Tribes
       </Link>
 
@@ -198,7 +198,7 @@ export default function TribeDetail() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-xl sm:text-2xl font-bold text-white">{tribe.name}</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">{tribe.name}</h2>
               {joined && <span className="text-xs bg-blue-accent/10 text-blue-accent px-2 py-0.5 rounded-full">Joined</span>}
             </div>
             <p className="text-gray-400 text-sm mt-1">{tribe.description}</p>
@@ -223,7 +223,7 @@ export default function TribeDetail() {
             className={`px-5 py-2.5 font-semibold rounded-xl transition-colors flex items-center gap-2 shrink-0 ${
               joined
                 ? 'bg-red-400/10 text-red-400 hover:bg-red-400/20'
-                : 'bg-blue-accent text-dark-900 hover:bg-blue-accent/90'
+                : 'bg-blue-accent text-white hover:bg-blue-accent/90'
             }`}
           >
             {joined ? <><UserMinus size={16} /> Leave</> : <><UserPlus size={16} /> Join Tribe</>}
@@ -249,7 +249,7 @@ export default function TribeDetail() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
-              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-white'
+              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-gray-900'
             }`}
           >
             {tab.label}
@@ -281,7 +281,7 @@ export default function TribeDetail() {
         <div className="bg-dark-800 border border-dark-600 rounded-2xl flex flex-col" style={{ height: '460px' }}>
           <div className="flex items-center gap-2 px-4 py-3 border-b border-dark-600">
             <MessageSquare size={16} className="text-blue-accent" />
-            <span className="text-white text-sm font-medium">{tribe.name} Chat</span>
+            <span className="text-gray-900 text-sm font-medium">{tribe.name} Chat</span>
             <span className="text-gray-500 text-xs ml-auto">{tribe.activeNow} online</span>
           </div>
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
@@ -297,11 +297,11 @@ export default function TribeDetail() {
               onChange={e => setChatInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSendChat()}
               placeholder="Type a message..."
-              className="flex-1 bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
+              className="flex-1 bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50"
             />
             <button
               onClick={handleSendChat}
-              className="bg-blue-accent text-dark-900 p-2.5 rounded-xl hover:bg-blue-accent/90 transition-colors"
+              className="bg-blue-accent text-white p-2.5 rounded-xl hover:bg-blue-accent/90 transition-colors"
             >
               <Send size={16} />
             </button>
@@ -313,7 +313,7 @@ export default function TribeDetail() {
       {activeTab === 'collab' && (
         <div className="space-y-4">
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4">
-            <h3 className="text-white text-sm font-semibold mb-1 flex items-center gap-2">
+            <h3 className="text-gray-900 text-sm font-semibold mb-1 flex items-center gap-2">
               <Handshake size={16} className="text-cyan-400" /> Collaboration Matchmaking
             </h3>
             <p className="text-gray-400 text-xs">

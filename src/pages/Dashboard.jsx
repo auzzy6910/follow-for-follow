@@ -51,14 +51,14 @@ function CooldownStatus() {
     <div className="flex items-center justify-between bg-dark-700 rounded-xl p-3">
       <div className="flex items-center gap-2">
         <Clock size={16} className="text-gray-400" />
-        <span className="text-gray-300 text-sm">Cooldown</span>
+        <span className="text-gray-700 text-sm">Cooldown</span>
       </div>
       <div className="flex items-center gap-2">
         <span className="text-blue-accent text-sm font-medium">Inactive</span>
         <button
           type="button"
           onClick={() => startCooldown(90)}
-          className="flex items-center gap-1 text-[10px] uppercase tracking-wide px-2 py-1 rounded-md bg-dark-600 text-gray-300 hover:text-blue-accent hover:bg-dark-500 transition-colors"
+          className="flex items-center gap-1 text-[10px] uppercase tracking-wide px-2 py-1 rounded-md bg-dark-600 text-gray-700 hover:text-blue-accent hover:bg-dark-500 transition-colors"
           aria-label="Start a 90-second cooldown"
         >
           <Play size={10} /> Test
@@ -75,7 +75,7 @@ function MobileVisibilityToggle({ visible, onToggle, label }) {
       onClick={onToggle}
       aria-label={visible ? `Hide ${label}` : `Show ${label}`}
       aria-pressed={!visible}
-      className="md:hidden text-gray-400 hover:text-white p-1 -m-1 shrink-0"
+      className="md:hidden text-gray-400 hover:text-gray-900 p-1 -m-1 shrink-0"
     >
       {visible ? <Eye size={18} /> : <EyeOff size={18} />}
     </button>
@@ -94,7 +94,7 @@ function StatCard({ icon: Icon, label, value, change, positive, to }) {
           {change}
         </span>
       </div>
-      <p className="text-xl sm:text-2xl font-bold text-white">{value}</p>
+      <p className="text-xl sm:text-2xl font-bold text-gray-900">{value}</p>
       <p className="text-gray-500 text-xs sm:text-sm mt-1">{label}</p>
     </div>
   )
@@ -129,7 +129,7 @@ function FollowForFollowSidebar() {
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="min-w-0">
-          <h3 className="text-white font-semibold">Follow for Follow</h3>
+          <h3 className="text-gray-900 font-semibold">Follow for Follow</h3>
           <p className="text-gray-500 text-[11px]">Accounts to follow</p>
         </div>
         <MobileVisibilityToggle
@@ -170,7 +170,7 @@ function FollowForFollowSidebar() {
                 className="flex-1 min-w-0 text-left"
                 aria-label={`Open @${post.username}`}
               >
-                <p className="text-white text-sm font-medium truncate">
+                <p className="text-gray-900 text-sm font-medium truncate">
                   @{post.username}
                 </p>
                 <p className="text-gray-500 text-[11px] truncate">
@@ -205,7 +205,7 @@ function SpotlightUsers() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-semibold text-lg">Spotlight Users</h3>
+        <h3 className="text-gray-900 font-semibold text-lg">Spotlight Users</h3>
         <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
           See All <ChevronRight size={16} />
         </Link>
@@ -221,7 +221,7 @@ function SpotlightUsers() {
             <div className={`p-0.5 rounded-full transition-transform group-hover:scale-105 ${user.tier === 'legend' ? 'bg-gradient-to-br from-amber-400 to-orange-500' : user.tier === 'influencer' ? 'bg-gradient-to-br from-blue-accent to-cyan-400' : 'bg-dark-500'}`}>
               <img src={user.avatar} alt="" className="w-14 h-14 rounded-full object-cover border-2 border-dark-900" />
             </div>
-            <p className="text-gray-300 text-xs font-medium truncate w-16 text-center group-hover:text-white">@{user.username.slice(0, 8)}</p>
+            <p className="text-gray-700 text-xs font-medium truncate w-16 text-center group-hover:text-gray-900">@{user.username.slice(0, 8)}</p>
             <span className="text-blue-accent text-xs">{user.credits} cr</span>
           </Link>
         ))}
@@ -236,7 +236,7 @@ function ActiveQuests() {
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-semibold">Daily Quests</h3>
+        <h3 className="text-gray-900 font-semibold">Daily Quests</h3>
         <div className="flex items-center gap-3">
           <Link to="/gamification" className="text-blue-accent text-xs hover:underline">View All</Link>
           <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="daily quests" />
@@ -246,7 +246,7 @@ function ActiveQuests() {
         {QUESTS.filter(q => q.type === 'daily').slice(0, 3).map(quest => (
           <div key={quest.id} className="bg-dark-700 rounded-xl p-3">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-gray-200 text-sm font-medium">{quest.title}</p>
+              <p className="text-gray-800 text-sm font-medium">{quest.title}</p>
               <span className="text-amber-400 text-xs font-semibold">+{quest.reward} cr</span>
             </div>
             <div className="w-full bg-dark-500 rounded-full h-1.5">
@@ -266,14 +266,14 @@ function TrendingTribes() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-semibold text-lg">Trending Tribes</h3>
+        <h3 className="text-gray-900 font-semibold text-lg">Trending Tribes</h3>
         <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="trending tribes" />
       </div>
       <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 ${visible ? '' : 'hidden md:grid'}`}>
         {TRIBES.slice(0, 5).map(tribe => (
           <div key={tribe.id} className="bg-dark-800 border border-dark-600 rounded-xl p-4 card-hover cursor-pointer text-center">
             <div className="text-3xl mb-2">{tribe.icon}</div>
-            <p className="text-white text-sm font-medium">{tribe.name}</p>
+            <p className="text-gray-900 text-sm font-medium">{tribe.name}</p>
             <p className="text-gray-500 text-xs mt-1">{tribe.members.toLocaleString()} members</p>
             <p className="text-blue-accent text-xs mt-1">+{tribe.weeklyGrowth}% this week</p>
           </div>
@@ -306,7 +306,7 @@ function SavedSearches() {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Bookmark size={18} className="text-blue-accent" />
-          <h3 className="text-white font-semibold">Saved Searches</h3>
+          <h3 className="text-gray-900 font-semibold">Saved Searches</h3>
         </div>
         <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="saved searches" />
       </div>
@@ -318,7 +318,7 @@ function SavedSearches() {
             onClick={() => handleApply(s)}
           >
             <div className="flex-1 min-w-0">
-              <p className="text-gray-200 text-sm font-medium truncate">{s.name}</p>
+              <p className="text-gray-800 text-sm font-medium truncate">{s.name}</p>
               <p className="text-gray-500 text-xs mt-0.5">
                 {new Date(s.createdAt).toLocaleDateString()}
               </p>
@@ -350,7 +350,7 @@ function Recommendations() {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Sparkles size={18} className="text-blue-accent" />
-          <h3 className="text-white font-semibold text-lg">People Like You</h3>
+          <h3 className="text-gray-900 font-semibold text-lg">People Like You</h3>
         </div>
         <div className="flex items-center gap-3">
           <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
@@ -373,7 +373,7 @@ function UserCards() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-semibold text-lg">Recommended For You</h3>
+        <h3 className="text-gray-900 font-semibold text-lg">Recommended For You</h3>
         <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
           See All <ChevronRight size={16} />
         </Link>
@@ -477,11 +477,11 @@ export default function Dashboard() {
       <div className="hidden md:grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <ActiveQuests />
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
-          <h3 className="text-white font-semibold mb-4">Safety Status</h3>
+          <h3 className="text-gray-900 font-semibold mb-4">Safety Status</h3>
           <div className="space-y-4">
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-gray-300 text-sm">Daily Follow Limit</span>
+                <span className="text-gray-700 text-sm">Daily Follow Limit</span>
                 <span className="text-blue-accent text-sm font-medium">{USER_STATS.dailyFollowsRemaining}/{USER_STATS.dailyFollowLimit}</span>
               </div>
               <div className="w-full bg-dark-500 rounded-full h-2">
@@ -492,7 +492,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between bg-dark-700 rounded-xl p-3">
               <div className="flex items-center gap-2">
                 <Shield size={16} className="text-gray-400" />
-                <span className="text-gray-300 text-sm">Unfollow Rate</span>
+                <span className="text-gray-700 text-sm">Unfollow Rate</span>
               </div>
               <span className="text-blue-accent text-sm font-medium">{USER_STATS.unfollowRate}%</span>
             </div>

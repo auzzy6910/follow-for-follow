@@ -70,11 +70,11 @@ export default function PostLinkModal({ open, onClose }) {
         <div className="flex items-center justify-between px-5 py-4 border-b border-dark-600 sticky top-0 bg-dark-800 z-10">
           <div className="flex items-center gap-2">
             <Link2 size={18} className="text-blue-accent" />
-            <h2 className="text-white text-base font-semibold">Post your account</h2>
+            <h2 className="text-gray-900 text-base font-semibold">Post your account</h2>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white"
+            className="text-gray-400 hover:text-gray-900"
             aria-label="Close"
           >
             <X size={18} />
@@ -95,7 +95,7 @@ export default function PostLinkModal({ open, onClose }) {
                   setError('')
                 }}
                 placeholder="https://instagram.com/yourhandle"
-                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent"
+                className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent"
               />
               {detection ? (
                 <p className="mt-1.5 text-[11px] text-blue-accent flex items-center gap-1">
@@ -122,7 +122,7 @@ export default function PostLinkModal({ open, onClose }) {
               onChange={e => setDescription(e.target.value)}
               rows={3}
               placeholder="Who you want, what you give back, and how engagement should look."
-              className="mt-1.5 w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent resize-none"
+              className="mt-1.5 w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent resize-none"
               maxLength={400}
             />
           </label>
@@ -134,7 +134,7 @@ export default function PostLinkModal({ open, onClose }) {
               className={`flex items-center gap-2 justify-center rounded-xl border px-3 py-2 text-sm font-medium transition-colors ${
                 !paid
                   ? 'bg-blue-accent/15 border-blue-accent text-blue-accent'
-                  : 'bg-dark-700 border-dark-500 text-gray-300 hover:text-white'
+                  : 'bg-dark-700 border-dark-500 text-gray-700 hover:text-gray-900'
               }`}
             >
               <Repeat2 size={14} /> F4F (mutual)
@@ -145,7 +145,7 @@ export default function PostLinkModal({ open, onClose }) {
               className={`flex items-center gap-2 justify-center rounded-xl border px-3 py-2 text-sm font-medium transition-colors ${
                 paid
                   ? 'bg-amber-400/15 border-amber-400 text-amber-300'
-                  : 'bg-dark-700 border-dark-500 text-gray-300 hover:text-white'
+                  : 'bg-dark-700 border-dark-500 text-gray-700 hover:text-gray-900'
               }`}
             >
               <ShoppingBag size={14} /> BUY (paid)
@@ -185,13 +185,13 @@ export default function PostLinkModal({ open, onClose }) {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-dark-700"
+              className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-dark-700"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold bg-blue-accent text-dark-900 hover:bg-blue-accent/90"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold bg-blue-accent text-white hover:bg-blue-accent/90"
             >
               <Sparkles size={14} /> Publish
             </button>
@@ -214,7 +214,7 @@ function PresetField({ label, value, onChange, presets, formatLabel }) {
           min={0}
           value={value}
           onChange={e => onChange(e.target.value)}
-          className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-accent"
+          className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-blue-accent"
         />
         <div className="flex flex-wrap gap-1.5">
           {presets.map(p => (
@@ -225,7 +225,7 @@ function PresetField({ label, value, onChange, presets, formatLabel }) {
               className={`text-[11px] px-2 py-0.5 rounded-full border transition-colors ${
                 Number(value) === p
                   ? 'bg-blue-accent/15 border-blue-accent text-blue-accent'
-                  : 'bg-dark-700 border-dark-500 text-gray-400 hover:text-white'
+                  : 'bg-dark-700 border-dark-500 text-gray-400 hover:text-gray-900'
               }`}
             >
               {formatLabel(p)}

@@ -52,13 +52,13 @@ export default function EscrowDrawer() {
       />
       <div className="fixed right-0 top-0 bottom-0 z-[85] w-full max-w-md bg-dark-800 border-l border-dark-600 overflow-y-auto shadow-2xl animate-slide-in-right">
         <div className="sticky top-0 bg-dark-800/95 backdrop-blur-sm border-b border-dark-600 px-5 py-4 flex items-center justify-between z-10">
-          <h3 className="text-white font-semibold flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold flex items-center gap-2">
             <Shield size={18} className="text-purple-400" />
             Escrow Details
           </h3>
           <button
             onClick={() => dispatch({ type: 'CLOSE_ESCROW_DRAWER' })}
-            className="text-gray-400 hover:text-white p-1"
+            className="text-gray-400 hover:text-gray-900 p-1"
           >
             <X size={18} />
           </button>
@@ -73,7 +73,7 @@ export default function EscrowDrawer() {
                 className="w-14 h-14 rounded-full object-cover border-2 border-dark-500"
               />
               <div className="flex-1 min-w-0">
-                <p className="text-white font-semibold truncate">
+                <p className="text-gray-900 font-semibold truncate">
                   {tx.user.displayName}
                 </p>
                 <p className="text-gray-400 text-sm">@{tx.user.username}</p>
@@ -93,7 +93,7 @@ export default function EscrowDrawer() {
                       {cfg.label}
                     </span>
                   </div>
-                  <p className="text-gray-300 text-sm">{cfg.desc}</p>
+                  <p className="text-gray-700 text-sm">{cfg.desc}</p>
                 </div>
               )
             })()}
@@ -101,24 +101,24 @@ export default function EscrowDrawer() {
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Credits</span>
-                <span className="text-white font-semibold">
+                <span className="text-gray-900 font-semibold">
                   {tx.credits} cr
                 </span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Follow Date</span>
-                <span className="text-white">{tx.followDate}</span>
+                <span className="text-gray-900">{tx.followDate}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Days Remaining</span>
-                <span className="text-white">
+                <span className="text-gray-900">
                   {tx.daysRemaining > 0 ? `${tx.daysRemaining} days` : '—'}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Status</span>
                 <span
-                  className={`capitalize font-medium ${STATUS_CONFIG[tx.status]?.color || 'text-white'}`}
+                  className={`capitalize font-medium ${STATUS_CONFIG[tx.status]?.color || 'text-gray-900'}`}
                 >
                   {tx.status}
                 </span>
@@ -135,7 +135,7 @@ export default function EscrowDrawer() {
             </div>
 
             <div className="border-t border-dark-600 pt-4">
-              <h4 className="text-white text-sm font-semibold mb-3">
+              <h4 className="text-gray-900 text-sm font-semibold mb-3">
                 Verification Timeline
               </h4>
               <div className="space-y-3">
@@ -182,7 +182,7 @@ export default function EscrowDrawer() {
               href={`https://instagram.com/${tx.user.username}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-2.5 bg-dark-700 border border-dark-500 text-gray-300 rounded-xl hover:border-blue-accent/50 hover:text-white transition-colors text-sm"
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-dark-700 border border-dark-500 text-gray-700 rounded-xl hover:border-blue-accent/50 hover:text-gray-900 transition-colors text-sm"
             >
               <ExternalLink size={14} /> View Profile
             </a>
@@ -212,7 +212,7 @@ function TimelineItem({ label, date, status }) {
     <div className="flex items-center gap-3">
       <div className={`w-2.5 h-2.5 rounded-full ${dotColor} shrink-0`} />
       <div className="flex-1 flex items-center justify-between">
-        <span className="text-gray-300 text-sm">{label}</span>
+        <span className="text-gray-700 text-sm">{label}</span>
         <span className="text-gray-500 text-xs">{date}</span>
       </div>
     </div>

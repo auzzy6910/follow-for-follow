@@ -42,12 +42,12 @@ function Toast({ notification }) {
       className={`flex items-start gap-3 px-4 py-3 rounded-xl border ${variant.bg} shadow-lg backdrop-blur-sm animate-slide-in max-w-sm w-full`}
     >
       <Icon size={18} className={`${variant.text} shrink-0 mt-0.5`} />
-      <p className="text-sm text-gray-200 flex-1">{notification.message}</p>
+      <p className="text-sm text-gray-800 flex-1">{notification.message}</p>
       <button
         onClick={() =>
           dispatch({ type: 'DISMISS_NOTIFICATION', id: notification.id })
         }
-        className="text-gray-500 hover:text-white shrink-0"
+        className="text-gray-500 hover:text-gray-900 shrink-0"
       >
         <X size={14} />
       </button>

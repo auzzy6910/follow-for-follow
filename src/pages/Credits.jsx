@@ -13,7 +13,7 @@ function CreditStatCard({ icon: Icon, label, value, sublabel, color }) {
           <Icon size={20} />
         </div>
         <div>
-          <p className="text-2xl font-bold text-white">{value}</p>
+          <p className="text-2xl font-bold text-gray-900">{value}</p>
           <p className="text-gray-500 text-xs">{label}</p>
         </div>
       </div>
@@ -39,7 +39,7 @@ export default function Credits() {
   return (
     <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-white">Credit & Exchange System</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Credit & Exchange System</h2>
         <p className="text-gray-400 text-xs sm:text-sm mt-1">Earn credits by following, spend to get followers</p>
       </div>
 
@@ -51,7 +51,7 @@ export default function Credits() {
             className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
               activeTab === tab.id
                 ? 'bg-blue-accent/10 text-blue-accent'
-                : 'text-gray-400 hover:text-white'
+                : 'text-gray-400 hover:text-gray-900'
             }`}
           >
             {tab.label}
@@ -69,40 +69,40 @@ export default function Credits() {
           </div>
 
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-            <h3 className="text-white font-semibold mb-4">How Credits Work</h3>
+            <h3 className="text-gray-900 font-semibold mb-4">How Credits Work</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
               <div className="space-y-3">
                 <div className="w-12 h-12 rounded-xl bg-blue-accent/10 flex items-center justify-center">
                   <ArrowUpRight size={24} className="text-blue-accent" />
                 </div>
-                <h4 className="text-white font-medium">Earn by Following</h4>
+                <h4 className="text-gray-900 font-medium">Earn by Following</h4>
                 <p className="text-gray-400 text-sm">Follow other users to earn credits. Higher quality accounts earn more. Tribe matches give 2x bonus.</p>
               </div>
               <div className="space-y-3">
                 <div className="w-12 h-12 rounded-xl bg-amber-400/10 flex items-center justify-center">
                   <Coins size={24} className="text-amber-400" />
                 </div>
-                <h4 className="text-white font-medium">Spend to Get Followers</h4>
+                <h4 className="text-gray-900 font-medium">Spend to Get Followers</h4>
                 <p className="text-gray-400 text-sm">List your profile and spend credits to appear in others' feed. The more you spend, the more visibility you get.</p>
               </div>
               <div className="space-y-3">
                 <div className="w-12 h-12 rounded-xl bg-purple-400/10 flex items-center justify-center">
                   <Shield size={24} className="text-purple-400" />
                 </div>
-                <h4 className="text-white font-medium">Escrow Protection</h4>
+                <h4 className="text-gray-900 font-medium">Escrow Protection</h4>
                 <p className="text-gray-400 text-sm">Credits are held for 30 days. If someone unfollows, their credits are slashed and returned to you.</p>
               </div>
             </div>
           </div>
 
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
-            <h3 className="text-white font-semibold mb-2">Verification Engine</h3>
+            <h3 className="text-gray-900 font-semibold mb-2">Verification Engine</h3>
             <p className="text-gray-400 text-sm mb-4">Each follow is verified before credits are awarded.</p>
             <div className="space-y-3">
               {['API-based automatic follow verification', 'Manual "Check" button for instant verification', '30-day escrow period for unfollows', 'Automated periodic re-checks'].map((item, i) => (
                 <div key={i} className="flex items-center gap-3 bg-dark-700 rounded-xl p-3">
                   <CheckCircle size={16} className="text-blue-accent shrink-0" />
-                  <span className="text-gray-300 text-sm">{item}</span>
+                  <span className="text-gray-700 text-sm">{item}</span>
                 </div>
               ))}
             </div>
@@ -112,7 +112,7 @@ export default function Credits() {
 
       {activeTab === 'history' && (
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
-          <h3 className="text-white font-semibold mb-4">Credit History</h3>
+          <h3 className="text-gray-900 font-semibold mb-4">Credit History</h3>
           <div className="space-y-3">
             {CREDIT_HISTORY.map(tx => (
               <div key={tx.id} className="flex items-center gap-4 bg-dark-700 rounded-xl p-4">
@@ -124,7 +124,7 @@ export default function Credits() {
                    <AlertTriangle size={18} className="text-red-400" />}
                 </div>
                 <div className="flex-1">
-                  <p className="text-white text-sm font-medium">{tx.action}</p>
+                  <p className="text-gray-900 text-sm font-medium">{tx.action}</p>
                   <p className="text-gray-500 text-xs">{tx.timestamp}</p>
                 </div>
                 <span className={`text-sm font-bold ${
@@ -143,7 +143,7 @@ export default function Credits() {
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
             <div className="flex items-center gap-2 mb-4">
               <Lock size={18} className="text-purple-400" />
-              <h3 className="text-white font-semibold">Escrow Transactions</h3>
+              <h3 className="text-gray-900 font-semibold">Escrow Transactions</h3>
             </div>
             <p className="text-gray-400 text-sm mb-4">Credits are held for 30 days. If someone unfollows you, their credits are slashed and returned.</p>
             <div className="space-y-3">
@@ -154,7 +154,7 @@ export default function Credits() {
                   className="flex items-center gap-4 bg-dark-700 rounded-xl p-4 cursor-pointer hover:bg-dark-600 transition-colors">
                   <img src={tx.user.avatar} alt="" className="w-10 h-10 rounded-full object-cover" />
                   <div className="flex-1">
-                    <p className="text-white text-sm font-medium">{tx.user.displayName}</p>
+                    <p className="text-gray-900 text-sm font-medium">{tx.user.displayName}</p>
                     <p className="text-gray-500 text-xs">Followed on {tx.followDate}</p>
                   </div>
                   <div className="text-right">
@@ -184,28 +184,28 @@ export default function Credits() {
       {activeTab === 'earn' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6 card-hover">
-            <h3 className="text-white font-semibold mb-2">Follow Users</h3>
+            <h3 className="text-gray-900 font-semibold mb-2">Follow Users</h3>
             <p className="text-gray-400 text-sm mb-4">Earn 25-50 credits per verified follow. Niche matches earn 2x.</p>
-            <button className="w-full py-2.5 bg-blue-accent text-dark-900 font-semibold rounded-xl hover:bg-blue-accent/90 transition-colors">
+            <button className="w-full py-2.5 bg-blue-accent text-white font-semibold rounded-xl hover:bg-blue-accent/90 transition-colors">
               Browse Users to Follow
             </button>
           </div>
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6 card-hover">
-            <h3 className="text-white font-semibold mb-2">Complete Quests</h3>
+            <h3 className="text-gray-900 font-semibold mb-2">Complete Quests</h3>
             <p className="text-gray-400 text-sm mb-4">Daily & weekly quests reward 30-200 credits each.</p>
             <button className="w-full py-2.5 bg-amber-400/10 text-amber-400 font-semibold rounded-xl border border-amber-400/30 hover:bg-amber-400/20 transition-colors">
               View Active Quests
             </button>
           </div>
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6 card-hover">
-            <h3 className="text-white font-semibold mb-2">Golden Hour Engagement</h3>
+            <h3 className="text-gray-900 font-semibold mb-2">Golden Hour Engagement</h3>
             <p className="text-gray-400 text-sm mb-4">Participate in scheduled engagement trains. Earn credits for dwell time.</p>
             <button className="w-full py-2.5 bg-cyan-400/10 text-cyan-400 font-semibold rounded-xl border border-cyan-400/30 hover:bg-cyan-400/20 transition-colors">
               Join a Session
             </button>
           </div>
           <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6 card-hover">
-            <h3 className="text-white font-semibold mb-2">Maintain Streaks</h3>
+            <h3 className="text-gray-900 font-semibold mb-2">Maintain Streaks</h3>
             <p className="text-gray-400 text-sm mb-4">7-day streak: +200 cr, 30-day streak: +1000 cr bonuses.</p>
             <div className="flex items-center gap-2">
               <div className="flex-1 bg-dark-500 rounded-full h-2">

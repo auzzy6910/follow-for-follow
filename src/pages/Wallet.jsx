@@ -36,11 +36,11 @@ function TopUpModal({ onClose }) {
       <div onClick={onClose} className="absolute inset-0 bg-black/60" />
       <div className="relative bg-dark-800 border border-dark-600 rounded-2xl p-6 w-full max-w-md z-10">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-white font-semibold flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold flex items-center gap-2">
             <CreditCard size={18} className="text-blue-accent" />
             Top Up Credits
           </h3>
-          <button onClick={onClose} className="text-gray-400 hover:text-white"><X size={18} /></button>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-900"><X size={18} /></button>
         </div>
         <p className="text-gray-400 text-sm mb-4">Purchase credits via Stripe. Select a preset or enter a custom amount.</p>
         <div className="grid grid-cols-4 gap-2 mb-4">
@@ -51,7 +51,7 @@ function TopUpModal({ onClose }) {
               className={`py-2 rounded-xl text-sm font-medium transition-colors border ${
                 amount === String(p)
                   ? 'bg-blue-accent/10 border-blue-accent/40 text-blue-accent'
-                  : 'bg-dark-700 border-dark-500 text-gray-300 hover:border-blue-accent/30'
+                  : 'bg-dark-700 border-dark-500 text-gray-700 hover:border-blue-accent/30'
               }`}
             >
               {p} cr
@@ -64,22 +64,22 @@ function TopUpModal({ onClose }) {
           placeholder="Custom amount"
           value={amount}
           onChange={e => setAmount(e.target.value)}
-          className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50 mb-4"
+          className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50 mb-4"
         />
         <div className="bg-dark-700 rounded-xl p-3 mb-4 space-y-1">
           <div className="flex justify-between text-sm">
             <span className="text-gray-400">Amount</span>
-            <span className="text-white">{amount || 0} credits</span>
+            <span className="text-gray-900">{amount || 0} credits</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-400">Price</span>
-            <span className="text-white">${((parseInt(amount, 10) || 0) * 0.01).toFixed(2)}</span>
+            <span className="text-gray-900">${((parseInt(amount, 10) || 0) * 0.01).toFixed(2)}</span>
           </div>
         </div>
         <button
           onClick={handleTopUp}
           disabled={!amount || parseInt(amount, 10) <= 0}
-          className="w-full py-2.5 bg-blue-accent text-dark-900 font-semibold rounded-xl hover:bg-blue-accent/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full py-2.5 bg-blue-accent text-white font-semibold rounded-xl hover:bg-blue-accent/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           <DollarSign size={16} /> Pay with Stripe
         </button>
@@ -113,11 +113,11 @@ function WithdrawModal({ onClose }) {
       <div onClick={onClose} className="absolute inset-0 bg-black/60" />
       <div className="relative bg-dark-800 border border-dark-600 rounded-2xl p-6 w-full max-w-md z-10">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-white font-semibold flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold flex items-center gap-2">
             <ArrowRightLeft size={18} className="text-amber-400" />
             Withdraw / Convert
           </h3>
-          <button onClick={onClose} className="text-gray-400 hover:text-white"><X size={18} /></button>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-900"><X size={18} /></button>
         </div>
         <p className="text-gray-400 text-sm mb-2">Convert credits to cash or transfer out.</p>
         <p className="text-gray-500 text-xs mb-4">Available: <span className="text-blue-accent font-medium">{userStats.totalCredits.toLocaleString()} cr</span></p>
@@ -128,16 +128,16 @@ function WithdrawModal({ onClose }) {
           placeholder="Amount to withdraw"
           value={amount}
           onChange={e => setAmount(e.target.value)}
-          className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-accent/50 mb-4"
+          className="w-full bg-dark-700 border border-dark-500 rounded-xl px-3 py-2.5 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-accent/50 mb-4"
         />
         <div className="bg-dark-700 rounded-xl p-3 mb-4 space-y-1">
           <div className="flex justify-between text-sm">
             <span className="text-gray-400">Credits</span>
-            <span className="text-white">{amount || 0} cr</span>
+            <span className="text-gray-900">{amount || 0} cr</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-400">Payout value</span>
-            <span className="text-white">${((parseInt(amount, 10) || 0) * 0.008).toFixed(2)}</span>
+            <span className="text-gray-900">${((parseInt(amount, 10) || 0) * 0.008).toFixed(2)}</span>
           </div>
         </div>
         <button
@@ -166,7 +166,7 @@ export default function Wallet() {
   return (
     <div className="max-w-5xl mx-auto space-y-5 sm:space-y-6">
       <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
           <WalletIcon size={24} className="text-blue-accent" /> Wallet
         </h2>
         <p className="text-gray-400 text-xs sm:text-sm mt-1">Manage your credits and transactions</p>
@@ -176,7 +176,7 @@ export default function Wallet() {
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
             <p className="text-gray-400 text-xs sm:text-sm mb-1">Available Balance</p>
-            <p className="text-3xl sm:text-4xl font-bold text-white">{balance.toLocaleString()}</p>
+            <p className="text-3xl sm:text-4xl font-bold text-gray-900">{balance.toLocaleString()}</p>
             <p className="text-blue-accent text-sm font-medium mt-1">credits</p>
           </div>
           <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-blue-accent/10 flex items-center justify-center shrink-0">
@@ -209,7 +209,7 @@ export default function Wallet() {
               <CreditCard size={20} className="text-blue-accent" />
             </div>
             <div>
-              <h3 className="text-white font-semibold">Top Up</h3>
+              <h3 className="text-gray-900 font-semibold">Top Up</h3>
               <p className="text-gray-400 text-xs">Buy credits via Stripe</p>
             </div>
           </div>
@@ -223,7 +223,7 @@ export default function Wallet() {
               <ArrowRightLeft size={20} className="text-amber-400" />
             </div>
             <div>
-              <h3 className="text-white font-semibold">Withdraw / Convert</h3>
+              <h3 className="text-gray-900 font-semibold">Withdraw / Convert</h3>
               <p className="text-gray-400 text-xs">Cash out your credits</p>
             </div>
           </div>
@@ -234,7 +234,7 @@ export default function Wallet() {
               <ArrowUpRight size={20} className="text-cyan-400" />
             </div>
             <div>
-              <h3 className="text-white font-semibold">Earn Credits</h3>
+              <h3 className="text-gray-900 font-semibold">Earn Credits</h3>
               <p className="text-gray-400 text-xs">Follow users, complete quests</p>
             </div>
           </div>
@@ -243,13 +243,13 @@ export default function Wallet() {
 
       <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6">
         <div className="flex items-center justify-between mb-4 gap-2">
-          <h3 className="text-white font-semibold flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold flex items-center gap-2">
             <BarChart3 size={18} /> Transaction History
           </h3>
           <select
             value={filterType}
             onChange={e => setFilterType(e.target.value)}
-            className="bg-dark-700 border border-dark-500 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none appearance-none cursor-pointer"
+            className="bg-dark-700 border border-dark-500 rounded-lg px-3 py-1.5 text-xs text-gray-900 focus:outline-none appearance-none cursor-pointer"
           >
             <option value="all">All Types</option>
             <option value="earned">Earned</option>
@@ -271,7 +271,7 @@ export default function Wallet() {
                  <TrendingDown size={18} className="text-red-400" />}
               </div>
               <div className="flex-1">
-                <p className="text-white text-sm font-medium">{tx.action}</p>
+                <p className="text-gray-900 text-sm font-medium">{tx.action}</p>
                 <p className="text-gray-500 text-xs flex items-center gap-1">
                   <Clock size={12} /> {tx.timestamp}
                 </p>
@@ -287,7 +287,7 @@ export default function Wallet() {
       </div>
 
       <div className="bg-dark-800 border border-dark-600 rounded-2xl p-6">
-        <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
+        <h3 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
           <Gift size={18} className="text-purple-400" /> Premium Membership
         </h3>
         <p className="text-gray-400 text-sm mb-4">Upgrade for faster growth and priority features.</p>
@@ -299,8 +299,8 @@ export default function Wallet() {
           ].map((plan, i) => (
             <div key={i} className={`bg-dark-700 border rounded-xl p-5 ${i === 1 ? 'border-blue-accent/30' : 'border-dark-500'}`}>
               {i === 1 && <span className="text-xs text-blue-accent font-semibold mb-2 block">Most Popular</span>}
-              <h4 className="text-white font-bold text-lg">{plan.name}</h4>
-              <p className="text-2xl font-bold text-white mt-1">${plan.price}<span className="text-gray-500 text-sm font-normal">/mo</span></p>
+              <h4 className="text-gray-900 font-bold text-lg">{plan.name}</h4>
+              <p className="text-2xl font-bold text-gray-900 mt-1">${plan.price}<span className="text-gray-500 text-sm font-normal">/mo</span></p>
               <ul className="mt-3 space-y-1.5">
                 {plan.features.map((f, j) => (
                   <li key={j} className="text-gray-400 text-xs flex items-center gap-1.5">
@@ -310,7 +310,7 @@ export default function Wallet() {
               </ul>
               <button className={`w-full mt-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 i === 0 ? 'bg-dark-600 text-gray-400' :
-                i === 1 ? 'bg-blue-accent text-dark-900 hover:bg-blue-accent/90' :
+                i === 1 ? 'bg-blue-accent text-white hover:bg-blue-accent/90' :
                 'bg-amber-400/10 text-amber-400 hover:bg-amber-400/20'
               }`}>
                 {i === 0 ? 'Current Plan' : 'Upgrade'}

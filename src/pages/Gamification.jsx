@@ -32,14 +32,14 @@ function TierUpModal({ celebration, onDismiss }) {
       <div className="bg-dark-800 border border-dark-600 rounded-2xl p-8 max-w-sm w-full mx-4 text-center relative animate-in">
         <button
           onClick={onDismiss}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 transition-colors"
         >
           <X size={20} />
         </button>
         <div className="w-20 h-20 rounded-full bg-amber-400/10 flex items-center justify-center mx-auto mb-4">
           <Sparkles size={40} className="text-amber-400" />
         </div>
-        <h3 className="text-2xl font-bold text-white mb-2">Tier Up!</h3>
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">Tier Up!</h3>
         <p className="text-gray-400 mb-6">
           You leveled up from{' '}
           <span className={`font-semibold ${tierColors[celebration.from]}`}>
@@ -61,7 +61,7 @@ function TierUpModal({ celebration, onDismiss }) {
         </p>
         <button
           onClick={onDismiss}
-          className="w-full bg-blue-accent text-dark-900 font-semibold py-3 rounded-xl hover:bg-blue-accent/90 transition-colors"
+          className="w-full bg-blue-accent text-white font-semibold py-3 rounded-xl hover:bg-blue-accent/90 transition-colors"
         >
           Awesome!
         </button>
@@ -116,7 +116,7 @@ export default function Gamification() {
       />
 
       <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
           <Trophy size={24} className="text-amber-400" /> Gamification
         </h2>
         <p className="text-gray-400 text-xs sm:text-sm mt-1">Compete, earn tiers, and complete quests for bonus credits</p>
@@ -135,21 +135,21 @@ export default function Gamification() {
             <Flame size={18} className="text-orange-400" />
             <span className="text-gray-400 text-xs sm:text-sm">Current Streak</span>
           </div>
-          <p className="text-xl sm:text-2xl font-bold text-white">{USER_STATS.streak} days</p>
+          <p className="text-xl sm:text-2xl font-bold text-gray-900">{USER_STATS.streak} days</p>
         </div>
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-2 mb-2">
             <Target size={18} className="text-cyan-400" />
             <span className="text-gray-400 text-xs sm:text-sm">Quests Done</span>
           </div>
-          <p className="text-xl sm:text-2xl font-bold text-white">{Object.keys(claimedQuests).length + 18}</p>
+          <p className="text-xl sm:text-2xl font-bold text-gray-900">{Object.keys(claimedQuests).length + 18}</p>
         </div>
         <div className="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5">
           <div className="flex items-center gap-2 mb-2">
             <Gift size={18} className="text-purple-400" />
             <span className="text-gray-400 text-xs sm:text-sm">Bonus Earned</span>
           </div>
-          <p className="text-xl sm:text-2xl font-bold text-white">1,250 cr</p>
+          <p className="text-xl sm:text-2xl font-bold text-gray-900">1,250 cr</p>
         </div>
       </div>
 
@@ -164,7 +164,7 @@ export default function Gamification() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
-              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-white'
+              activeTab === tab.id ? 'bg-blue-accent/10 text-blue-accent' : 'text-gray-400 hover:text-gray-900'
             }`}
           >
             {tab.label}
@@ -175,7 +175,7 @@ export default function Gamification() {
       {activeTab === 'leaderboard' && (
         <div className="bg-dark-800 border border-dark-600 rounded-2xl overflow-hidden">
           <div className="p-5 border-b border-dark-600 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <h3 className="text-white font-semibold flex items-center gap-2">
+            <h3 className="text-gray-900 font-semibold flex items-center gap-2">
               <Medal size={18} className="text-amber-400" /> {rangeLabels[leaderboardRange]} Top Gainers
             </h3>
             <div className="flex gap-1 bg-dark-700 p-1 rounded-lg">
@@ -190,7 +190,7 @@ export default function Gamification() {
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                     leaderboardRange === range.id
                       ? 'bg-blue-accent/10 text-blue-accent'
-                      : 'text-gray-400 hover:text-white'
+                      : 'text-gray-400 hover:text-gray-900'
                   }`}
                 >
                   <range.icon size={12} />
@@ -203,13 +203,13 @@ export default function Gamification() {
             {leaderboardData.map((user, i) => (
               <div key={user.id} className={`flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-4 ${i < 3 ? 'bg-dark-700/50' : ''}`}>
                 <span className={`w-8 text-center font-bold ${
-                  i === 0 ? 'text-amber-400 text-lg' : i === 1 ? 'text-gray-300 text-lg' : i === 2 ? 'text-orange-400 text-lg' : 'text-gray-500'
+                  i === 0 ? 'text-amber-400 text-lg' : i === 1 ? 'text-gray-700 text-lg' : i === 2 ? 'text-orange-400 text-lg' : 'text-gray-500'
                 }`}>
                   {i < 3 ? ['🥇', '🥈', '🥉'][i] : `#${i + 1}`}
                 </span>
                 <img src={user.avatar} alt="" className="w-10 h-10 rounded-full object-cover" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-white text-sm font-medium truncate">{user.displayName}</p>
+                  <p className="text-gray-900 text-sm font-medium truncate">{user.displayName}</p>
                   <p className="text-gray-500 text-xs">@{user.username}</p>
                 </div>
                 <div className="hidden md:block"><TierBadge tier={user.tier} /></div>
@@ -228,7 +228,7 @@ export default function Gamification() {
               <span className="w-8 text-center font-bold text-blue-accent">#{currentUserRank}</span>
               <img src={currentUserEntry.avatar} alt="" className="w-10 h-10 rounded-full object-cover ring-2 ring-blue-accent/40" />
               <div className="flex-1 min-w-0">
-                <p className="text-white text-sm font-medium truncate flex items-center gap-1.5">
+                <p className="text-gray-900 text-sm font-medium truncate flex items-center gap-1.5">
                   {currentUserEntry.displayName}
                   <span className="text-[10px] bg-blue-accent/10 text-blue-accent px-1.5 py-0.5 rounded-full font-medium">You</span>
                 </p>
@@ -270,7 +270,7 @@ export default function Gamification() {
                       <Gift size={14} /> +{quest.reward} cr
                     </span>
                   </div>
-                  <h4 className="text-white font-medium mb-3">{quest.title}</h4>
+                  <h4 className="text-gray-900 font-medium mb-3">{quest.title}</h4>
                   <div className="w-full bg-dark-500 rounded-full h-2 mb-2">
                     <div
                       className="progress-bar h-2"
@@ -286,7 +286,7 @@ export default function Gamification() {
                     ) : isComplete ? (
                       <button
                         onClick={() => handleClaimQuest(quest)}
-                        className="text-xs bg-blue-accent text-dark-900 font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-accent/90 transition-colors cursor-pointer"
+                        className="text-xs bg-blue-accent text-white font-semibold px-3 py-1.5 rounded-lg hover:bg-blue-accent/90 transition-colors cursor-pointer"
                       >
                         Claim Reward
                       </button>
@@ -319,11 +319,11 @@ export default function Gamification() {
                   <span className="text-blue-accent text-xs font-medium bg-blue-accent/10 px-2 py-0.5 rounded-full">Current</span>
                 )}
               </div>
-              <h3 className="text-white font-semibold text-lg mb-1">{t.name}</h3>
+              <h3 className="text-gray-900 font-semibold text-lg mb-1">{t.name}</h3>
               <p className="text-gray-400 text-sm mb-4">{t.desc}</p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                 {t.perks.map((perk, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-gray-300">
+                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
                     <Zap size={12} className={`text-${t.color}`} />
                     {perk}
                   </div>
@@ -342,21 +342,21 @@ export default function Gamification() {
                 <Flame size={28} className="text-orange-400" />
               </div>
               <div className="min-w-0">
-                <p className="text-2xl sm:text-3xl font-bold text-white">{USER_STATS.streak} Day Streak</p>
+                <p className="text-2xl sm:text-3xl font-bold text-gray-900">{USER_STATS.streak} Day Streak</p>
                 <p className="text-gray-400 text-xs sm:text-sm">Keep following daily to maintain your streak!</p>
               </div>
             </div>
 
             <div className="flex items-center justify-between mb-4 bg-dark-700 rounded-xl p-4">
               <div>
-                <p className="text-white text-sm font-medium">Daily Streak Check-in</p>
+                <p className="text-gray-900 text-sm font-medium">Daily Streak Check-in</p>
                 <p className="text-gray-500 text-xs">Follow at least 1 user today to maintain your streak</p>
               </div>
               <button
                 onClick={() => {
                   notify('Daily streak maintained! Keep it up!', 'success')
                 }}
-                className="bg-blue-accent text-dark-900 font-semibold text-sm px-4 py-2 rounded-lg hover:bg-blue-accent/90 transition-colors shrink-0"
+                className="bg-blue-accent text-white font-semibold text-sm px-4 py-2 rounded-lg hover:bg-blue-accent/90 transition-colors shrink-0"
               >
                 Claim Today
               </button>
@@ -389,7 +389,7 @@ export default function Gamification() {
                   isClaimed ? 'border-blue-accent/30' : 'border-dark-600'
                 }`}>
                   <div className="text-center">
-                    <p className="text-3xl font-bold text-white mb-1">{milestone.days}</p>
+                    <p className="text-3xl font-bold text-gray-900 mb-1">{milestone.days}</p>
                     <p className="text-gray-400 text-sm mb-3">day streak</p>
                     <p className="text-amber-400 font-bold text-lg mb-3">+{milestone.reward} cr</p>
                     {isClaimed && (
@@ -398,7 +398,7 @@ export default function Gamification() {
                     {isClaimable && (
                       <button
                         onClick={() => handleClaimStreak(milestone)}
-                        className="text-sm bg-blue-accent text-dark-900 font-semibold px-4 py-2 rounded-lg hover:bg-blue-accent/90 transition-colors cursor-pointer"
+                        className="text-sm bg-blue-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-blue-accent/90 transition-colors cursor-pointer"
                       >
                         Claim Now
                       </button>

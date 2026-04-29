@@ -31,7 +31,7 @@ export default function MobileNav() {
               `flex-1 basis-0 min-w-0 flex flex-col items-center justify-center gap-0.5 py-1.5 px-0.5 transition-colors ${
                 isActive
                   ? 'text-blue-accent'
-                  : 'text-gray-400 hover:text-white'
+                  : 'text-gray-400 hover:text-gray-900'
               }`
             }
           >

@@ -1,17 +1,28 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-900: #0a0a0f;
-  --color-dark-800: #111118;
-  --color-dark-700: #1a1a24;
-  --color-dark-600: #22222e;
-  --color-dark-500: #2a2a38;
-  --color-dark-400: #3a3a4a;
-  --color-blue-accent: #1e90ff;
-  --color-blue-glow: #1e90ff40;
-  --color-blue-dark: #0a2440;
-  --color-amber-accent: #ffb800;
-  --color-red-accent: #ff4444;
+  /* Dark-* tokens are remapped to a light, GrowthCore-style palette.
+     Keeping the original token names lets every existing component
+     pick up the new look without per-file refactors. */
+  --color-dark-900: #f8f9ff;   /* page background */
+  --color-dark-800: #ffffff;   /* card surface */
+  --color-dark-700: #f3f4f6;   /* subtle surface */
+  --color-dark-600: #e5e7eb;   /* borders */
+  --color-dark-500: #e5e7eb;   /* borders */
+  --color-dark-400: #d1d5db;   /* hairline / input borders */
+
+  /* Accent is now GrowthCore primary red */
+  --color-blue-accent: #af101a;
+  --color-blue-glow: rgba(175, 16, 26, 0.30);
+  --color-blue-dark: #fff2f0;
+  --color-amber-accent: #ea580c;
+  --color-red-accent: #dc2626;
+
+  --color-primary: #af101a;
+  --color-primary-700: #931017;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f3f4f6;
+
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
@@ -23,8 +34,8 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-dark-900);
-  color: #e0e0e0;
+  background-color: #f9fafb;
+  color: #121c28;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -35,16 +46,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-dark-800);
+  background: #f3f4f6;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-dark-500);
+  background: #d1d5db;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-dark-400);
+  background: #9ca3af;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -57,11 +68,11 @@ body {
 }
 
 .glow-blue {
-  box-shadow: 0 0 20px var(--color-blue-glow), 0 0 40px var(--color-blue-glow);
+  box-shadow: 0 8px 24px rgba(175, 16, 26, 0.18);
 }
 
 .glow-text {
-  text-shadow: 0 0 10px var(--color-blue-glow);
+  text-shadow: 0 0 10px rgba(175, 16, 26, 0.25);
 }
 
 .card-hover {
@@ -69,8 +80,8 @@ body {
 }
 
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(30, 144, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
 
 .gradient-border {
@@ -83,7 +94,7 @@ body {
   inset: 0;
   padding: 1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #1e90ff, #00c9ff, #1e90ff);
+  background: linear-gradient(135deg, #af101a, #f97316, #af101a);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -100,7 +111,7 @@ body {
 }
 
 .shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(30, 144, 255, 0.05) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(175, 16, 26, 0.05) 50%, transparent 100%);
   background-size: 200% 100%;
   animation: shimmer 3s infinite;
 }
@@ -115,14 +126,14 @@ body {
 }
 
 .progress-bar {
-  background: linear-gradient(90deg, #1e90ff, #00c9ff);
+  background: linear-gradient(90deg, #af101a, #f97316);
   border-radius: 9999px;
   transition: width 0.5s ease;
 }
 
-.tier-rookie { border-color: #888; }
-.tier-influencer { border-color: #1e90ff; }
-.tier-legend { border-color: #ffd700; }
+.tier-rookie { border-color: #9ca3af; }
+.tier-influencer { border-color: #af101a; }
+.tier-legend { border-color: #f59e0b; }
 
 @keyframes slide-in {
   from { opacity: 0; transform: translateX(40px); }
