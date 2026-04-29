@@ -348,8 +348,8 @@ function UserCards() {
           See All <ChevronRight size={16} />
         </Link>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
-        {USERS.slice(0, 8).map(user => (
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+        {USERS.slice(0, 6).map(user => (
           <UserCard key={user.id} user={user} />
         ))}
       </div>
