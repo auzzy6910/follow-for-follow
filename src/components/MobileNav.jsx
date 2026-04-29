@@ -18,7 +18,7 @@ const items = [
 export default function MobileNav() {
   return (
     <nav
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-dark-800/95 backdrop-blur border-t border-dark-600"
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 glass-strong border-t border-white/10"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <div className="flex w-full">
@@ -28,16 +28,26 @@ export default function MobileNav() {
             to={path}
             end={path === '/'}
             className={({ isActive }) =>
-              `flex-1 basis-0 min-w-0 flex flex-col items-center justify-center gap-0.5 py-1.5 px-0.5 transition-colors ${
+              `relative flex-1 basis-0 min-w-0 flex flex-col items-center justify-center gap-0.5 py-2 px-0.5 transition-colors ${
                 isActive
-                  ? 'text-blue-accent'
+                  ? 'text-violet-accent'
                   : 'text-gray-400 hover:text-white'
               }`
             }
           >
             {({ isActive }) => (
               <>
-                <Icon size={18} className={isActive ? 'drop-shadow-[0_0_6px_var(--color-blue-glow)]' : ''} />
+                {isActive && (
+                  <span
+                    aria-hidden
+                    className="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 w-8 rounded-full gradient-accent"
+                  />
+                )}
+                <Icon
+                  size={20}
+                  strokeWidth={1.75}
+                  className={isActive ? 'drop-shadow-[0_0_8px_rgba(139,92,246,0.7)]' : ''}
+                />
                 <span className="text-[9px] xs:text-[10px] font-medium leading-none truncate max-w-full">{label}</span>
               </>
             )}

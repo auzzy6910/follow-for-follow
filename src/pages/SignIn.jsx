@@ -53,16 +53,31 @@ export default function SignIn() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-dark-900 px-4 py-10">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-6">
-          <div className="inline-flex w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-accent to-cyan-400 items-center justify-center text-dark-900 font-bold text-2xl mb-3">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-10 overflow-hidden">
+      {/* Glowing gradient halo behind the headline */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(40rem 24rem at 50% 18%, rgba(139,92,246,0.35), transparent 60%), radial-gradient(36rem 24rem at 50% 60%, rgba(59,130,246,0.22), transparent 65%)',
+          filter: 'blur(20px)',
+        }}
+      />
+
+      <div className="relative w-full max-w-md">
+        <div className="text-center mb-7">
+          <div className="inline-flex w-14 h-14 rounded-2xl gradient-accent items-center justify-center text-white font-extrabold text-2xl mb-4 shadow-[0_0_28px_rgba(139,92,246,0.55)]">
             F4F
           </div>
-          <h1 className="text-2xl font-bold text-white">
-            {isSignUp ? 'Create your account' : 'Welcome back'}
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            {isSignUp ? (
+              <>Create your <span className="gradient-text">account</span></>
+            ) : (
+              <>Welcome <span className="gradient-text">back</span></>
+            )}
           </h1>
-          <p className="text-gray-400 text-sm mt-1">
+          <p className="text-gray-400 text-sm mt-2">
             {isSignUp
               ? 'Join Follow for Follow to start growing your audience.'
               : 'Sign in to access your dashboard.'}
@@ -71,7 +86,7 @@ export default function SignIn() {
 
         <form
           onSubmit={handleSubmit}
-          className="bg-dark-800 border border-dark-600 rounded-2xl p-5 sm:p-6 space-y-4"
+          className="glass-strong rounded-2xl p-5 sm:p-6 space-y-4"
         >
           <div>
             <label
@@ -134,7 +149,7 @@ export default function SignIn() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full inline-flex items-center justify-center gap-2 bg-blue-accent text-dark-900 font-semibold py-2.5 rounded-xl hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+            className="gradient-accent w-full inline-flex items-center justify-center gap-2 text-white font-semibold py-2.5 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed transition-all"
           >
             {submitting ? (
               <Loader2 size={16} className="animate-spin" />
@@ -151,7 +166,7 @@ export default function SignIn() {
             <button
               type="button"
               onClick={toggleFlow}
-              className="text-blue-accent font-medium hover:underline"
+              className="gradient-text font-semibold hover:underline"
             >
               {isSignUp ? 'Sign in' : 'Sign up'}
             </button>

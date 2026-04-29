@@ -22,6 +22,15 @@ const bottomItems = [
   { path: '/wallet', label: 'Wallet', icon: Wallet },
 ]
 
+const linkBaseClass =
+  'relative flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group'
+
+const activeClass =
+  'text-white bg-gradient-to-r from-violet-accent/20 via-indigo-500/15 to-blue-electric/10 border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]'
+
+const inactiveClass =
+  'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
+
 export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobileClose }) {
   const { signOut } = useAuthActions()
   const { isAuthenticated, openModal } = useAuthGuard()
@@ -34,28 +43,31 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
       {/* Mobile backdrop */}
       <div
         onClick={onMobileClose}
-        className={`lg:hidden fixed inset-0 z-40 bg-black/60 transition-opacity ${
+        className={`lg:hidden fixed inset-0 z-40 bg-black/70 backdrop-blur-sm transition-opacity ${
           mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         aria-hidden
       />
 
       <aside
-        className={`bg-dark-800 border-r border-dark-600 flex flex-col shrink-0
+        className={`glass-strong flex flex-col shrink-0
           fixed lg:static top-0 left-0 z-50 h-full w-64 lg:w-60
           transition-transform duration-300 lg:translate-x-0
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           ${desktopHiddenClass}`}
       >
-        <div className="flex items-center gap-3 px-4 h-16 border-b border-dark-600">
-          <img
-            src="/logo.png"
-            alt="Follow for Follow"
-            className="w-10 h-10 rounded-xl shrink-0 object-cover"
-          />
+        <div className="flex items-center gap-3 px-4 h-16 border-b border-white/10">
+          <div className="relative shrink-0">
+            <div className="absolute inset-0 rounded-xl gradient-accent opacity-60 blur-md" aria-hidden />
+            <img
+              src="/logo.png"
+              alt="Follow for Follow"
+              className="relative w-10 h-10 rounded-xl object-cover ring-1 ring-white/15"
+            />
+          </div>
           <div className="overflow-hidden">
-            <h1 className="text-white font-bold text-lg leading-tight whitespace-nowrap">Follow</h1>
-            <p className="text-blue-accent text-xs font-medium leading-tight whitespace-nowrap">for Follow</p>
+            <h1 className="text-white font-extrabold text-lg leading-tight whitespace-nowrap tracking-tight">Follow</h1>
+            <p className="gradient-text text-xs font-semibold leading-tight whitespace-nowrap">for Follow</p>
           </div>
           {/* Mobile close button */}
           <button
@@ -83,51 +95,65 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
               end={path === '/'}
               onClick={onMobileClose}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
-                  isActive
-                    ? 'bg-blue-accent/10 text-blue-accent'
-                    : 'text-gray-400 hover:text-white hover:bg-dark-600'
-                }`
+                `${linkBaseClass} ${isActive ? activeClass : inactiveClass}`
               }
             >
-              <Icon size={20} className="shrink-0" />
-              <span className="text-sm font-medium whitespace-nowrap">{label}</span>
+              {({ isActive }) => (
+                <>
+                  {isActive && (
+                    <span
+                      aria-hidden
+                      className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-full gradient-accent"
+                    />
+                  )}
+                  <Icon
+                    size={20}
+                    strokeWidth={1.75}
+                    className={`shrink-0 ${isActive ? 'text-violet-accent drop-shadow-[0_0_6px_rgba(139,92,246,0.6)]' : ''}`}
+                  />
+                  <span className="text-sm font-medium whitespace-nowrap">{label}</span>
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
 
-        <div className="py-4 px-3 space-y-1 border-t border-dark-600">
+        <div className="py-4 px-3 space-y-1 border-t border-white/10">
           {bottomItems.map(({ path, label, icon: Icon }) => (
             <NavLink
               key={path}
               to={path}
               onClick={onMobileClose}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${
-                  isActive
-                    ? 'bg-blue-accent/10 text-blue-accent'
-                    : 'text-gray-400 hover:text-white hover:bg-dark-600'
-                }`
+                `${linkBaseClass} ${isActive ? activeClass : inactiveClass}`
               }
             >
-              <Icon size={20} className="shrink-0" />
-              <span className="text-sm font-medium">{label}</span>
+              {({ isActive }) => (
+                <>
+                  <Icon
+                    size={20}
+                    strokeWidth={1.75}
+                    className={`shrink-0 ${isActive ? 'text-violet-accent' : ''}`}
+                  />
+                  <span className="text-sm font-medium">{label}</span>
+                </>
+              )}
             </NavLink>
           ))}
           {isAuthenticated ? (
             <button
               onClick={() => void signOut()}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200 w-full"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-400/10 border border-transparent hover:border-red-400/20 transition-all duration-200 w-full"
             >
-              <LogOut size={20} className="shrink-0" />
+              <LogOut size={20} strokeWidth={1.75} className="shrink-0" />
               <span className="text-sm font-medium">Logout</span>
             </button>
           ) : (
             <button
               onClick={openModal}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:text-blue-accent hover:bg-blue-accent/10 transition-all duration-200 w-full"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-200 w-full"
             >
-              <LogIn size={20} className="shrink-0" />
+              <LogIn size={20} strokeWidth={1.75} className="shrink-0" />
               <span className="text-sm font-medium">Sign in</span>
             </button>
           )}
