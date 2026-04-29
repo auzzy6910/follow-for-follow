@@ -1,4 +1,4 @@
-import { Bell, Menu, Search, Wallet, Flame, LogOut, LogIn } from 'lucide-react'
+import { Bell, Menu, Search, Wallet, Flame, LogOut, LogIn, User } from 'lucide-react'
 import { useAuthActions } from '@convex-dev/auth/react'
 import { useAppContext } from '../context/useAppContext'
 import { useAuthGuard } from '../context/useAuthGuard'
@@ -35,27 +35,36 @@ export default function Header({ onSidebarToggle }) {
         />
       </div>
 
-      <div className="ml-auto flex items-center gap-3 sm:gap-4">
-        <div className="hidden sm:flex items-center gap-4 text-sm font-semibold">
-          <div className="flex items-center gap-1.5 text-[#af101a]">
-            <Wallet size={16} strokeWidth={2.5} />
-            <span>{userStats.totalCredits.toLocaleString()}</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-orange-600">
-            <Flame size={16} strokeWidth={2.5} />
-            <span>{userStats.streak} days</span>
-          </div>
+      <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
+        <div
+          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-[#af101a]/10 text-[#af101a] text-sm font-semibold shrink-0"
+          title="Credits"
+        >
+          <Wallet size={16} strokeWidth={2.5} />
+          <span className="tabular-nums">{userStats.totalCredits.toLocaleString()}</span>
         </div>
 
-        <div className="relative">
+        <div
+          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-orange-100 text-orange-600 text-sm font-semibold shrink-0"
+          title="Daily streak"
+        >
+          <Flame size={16} strokeWidth={2.5} />
+          <span className="tabular-nums">
+            {userStats.streak}
+            <span className="hidden sm:inline"> days</span>
+            <span className="sm:hidden">d</span>
+          </span>
+        </div>
+
+        <div className="relative shrink-0">
           <button
             type="button"
             onClick={toggleNotificationCenter}
-            className="relative w-9 h-9 rounded-full text-gray-600 hover:text-[#af101a] flex items-center justify-center transition-colors shrink-0"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-[#af101a] transition-colors"
             aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`}
             aria-haspopup="dialog"
           >
-            <Bell size={20} />
+            <Bell size={18} />
             {unreadCount > 0 && (
               <span className="absolute -top-0.5 -right-0.5 min-w-4 h-4 px-1 rounded-full bg-[#af101a] text-white text-[10px] font-bold flex items-center justify-center">
                 {unreadCount > 9 ? '9+' : unreadCount}
@@ -71,7 +80,7 @@ export default function Header({ onSidebarToggle }) {
             onClick={() => void signOut()}
             aria-label="Sign out"
             title="Sign out"
-            className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
+            className="inline-flex items-center gap-1.5 h-9 px-3 sm:px-4 rounded-full bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
           >
             <LogOut size={16} />
             <span className="hidden sm:inline">Sign out</span>
@@ -80,7 +89,7 @@ export default function Header({ onSidebarToggle }) {
           <button
             type="button"
             onClick={openModal}
-            className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
+            className="inline-flex items-center gap-1.5 h-9 px-3 sm:px-4 rounded-full bg-[#af101a] hover:bg-[#931017] text-white text-sm font-bold transition-all shrink-0"
           >
             <LogIn size={16} />
             <span className="hidden sm:inline">Sign In</span>
@@ -88,10 +97,12 @@ export default function Header({ onSidebarToggle }) {
         )}
 
         <button
-          className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 shrink-0"
+          type="button"
           aria-label="Profile"
+          title="Profile"
+          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-[#af101a] border border-gray-200 transition-colors shrink-0"
         >
-          <img src="/logo.png" alt="Profile" className="w-full h-full object-cover" />
+          <User size={18} />
         </button>
       </div>
     </header>
