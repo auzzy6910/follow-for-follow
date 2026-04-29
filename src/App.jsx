@@ -21,6 +21,7 @@ import FollowOverlay from './components/FollowOverlay'
 import EscrowDrawer from './components/EscrowDrawer'
 import WarmingWizard from './components/WarmingWizard'
 import AuthModal from './components/AuthModal'
+import InSiteLinkViewer from './components/InSiteLinkViewer'
 import { AuthGuardProvider } from './context/AuthGuardContext'
 
 function AppShell() {
@@ -63,6 +64,7 @@ function AppShell() {
       <EscrowDrawer />
       <WarmingWizard />
       <AuthModal />
+      <InSiteLinkViewer />
     </div>
   )
 }

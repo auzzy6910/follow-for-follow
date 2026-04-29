@@ -4,7 +4,6 @@ import {
   useUsers,
   useTribes,
   useUserStats,
-  useLeaderboard,
   useQuests,
   useSavedSearches,
   useDeleteSearch,
@@ -13,6 +12,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom'
 import UserCard from '../components/UserCard'
 import OwnerFeaturedHero from '../components/OwnerFeaturedHero'
+import PostedAccountsSection from '../components/PostedAccountsSection'
 import { useAppContext } from '../context/useAppContext'
 
 function formatCooldownRemaining(cooldownUntil) {
@@ -114,30 +114,86 @@ function FeaturedHero() {
   return <OwnerFeaturedHero />
 }
 
-function TopGainers() {
-  const LEADERBOARD = useLeaderboard()
+function FollowForFollowSidebar() {
+  const {
+    f4fPosts,
+    postFollows,
+    setPostFollow,
+    openLinkViewer,
+    userStats,
+  } = useAppContext()
   const [visible, setVisible] = useState(false)
+  const linkPosts = f4fPosts.filter(p => p.type === 'link').slice(0, 5)
+
   return (
     <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-semibold">Top Gainers</h3>
-        <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="top gainers" />
+        <div className="min-w-0">
+          <h3 className="text-white font-semibold">Follow for Follow</h3>
+          <p className="text-gray-500 text-[11px]">Accounts to follow</p>
+        </div>
+        <MobileVisibilityToggle
+          visible={visible}
+          onToggle={() => setVisible(v => !v)}
+          label="follow for follow"
+        />
       </div>
       <div className={`space-y-3 ${visible ? 'block' : 'hidden md:block'}`}>
-        {LEADERBOARD.slice(0, 5).map((user, i) => (
-          <div key={user.id} className="flex items-center gap-3">
-            <span className="text-gray-500 text-sm font-medium w-5">{i + 1}</span>
-            <img src={user.avatar} alt="" className="w-9 h-9 rounded-full object-cover" />
-            <div className="flex-1 min-w-0">
-              <p className="text-white text-sm font-medium truncate">{user.displayName}</p>
-              <p className="text-gray-500 text-xs">@{user.username}</p>
+        {linkPosts.length === 0 && (
+          <p className="text-gray-500 text-xs">
+            No accounts posted yet. Use the <strong>Post link</strong> button below to add yours.
+          </p>
+        )}
+        {linkPosts.map(post => {
+          const follow = postFollows[post.id]
+          const isFollowing = !!follow?.followed
+          const isCounted = !!follow?.counted
+          const userFollowers = userStats.followers ?? 0
+          const meets =
+            post.paid || !post.minFollowers || userFollowers >= post.minFollowers
+          return (
+            <div
+              key={post.id}
+              className="flex items-center gap-2"
+              role="group"
+            >
+              <input
+                type="checkbox"
+                checked={isFollowing}
+                onChange={e => setPostFollow(post, e.target.checked)}
+                aria-label={`Mark @${post.username} ${isFollowing ? 'unfollowed' : 'followed'}`}
+                className="w-4 h-4 rounded border-2 border-dark-400 bg-dark-700 accent-blue-accent cursor-pointer"
+              />
+              <button
+                type="button"
+                onClick={() => openLinkViewer(post.id)}
+                className="flex-1 min-w-0 text-left"
+                aria-label={`Open @${post.username}`}
+              >
+                <p className="text-white text-sm font-medium truncate">
+                  @{post.username}
+                </p>
+                <p className="text-gray-500 text-[11px] truncate">
+                  {post.paid
+                    ? 'BUY · paid follow'
+                    : `${meets ? '✓' : '✗'} min ${post.minFollowers.toLocaleString?.() || post.minFollowers}`}
+                </p>
+              </button>
+              {post.paid ? (
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 bg-amber-400/15 border border-amber-400/40 rounded-full px-1.5 py-0.5">
+                  Buy
+                </span>
+              ) : (
+                <span className="text-[10px] font-bold text-blue-accent bg-blue-accent/15 border border-blue-accent/40 rounded-full px-1.5 py-0.5">
+                  +{post.rewardCredits}cr
+                </span>
+              )}
+              {isFollowing && !isCounted && (
+                <span className="text-[10px] text-amber-300">!</span>
+              )}
             </div>
-            <div className="text-right">
-              <p className="text-blue-accent text-sm font-semibold">+{user.weeklyFollowers.toLocaleString()}</p>
-              <p className="text-gray-500 text-xs">this week</p>
-            </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
@@ -400,9 +456,11 @@ export default function Dashboard() {
           <FeaturedHero />
         </div>
         <div className="hidden md:block">
-          <TopGainers />
+          <FollowForFollowSidebar />
         </div>
       </div>
+
+      <PostedAccountsSection />
 
       <SpotlightUsers />
 
