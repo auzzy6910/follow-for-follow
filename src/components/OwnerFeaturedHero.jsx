@@ -29,19 +29,20 @@ function formatFollowers(n) {
 
 function FeaturedCard({ user, isOwner }) {
   return (
-    <div className="relative rounded-2xl overflow-hidden bg-dark-800 border border-dark-600">
+    <div className="hero-glow relative rounded-2xl overflow-hidden bg-dark-800 border border-white/10">
       <img src={user.cover} alt="" className="w-full h-48 sm:h-72 object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/60 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/70 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-accent/10 via-transparent to-blue-electric/10" />
       <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
         <div className="flex items-end gap-3 sm:gap-4">
           <img
             src={user.avatar}
             alt={user.displayName}
-            className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl border-2 border-blue-accent object-cover shrink-0"
+            className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl border-2 border-violet-accent object-cover shrink-0 shadow-[0_0_24px_rgba(139,92,246,0.45)]"
           />
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-[10px] sm:text-xs font-semibold text-dark-900 bg-blue-accent px-2 py-0.5 rounded-full">
+              <span className="text-[10px] sm:text-xs font-semibold text-white gradient-accent px-2 py-0.5 rounded-full">
                 {isOwner ? 'YOUR PROFILE' : 'FEATURED'}
               </span>
               <span className="text-[10px] sm:text-xs font-medium text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full flex items-center gap-1">
@@ -73,29 +74,29 @@ function FeaturedCard({ user, isOwner }) {
 function SignInPrompt() {
   const { requireAuth } = useAuthGuard()
   return (
-    <div className="rounded-2xl bg-dark-800 border border-dark-600 p-6 sm:p-8 text-center">
-      <div className="inline-flex w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-accent to-cyan-400 items-center justify-center text-dark-900 font-bold text-xl mb-3">
+    <div className="hero-glow relative overflow-hidden rounded-2xl bg-dark-800 border border-white/10 p-6 sm:p-10 text-center">
+      <div className="inline-flex w-12 h-12 rounded-2xl gradient-accent items-center justify-center text-white font-extrabold text-xl mb-4 shadow-[0_0_24px_rgba(139,92,246,0.5)]">
         F4F
       </div>
-      <h2 className="text-lg sm:text-xl font-bold text-white">
-        Sign up to claim your featured spot
+      <h2 className="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
+        Claim your <span className="gradient-text">featured spot</span>
       </h2>
-      <p className="text-gray-400 text-sm mt-1 max-w-md mx-auto">
+      <p className="text-gray-400 text-sm sm:text-base mt-2 max-w-md mx-auto">
         Create an account to make this section yours. Your display name,
         username, bio, and avatar will appear here as the featured profile.
       </p>
-      <div className="flex items-center justify-center gap-2 mt-5">
+      <div className="flex items-center justify-center gap-2 mt-6">
         <button
           type="button"
           onClick={() => requireAuth(() => {})}
-          className="inline-flex items-center gap-1.5 bg-blue-accent text-dark-900 font-semibold text-sm px-4 py-2 rounded-xl hover:opacity-90 transition-opacity"
+          className="gradient-accent inline-flex items-center gap-1.5 text-white font-semibold text-sm px-4 py-2 rounded-lg"
         >
           <UserPlus size={16} /> Sign up
         </button>
         <button
           type="button"
           onClick={() => requireAuth(() => {})}
-          className="inline-flex items-center gap-1.5 bg-dark-700 border border-dark-500 text-gray-200 text-sm px-4 py-2 rounded-xl hover:bg-dark-600 transition-colors"
+          className="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-gray-200 text-sm px-4 py-2 rounded-lg hover:bg-white/10 hover:border-white/20 transition-all"
         >
           <LogIn size={16} /> Sign in
         </button>

@@ -47,11 +47,11 @@ export default function AuthModal() {
     <>
       <div
         onClick={closeModal}
-        className="fixed inset-0 z-[100] bg-black/60 transition-opacity"
+        className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md transition-opacity"
       />
       <div className="fixed inset-0 z-[101] flex items-center justify-center px-4">
         <div className="w-full max-w-md">
-          <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5 sm:p-6 relative">
+          <div className="glass-strong rounded-2xl p-5 sm:p-6 relative">
             <button
               type="button"
               onClick={closeModal}
@@ -62,11 +62,11 @@ export default function AuthModal() {
             </button>
 
             <div className="text-center mb-5">
-              <div className="inline-flex w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-accent to-cyan-400 items-center justify-center text-dark-900 font-bold text-xl mb-3">
+              <div className="inline-flex w-12 h-12 rounded-2xl gradient-accent items-center justify-center text-white font-extrabold text-xl mb-3 shadow-[0_0_24px_rgba(139,92,246,0.5)]">
                 F4F
               </div>
-              <h2 className="text-xl font-bold text-white">
-                {isSignUp ? 'Create your account' : 'Sign in to continue'}
+              <h2 className="text-2xl font-extrabold text-white tracking-tight">
+                {isSignUp ? <>Create your <span className="gradient-text">account</span></> : <>Sign in to <span className="gradient-text">continue</span></>}
               </h2>
               <p className="text-gray-400 text-sm mt-1">
                 {isSignUp
@@ -137,7 +137,7 @@ export default function AuthModal() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full inline-flex items-center justify-center gap-2 bg-blue-accent text-dark-900 font-semibold py-2.5 rounded-xl hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+                className="gradient-accent w-full inline-flex items-center justify-center gap-2 text-white font-semibold py-2.5 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed transition-all"
               >
                 {submitting ? (
                   <Loader2 size={16} className="animate-spin" />
@@ -154,7 +154,7 @@ export default function AuthModal() {
                 <button
                   type="button"
                   onClick={toggleFlow}
-                  className="text-blue-accent font-medium hover:underline"
+                  className="gradient-text font-semibold hover:underline"
                 >
                   {isSignUp ? 'Sign in' : 'Sign up'}
                 </button>

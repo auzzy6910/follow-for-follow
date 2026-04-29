@@ -102,10 +102,10 @@ export default function UserCard({ user }) {
         <button
           onClick={handleFollow}
           disabled={isFollowing}
-          className={`flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg transition-colors flex items-center justify-center gap-1 ${
+          className={`flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg transition-all flex items-center justify-center gap-1 ${
             isFollowing
-              ? 'bg-dark-600 text-gray-300 hover:bg-dark-500'
-              : 'bg-sky-500 text-white hover:bg-sky-400'
+              ? 'bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10'
+              : 'gradient-accent text-white'
           }`}
         >
           {isFollowing ? (
@@ -119,7 +119,7 @@ export default function UserCard({ user }) {
         </button>
         <Link
           to={`/profile/${user.id}`}
-          className="flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg bg-dark-600 text-white hover:bg-dark-500 transition-colors text-center"
+          className="flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 transition-all text-center"
         >
           Profile
         </Link>
