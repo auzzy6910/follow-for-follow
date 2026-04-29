@@ -33,6 +33,8 @@ export default function UserCard({ user }) {
   const platform = PLATFORMS.find(p => p.id === user.platform)
   const owedFollowBack = pendingFollowBacks.find(fb => fb.user.id === user.id)
 
+  const profileHref = `/profile/${user.id}`
+
   const handleFollow = () => {
     requireAuth(() => followUser(user, ALL_USERS))
   }
@@ -45,70 +47,78 @@ export default function UserCard({ user }) {
   }
 
   return (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl card-hover flex flex-col items-center text-center px-3 sm:px-5 pt-5 sm:pt-6 pb-4 sm:pb-5">
-      {/* Story-ring avatar (Instagram-style gradient) */}
-      <div className={`p-[2px] sm:p-[3px] rounded-full bg-gradient-to-tr ${tierRing[user.tier] || tierRing.rookie}`}>
-        <div className="bg-dark-800 p-[2px] rounded-full">
-          <img
-            src={user.avatar}
-            alt={user.displayName}
-            className="w-16 h-16 sm:w-24 sm:h-24 rounded-full object-cover"
-          />
+    <div className="bg-dark-800 border border-dark-600 rounded-2xl card-hover flex flex-col items-center text-center px-3 sm:px-5 pt-5 sm:pt-6 pb-4 sm:pb-5 transition-colors hover:border-blue-accent/40">
+      {/* Avatar — clicking navigates to the user's profile */}
+      <Link
+        to={profileHref}
+        aria-label={`Open ${user.displayName}'s profile`}
+        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-accent rounded-full"
+      >
+        <div className={`p-[2px] sm:p-[3px] rounded-full bg-gradient-to-tr ${tierRing[user.tier] || tierRing.rookie}`}>
+          <div className="bg-dark-800 p-[2px] rounded-full">
+            <img
+              src={user.avatar}
+              alt={user.displayName}
+              className="w-16 h-16 sm:w-24 sm:h-24 rounded-full object-cover cursor-pointer"
+            />
+          </div>
         </div>
-      </div>
+      </Link>
 
-      {/* Username + verified badge */}
-      <div className="mt-3 flex items-center justify-center gap-1 min-w-0 w-full">
-        <h4 className="text-white text-sm sm:text-base font-semibold truncate min-w-0">
-          {user.username}
-        </h4>
-        {user.isVerified && (
-          <BadgeCheck size={16} className="text-sky-400 fill-sky-400/20 shrink-0" />
-        )}
-      </div>
+      {/* Username + display name + stats — also link to the profile so the
+          whole card box (apart from the action buttons) is clickable. */}
+      <Link
+        to={profileHref}
+        className="w-full mt-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-accent rounded-lg"
+      >
+        <div className="flex items-center justify-center gap-1 min-w-0 w-full">
+          <h4 className="text-white text-sm sm:text-base font-semibold truncate min-w-0 group-hover:text-blue-accent transition-colors">
+            {user.username}
+          </h4>
+          {user.isVerified && (
+            <BadgeCheck size={16} className="text-sky-400 fill-sky-400/20 shrink-0" />
+          )}
+        </div>
 
-      {/* Display name */}
-      <p className="text-gray-300 text-[11px] sm:text-xs font-medium truncate w-full">
-        {user.displayName}
-      </p>
-
-      {/* Stats row: posts | followers | following */}
-      <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-1 w-full text-white">
-        <Stat value={formatCount(user.posts ?? 0)} label="posts" />
-        <Stat value={formatCount(user.followers)} label="followers" />
-        <Stat value={formatCount(user.following ?? 0)} label="following" />
-      </div>
-
-      {/* Bio */}
-      {user.bio && (
-        <p className="hidden sm:block mt-3 text-gray-400 text-[11px] leading-snug line-clamp-2 w-full">
-          {user.bio}
+        <p className="text-gray-300 text-[11px] sm:text-xs font-medium truncate w-full">
+          {user.displayName}
         </p>
-      )}
 
-      {/* Niche + location pills */}
-      <div className="mt-2 sm:mt-3 hidden sm:flex items-center justify-center gap-1.5 flex-wrap">
-        {niche && (
-          <span
-            className="text-[10px] font-medium px-2 py-0.5 rounded-full"
-            style={{ backgroundColor: `${niche.color}20`, color: niche.color }}
-          >
-            {niche.icon} {niche.name}
-          </span>
-        )}
-        {platform && (
-          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-dark-600 text-gray-300">
-            {platform.icon} {platform.name}
-          </span>
-        )}
-      </div>
-
-      {user.location && (
-        <div className="hidden sm:flex items-center gap-1 mt-1.5 text-[10px] text-gray-500">
-          <MapPin size={10} />
-          <span className="truncate">{user.location}</span>
+        <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-1 w-full text-white">
+          <Stat value={formatCount(user.posts ?? 0)} label="posts" />
+          <Stat value={formatCount(user.followers)} label="followers" />
+          <Stat value={formatCount(user.following ?? 0)} label="following" />
         </div>
-      )}
+
+        {user.bio && (
+          <p className="hidden sm:block mt-3 text-gray-400 text-[11px] leading-snug line-clamp-2 w-full">
+            {user.bio}
+          </p>
+        )}
+
+        <div className="mt-2 sm:mt-3 hidden sm:flex items-center justify-center gap-1.5 flex-wrap">
+          {niche && (
+            <span
+              className="text-[10px] font-medium px-2 py-0.5 rounded-full"
+              style={{ backgroundColor: `${niche.color}20`, color: niche.color }}
+            >
+              {niche.icon} {niche.name}
+            </span>
+          )}
+          {platform && (
+            <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-dark-600 text-gray-300">
+              {platform.icon} {platform.name}
+            </span>
+          )}
+        </div>
+
+        {user.location && (
+          <div className="hidden sm:flex items-center justify-center gap-1 mt-1.5 text-[10px] text-gray-500">
+            <MapPin size={10} />
+            <span className="truncate">{user.location}</span>
+          </div>
+        )}
+      </Link>
 
       {/* Follow / Follow back / Profile buttons (Instagram-style) */}
       <div className="mt-3 sm:mt-4 flex items-center gap-2 w-full">
@@ -140,7 +150,7 @@ export default function UserCard({ user }) {
           </button>
         )}
         <Link
-          to={`/profile/${user.id}`}
+          to={profileHref}
           className="flex-1 min-w-0 text-[12px] sm:text-sm font-semibold py-1.5 sm:py-2 px-2 rounded-lg bg-dark-600 text-white hover:bg-dark-500 transition-colors text-center"
         >
           Profile
