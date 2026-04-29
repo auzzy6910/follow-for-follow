@@ -12,7 +12,7 @@ export default function Header({ onSidebarToggle }) {
   const unreadCount = inboxNotifications.filter(n => !n.read).length
 
   return (
-    <header className="bg-white border-b border-gray-200 flex items-center h-16 px-4 sm:px-6 gap-4 shrink-0">
+    <header className="bg-white border-b border-gray-200 flex items-center h-16 pl-4 sm:pl-6 pr-0 gap-4 shrink-0">
       <button
         type="button"
         onClick={onSidebarToggle}
@@ -35,7 +35,7 @@ export default function Header({ onSidebarToggle }) {
         />
       </div>
 
-      <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
+      <div className="ml-auto flex items-center gap-2 sm:gap-2.5 pr-2 sm:pr-3">
         <div
           className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-[#af101a]/10 text-[#af101a] text-sm font-semibold shrink-0"
           title="Credits"
