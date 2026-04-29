@@ -11,7 +11,6 @@ import {
 import { Link, useNavigate } from 'react-router-dom'
 import UserCard from '../components/UserCard'
 import OwnerFeaturedHero from '../components/OwnerFeaturedHero'
-import PostedAccountsSection from '../components/PostedAccountsSection'
 import FollowBackPlatformBanner from '../components/FollowBackPlatformBanner'
 import { useAppContext } from '../context/useAppContext'
 
@@ -427,8 +426,6 @@ export default function Dashboard() {
           <FollowForFollowSidebar />
         </div>
       </div>
-
-      <PostedAccountsSection />
 
       <FollowBackPlatformBanner />
 
