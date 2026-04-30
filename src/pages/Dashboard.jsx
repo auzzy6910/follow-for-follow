@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Clock, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Play } from 'lucide-react'
 import {
   useUsers,
-  useTribes,
   useUserStats,
   useQuests,
   useSavedSearches,
@@ -230,29 +229,6 @@ function ActiveQuests() {
   )
 }
 
-function TrendingTribes() {
-  const TRIBES = useTribes()
-  const [visible, setVisible] = useState(false)
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-gray-900 font-semibold text-lg">Trending Tribes</h3>
-        <MobileVisibilityToggle visible={visible} onToggle={() => setVisible(v => !v)} label="trending tribes" />
-      </div>
-      <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 ${visible ? '' : 'hidden md:grid'}`}>
-        {TRIBES.slice(0, 5).map(tribe => (
-          <div key={tribe.id} className="bg-dark-800 border border-dark-600 rounded-xl p-4 card-hover cursor-pointer text-center">
-            <div className="text-3xl mb-2">{tribe.icon}</div>
-            <p className="text-gray-900 text-sm font-medium">{tribe.name}</p>
-            <p className="text-gray-500 text-xs mt-1">{tribe.members.toLocaleString()} members</p>
-            <p className="text-blue-accent text-xs mt-1">+{tribe.weeklyGrowth}% this week</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function SavedSearches() {
   const searches = useSavedSearches()
   const deleteSearch = useDeleteSearch()
@@ -374,7 +350,6 @@ export default function Dashboard() {
         <SavedSearches />
       </div>
 
-      <TrendingTribes />
       <UserCards />
 
       <div className="hidden md:grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
