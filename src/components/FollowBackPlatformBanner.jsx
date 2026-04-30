@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { UserPlus } from 'lucide-react'
+
+const FOLLOWER_AVATAR =
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face'
 
 const PLATFORMS = [
   { id: 'all', label: 'All Platforms' },
@@ -24,9 +26,12 @@ export default function FollowBackPlatformBanner({
   return (
     <div className="space-y-5">
       <div className="flex items-center gap-5 sm:gap-6 rounded-3xl bg-[#af101a] text-white px-6 sm:px-8 py-6 sm:py-8 shadow-lg">
-        <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/15 flex items-center justify-center">
-          <UserPlus size={36} className="text-white" />
-        </div>
+        <img
+          src={FOLLOWER_AVATAR}
+          alt="@SarahStyle"
+          className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-2 ring-white/70"
+        />
+
         <div className="flex-1 min-w-0">
           <p className="font-bold text-xl sm:text-3xl leading-tight">Follow back</p>
           <p className="text-white/90 text-base sm:text-lg mt-1.5">
