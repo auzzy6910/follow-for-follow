@@ -9,7 +9,6 @@ import {
 } from '../hooks/useAppData'
 import { Link, useNavigate } from 'react-router-dom'
 import UserCard from '../components/UserCard'
-import OwnerFeaturedHero from '../components/OwnerFeaturedHero'
 import FollowBackPlatformBanner from '../components/FollowBackPlatformBanner'
 import { useAppContext } from '../context/useAppContext'
 
@@ -77,95 +76,6 @@ function MobileVisibilityToggle({ visible, onToggle, label }) {
     >
       {visible ? <Eye size={18} /> : <EyeOff size={18} />}
     </button>
-  )
-}
-
-function FeaturedHero() {
-  return <OwnerFeaturedHero />
-}
-
-function FollowForFollowSidebar() {
-  const {
-    f4fPosts,
-    postFollows,
-    setPostFollow,
-    openLinkViewer,
-    userStats,
-  } = useAppContext()
-  const [visible, setVisible] = useState(false)
-  const linkPosts = f4fPosts.filter(p => p.type === 'link').slice(0, 5)
-
-  return (
-    <div className="bg-dark-800 border border-dark-600 rounded-2xl p-5">
-      <div className="flex items-center justify-between mb-4">
-        <div className="min-w-0">
-          <h3 className="text-gray-900 font-semibold">Follow for Follow</h3>
-          <p className="text-gray-500 text-[11px]">Accounts to follow</p>
-        </div>
-        <MobileVisibilityToggle
-          visible={visible}
-          onToggle={() => setVisible(v => !v)}
-          label="follow for follow"
-        />
-      </div>
-      <div className={`space-y-3 ${visible ? 'block' : 'hidden md:block'}`}>
-        {linkPosts.length === 0 && (
-          <p className="text-gray-500 text-xs">
-            No accounts posted yet. Use the <strong>Post link</strong> button below to add yours.
-          </p>
-        )}
-        {linkPosts.map(post => {
-          const follow = postFollows[post.id]
-          const isFollowing = !!follow?.followed
-          const isCounted = !!follow?.counted
-          const userFollowers = userStats.followers ?? 0
-          const meets =
-            post.paid || !post.minFollowers || userFollowers >= post.minFollowers
-          return (
-            <div
-              key={post.id}
-              className="flex items-center gap-2"
-              role="group"
-            >
-              <input
-                type="checkbox"
-                checked={isFollowing}
-                onChange={e => setPostFollow(post, e.target.checked)}
-                aria-label={`Mark @${post.username} ${isFollowing ? 'unfollowed' : 'followed'}`}
-                className="w-4 h-4 rounded border-2 border-dark-400 bg-dark-700 accent-blue-accent cursor-pointer"
-              />
-              <button
-                type="button"
-                onClick={() => openLinkViewer(post.id)}
-                className="flex-1 min-w-0 text-left"
-                aria-label={`Open @${post.username}`}
-              >
-                <p className="text-gray-900 text-sm font-medium truncate">
-                  @{post.username}
-                </p>
-                <p className="text-gray-500 text-[11px] truncate">
-                  {post.paid
-                    ? 'BUY · paid follow'
-                    : `${meets ? '✓' : '✗'} min ${post.minFollowers.toLocaleString?.() || post.minFollowers}`}
-                </p>
-              </button>
-              {post.paid ? (
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 bg-amber-400/15 border border-amber-400/40 rounded-full px-1.5 py-0.5">
-                  Buy
-                </span>
-              ) : (
-                <span className="text-[10px] font-bold text-blue-accent bg-blue-accent/15 border border-blue-accent/40 rounded-full px-1.5 py-0.5">
-                  +{post.rewardCredits}cr
-                </span>
-              )}
-              {isFollowing && !isCounted && (
-                <span className="text-[10px] text-amber-300">!</span>
-              )}
-            </div>
-          )
-        })}
-      </div>
-    </div>
   )
 }
 
@@ -333,15 +243,6 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-5 sm:space-y-6 max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        <div className="lg:col-span-2">
-          <FeaturedHero />
-        </div>
-        <div className="hidden md:block">
-          <FollowForFollowSidebar />
-        </div>
-      </div>
-
       <FollowBackPlatformBanner />
 
       <SpotlightUsers />
