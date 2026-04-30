@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Clock, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Play } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { Clock, Shield, Eye, EyeOff, Bookmark, Trash2, Play } from 'lucide-react'
 import {
   useUsers,
   useUserStats,
@@ -11,6 +11,16 @@ import { Link, useNavigate } from 'react-router-dom'
 import UserCard from '../components/UserCard'
 import FollowBackPlatformBanner from '../components/FollowBackPlatformBanner'
 import { useAppContext } from '../context/useAppContext'
+
+const PLATFORM_LABELS = {
+  instagram: 'Instagram',
+  twitter: 'X / Twitter',
+  tiktok: 'TikTok',
+  youtube: 'YouTube',
+  linkedin: 'LinkedIn',
+  threads: 'Threads',
+}
+const PLATFORM_ORDER = ['instagram', 'twitter', 'tiktok', 'youtube', 'linkedin', 'threads']
 
 function formatCooldownRemaining(cooldownUntil) {
   if (!cooldownUntil) return null
@@ -79,65 +89,47 @@ function MobileVisibilityToggle({ visible, onToggle, label }) {
   )
 }
 
-function isUserActive(user) {
-  // Deterministic mock: roughly 1/3 of spotlight users appear "live" right now.
-  const idNum = Number(String(user.id).replace(/\D/g, '')) || 0
-  return idNum % 3 === 0
+function SpotlightUserBadge({ user }) {
+  return (
+    <Link
+      to={`/profile/${user.id}`}
+      aria-label={`Open ${user.displayName}'s profile`}
+      className="flex flex-col items-center gap-2 shrink-0 group focus:outline-none focus:ring-2 focus:ring-blue-accent/50 rounded-xl px-1 py-1"
+    >
+      <div className={`p-0.5 rounded-full transition-transform group-hover:scale-105 ${user.tier === 'legend' ? 'bg-gradient-to-br from-amber-400 to-orange-500' : user.tier === 'influencer' ? 'bg-gradient-to-br from-blue-accent to-cyan-400' : 'bg-dark-500'}`}>
+        <img src={user.avatar} alt="" className="w-14 h-14 rounded-full object-cover border-2 border-dark-900" />
+      </div>
+      <p className="text-gray-700 text-xs font-medium truncate w-16 text-center group-hover:text-gray-900">@{user.username.slice(0, 8)}</p>
+      <span className="text-blue-accent text-xs">{user.credits} cr</span>
+    </Link>
+  )
 }
 
-function SpotlightUsers() {
+function SpotlightUsers({ activePlatform = 'all' }) {
   const USERS = useUsers()
-  const spotlightUsers = USERS.slice(0, 8)
+  const spotlightUsers = useMemo(() => {
+    if (activePlatform === 'all') return USERS
+    return USERS.filter(u => u.platform === activePlatform)
+  }, [USERS, activePlatform])
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <h3 className="text-gray-900 font-semibold text-lg">Spotlight Users</h3>
-          <span className="hidden sm:inline-flex items-center gap-1 text-[11px] uppercase tracking-wide font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 live-dot" />
-            Live
-          </span>
-        </div>
-        <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
-          See All <ChevronRight size={16} />
-        </Link>
+        <h3 className="text-gray-900 font-semibold text-lg">Spotlight Users</h3>
       </div>
-      <div className="flex gap-4 overflow-x-auto pb-2">
-        {spotlightUsers.map(user => {
-          const active = isUserActive(user)
-          return (
-            <Link
-              key={user.id}
-              to={`/profile/${user.id}`}
-              aria-label={`Open ${user.displayName}'s profile${active ? ' (active now)' : ''}`}
-              className="flex flex-col items-center gap-2 shrink-0 group focus:outline-none focus:ring-2 focus:ring-blue-accent/50 rounded-xl px-1 py-1"
-            >
-              <div
-                className={`relative p-[2px] rounded-full transition-transform group-hover:scale-105 ${
-                  active ? 'story-ring story-ring-active' : 'story-ring-muted'
-                }`}
-              >
-                <div className="p-0.5 rounded-full bg-white">
-                  <img
-                    src={user.avatar}
-                    alt=""
-                    className="w-14 h-14 rounded-full object-cover"
-                  />
-                </div>
-                {active && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wide text-white bg-emerald-500 ring-2 ring-white shadow-sm"
-                  >
-                    Live
-                  </span>
-                )}
-              </div>
-              <p className="text-gray-700 text-xs font-medium truncate w-16 text-center group-hover:text-gray-900">@{user.username.slice(0, 8)}</p>
-              <span className="text-blue-accent text-xs">{user.credits} cr</span>
-            </Link>
-          )
-        })}
+      <div className="overflow-hidden no-scrollbar pb-2" aria-label="Spotlight users carousel">
+        {spotlightUsers.length === 0 ? (
+          <p className="text-gray-500 text-sm">No creators yet for this platform.</p>
+        ) : (
+          <div className="spotlight-marquee gap-4">
+            {spotlightUsers.map(user => (
+              <SpotlightUserBadge key={`a-${user.id}`} user={user} />
+            ))}
+            {spotlightUsers.map(user => (
+              <SpotlightUserBadge key={`b-${user.id}`} user={user} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
@@ -228,27 +220,73 @@ function SavedSearches() {
   )
 }
 
-function UserCards() {
+function UserCards({ activePlatform = 'all' }) {
   const USERS = useUsers()
+
+  const grouped = useMemo(() => {
+    const groups = new Map()
+    for (const platformId of PLATFORM_ORDER) {
+      groups.set(platformId, [])
+    }
+    for (const user of USERS) {
+      if (!groups.has(user.platform)) groups.set(user.platform, [])
+      groups.get(user.platform).push(user)
+    }
+    return groups
+  }, [USERS])
+
+  if (activePlatform !== 'all') {
+    const platformUsers = grouped.get(activePlatform) ?? []
+    return (
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-gray-900 font-semibold text-lg">
+            Recommended on {PLATFORM_LABELS[activePlatform] ?? 'this platform'}
+          </h3>
+        </div>
+        {platformUsers.length === 0 ? (
+          <p className="text-gray-500 text-sm">
+            No creators yet for this platform. Check back soon.
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+            {platformUsers.map(user => (
+              <UserCard key={user.id} user={user} />
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
   return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
+    <div className="space-y-8">
+      <div className="flex items-center justify-between">
         <h3 className="text-gray-900 font-semibold text-lg">Recommended For You</h3>
-        <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
-          See All <ChevronRight size={16} />
-        </Link>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-        {USERS.slice(0, 6).map(user => (
-          <UserCard key={user.id} user={user} />
-        ))}
-      </div>
+      {PLATFORM_ORDER.map(platformId => {
+        const platformUsers = grouped.get(platformId) ?? []
+        if (platformUsers.length === 0) return null
+        return (
+          <section key={platformId} aria-label={`${PLATFORM_LABELS[platformId]} creators`}>
+            <h4 className="text-gray-700 font-semibold text-sm uppercase tracking-wide mb-3">
+              {PLATFORM_LABELS[platformId]}
+            </h4>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+              {platformUsers.map(user => (
+                <UserCard key={user.id} user={user} />
+              ))}
+            </div>
+          </section>
+        )
+      })}
     </div>
   )
 }
 
 export default function Dashboard() {
   const USER_STATS = useUserStats()
+  const [activePlatform, setActivePlatform] = useState('all')
   const {
     warmingWizardDismissed,
     warmingPlan,
@@ -276,15 +314,18 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-5 sm:space-y-6 max-w-7xl mx-auto">
-      <FollowBackPlatformBanner />
+      <FollowBackPlatformBanner
+        activePlatform={activePlatform}
+        onPlatformChange={setActivePlatform}
+      />
 
-      <SpotlightUsers />
+      <SpotlightUsers activePlatform={activePlatform} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <SavedSearches />
       </div>
 
-      <UserCards />
+      <UserCards activePlatform={activePlatform} />
 
       <div className="hidden md:grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <ActiveQuests />
