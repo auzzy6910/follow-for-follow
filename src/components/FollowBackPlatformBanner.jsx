@@ -11,8 +11,15 @@ const PLATFORMS = [
   { id: 'threads', label: 'Threads' },
 ]
 
-export default function FollowBackPlatformBanner() {
-  const [activePlatform, setActivePlatform] = useState('all')
+export default function FollowBackPlatformBanner({
+  activePlatform: activePlatformProp,
+  onPlatformChange,
+}) {
+  const [internalPlatform, setInternalPlatform] = useState('all')
+  const isControlled =
+    activePlatformProp !== undefined && onPlatformChange !== undefined
+  const activePlatform = isControlled ? activePlatformProp : internalPlatform
+  const setActivePlatform = isControlled ? onPlatformChange : setInternalPlatform
 
   return (
     <div className="space-y-5">

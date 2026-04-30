@@ -19,7 +19,7 @@ const bottomItems = [
   { path: '/wallet', label: 'Wallet', icon: Wallet },
 ]
 
-export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobileClose }) {
+export default function Sidebar({ isOpen, mobileOpen = false, onMobileClose }) {
   const { signOut } = useAuthActions()
   const { isAuthenticated, openModal } = useAuthGuard()
   const desktopHiddenClass = isOpen ? '' : 'lg:hidden'
@@ -52,13 +52,6 @@ export default function Sidebar({ isOpen, onToggle, mobileOpen = false, onMobile
             aria-label="Close menu"
           >
             <X size={20} />
-          </button>
-          <button
-            onClick={onToggle}
-            className="hidden lg:block ml-auto text-gray-400 hover:text-gray-700 transition-colors p-1"
-            aria-label="Close sidebar"
-          >
-            <X size={18} />
           </button>
         </div>
 
