@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Clock, Shield, ChevronRight, Eye, EyeOff, Bookmark, Trash2, Play } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { Clock, Shield, Eye, EyeOff, Bookmark, Trash2, Play } from 'lucide-react'
 import {
   useUsers,
   useUserStats,
@@ -11,6 +11,16 @@ import { Link, useNavigate } from 'react-router-dom'
 import UserCard from '../components/UserCard'
 import FollowBackPlatformBanner from '../components/FollowBackPlatformBanner'
 import { useAppContext } from '../context/useAppContext'
+
+const PLATFORM_LABELS = {
+  instagram: 'Instagram',
+  twitter: 'X / Twitter',
+  tiktok: 'TikTok',
+  youtube: 'YouTube',
+  linkedin: 'LinkedIn',
+  threads: 'Threads',
+}
+const PLATFORM_ORDER = ['instagram', 'twitter', 'tiktok', 'youtube', 'linkedin', 'threads']
 
 function formatCooldownRemaining(cooldownUntil) {
   if (!cooldownUntil) return null
@@ -79,16 +89,16 @@ function MobileVisibilityToggle({ visible, onToggle, label }) {
   )
 }
 
-function SpotlightUsers() {
+function SpotlightUsers({ activePlatform = 'all' }) {
   const USERS = useUsers()
-  const spotlightUsers = USERS.slice(0, 8)
+  const spotlightUsers = useMemo(() => {
+    if (activePlatform === 'all') return USERS
+    return USERS.filter(u => u.platform === activePlatform)
+  }, [USERS, activePlatform])
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-gray-900 font-semibold text-lg">Spotlight Users</h3>
-        <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
-          See All <ChevronRight size={16} />
-        </Link>
       </div>
       <div className="flex gap-4 overflow-x-auto pb-2">
         {spotlightUsers.map(user => (
@@ -195,27 +205,73 @@ function SavedSearches() {
   )
 }
 
-function UserCards() {
+function UserCards({ activePlatform = 'all' }) {
   const USERS = useUsers()
+
+  const grouped = useMemo(() => {
+    const groups = new Map()
+    for (const platformId of PLATFORM_ORDER) {
+      groups.set(platformId, [])
+    }
+    for (const user of USERS) {
+      if (!groups.has(user.platform)) groups.set(user.platform, [])
+      groups.get(user.platform).push(user)
+    }
+    return groups
+  }, [USERS])
+
+  if (activePlatform !== 'all') {
+    const platformUsers = grouped.get(activePlatform) ?? []
+    return (
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-gray-900 font-semibold text-lg">
+            Recommended on {PLATFORM_LABELS[activePlatform] ?? 'this platform'}
+          </h3>
+        </div>
+        {platformUsers.length === 0 ? (
+          <p className="text-gray-500 text-sm">
+            No creators yet for this platform. Check back soon.
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+            {platformUsers.map(user => (
+              <UserCard key={user.id} user={user} />
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
   return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
+    <div className="space-y-8">
+      <div className="flex items-center justify-between">
         <h3 className="text-gray-900 font-semibold text-lg">Recommended For You</h3>
-        <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
-          See All <ChevronRight size={16} />
-        </Link>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-        {USERS.slice(0, 6).map(user => (
-          <UserCard key={user.id} user={user} />
-        ))}
-      </div>
+      {PLATFORM_ORDER.map(platformId => {
+        const platformUsers = grouped.get(platformId) ?? []
+        if (platformUsers.length === 0) return null
+        return (
+          <section key={platformId} aria-label={`${PLATFORM_LABELS[platformId]} creators`}>
+            <h4 className="text-gray-700 font-semibold text-sm uppercase tracking-wide mb-3">
+              {PLATFORM_LABELS[platformId]}
+            </h4>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+              {platformUsers.map(user => (
+                <UserCard key={user.id} user={user} />
+              ))}
+            </div>
+          </section>
+        )
+      })}
     </div>
   )
 }
 
 export default function Dashboard() {
   const USER_STATS = useUserStats()
+  const [activePlatform, setActivePlatform] = useState('all')
   const {
     warmingWizardDismissed,
     warmingPlan,
@@ -243,15 +299,18 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-5 sm:space-y-6 max-w-7xl mx-auto">
-      <FollowBackPlatformBanner />
+      <FollowBackPlatformBanner
+        activePlatform={activePlatform}
+        onPlatformChange={setActivePlatform}
+      />
 
-      <SpotlightUsers />
+      <SpotlightUsers activePlatform={activePlatform} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <SavedSearches />
       </div>
 
-      <UserCards />
+      <UserCards activePlatform={activePlatform} />
 
       <div className="hidden md:grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <ActiveQuests />
