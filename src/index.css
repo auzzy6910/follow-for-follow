@@ -167,3 +167,25 @@ body {
 .follow-back-pulse {
   animation: follow-back-pulse 1.6s ease-in-out infinite;
 }
+
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.spotlight-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-x 60s linear infinite;
+}
+
+.spotlight-marquee:hover,
+.spotlight-marquee:focus-within {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-marquee {
+    animation: none;
+  }
+}

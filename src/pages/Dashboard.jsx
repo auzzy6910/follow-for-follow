@@ -89,32 +89,47 @@ function MobileVisibilityToggle({ visible, onToggle, label }) {
   )
 }
 
+function SpotlightUserBadge({ user }) {
+  return (
+    <Link
+      to={`/profile/${user.id}`}
+      aria-label={`Open ${user.displayName}'s profile`}
+      className="flex flex-col items-center gap-2 shrink-0 group focus:outline-none focus:ring-2 focus:ring-blue-accent/50 rounded-xl px-1 py-1"
+    >
+      <div className={`p-0.5 rounded-full transition-transform group-hover:scale-105 ${user.tier === 'legend' ? 'bg-gradient-to-br from-amber-400 to-orange-500' : user.tier === 'influencer' ? 'bg-gradient-to-br from-blue-accent to-cyan-400' : 'bg-dark-500'}`}>
+        <img src={user.avatar} alt="" className="w-14 h-14 rounded-full object-cover border-2 border-dark-900" />
+      </div>
+      <p className="text-gray-700 text-xs font-medium truncate w-16 text-center group-hover:text-gray-900">@{user.username.slice(0, 8)}</p>
+      <span className="text-blue-accent text-xs">{user.credits} cr</span>
+    </Link>
+  )
+}
+
 function SpotlightUsers({ activePlatform = 'all' }) {
   const USERS = useUsers()
   const spotlightUsers = useMemo(() => {
     if (activePlatform === 'all') return USERS
     return USERS.filter(u => u.platform === activePlatform)
   }, [USERS, activePlatform])
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-gray-900 font-semibold text-lg">Spotlight Users</h3>
       </div>
-      <div className="flex gap-4 overflow-x-auto pb-2">
-        {spotlightUsers.map(user => (
-          <Link
-            key={user.id}
-            to={`/profile/${user.id}`}
-            aria-label={`Open ${user.displayName}'s profile`}
-            className="flex flex-col items-center gap-2 shrink-0 group focus:outline-none focus:ring-2 focus:ring-blue-accent/50 rounded-xl px-1 py-1"
-          >
-            <div className={`p-0.5 rounded-full transition-transform group-hover:scale-105 ${user.tier === 'legend' ? 'bg-gradient-to-br from-amber-400 to-orange-500' : user.tier === 'influencer' ? 'bg-gradient-to-br from-blue-accent to-cyan-400' : 'bg-dark-500'}`}>
-              <img src={user.avatar} alt="" className="w-14 h-14 rounded-full object-cover border-2 border-dark-900" />
-            </div>
-            <p className="text-gray-700 text-xs font-medium truncate w-16 text-center group-hover:text-gray-900">@{user.username.slice(0, 8)}</p>
-            <span className="text-blue-accent text-xs">{user.credits} cr</span>
-          </Link>
-        ))}
+      <div className="overflow-hidden no-scrollbar pb-2" aria-label="Spotlight users carousel">
+        {spotlightUsers.length === 0 ? (
+          <p className="text-gray-500 text-sm">No creators yet for this platform.</p>
+        ) : (
+          <div className="spotlight-marquee gap-4">
+            {spotlightUsers.map(user => (
+              <SpotlightUserBadge key={`a-${user.id}`} user={user} />
+            ))}
+            {spotlightUsers.map(user => (
+              <SpotlightUserBadge key={`b-${user.id}`} user={user} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
