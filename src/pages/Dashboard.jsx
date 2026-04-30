@@ -79,32 +79,65 @@ function MobileVisibilityToggle({ visible, onToggle, label }) {
   )
 }
 
+function isUserActive(user) {
+  // Deterministic mock: roughly 1/3 of spotlight users appear "live" right now.
+  const idNum = Number(String(user.id).replace(/\D/g, '')) || 0
+  return idNum % 3 === 0
+}
+
 function SpotlightUsers() {
   const USERS = useUsers()
   const spotlightUsers = USERS.slice(0, 8)
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-gray-900 font-semibold text-lg">Spotlight Users</h3>
+        <div className="flex items-center gap-2">
+          <h3 className="text-gray-900 font-semibold text-lg">Spotlight Users</h3>
+          <span className="hidden sm:inline-flex items-center gap-1 text-[11px] uppercase tracking-wide font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 live-dot" />
+            Live
+          </span>
+        </div>
         <Link to="/explore" className="text-blue-accent text-sm hover:underline hidden md:flex items-center gap-1">
           See All <ChevronRight size={16} />
         </Link>
       </div>
       <div className="flex gap-4 overflow-x-auto pb-2">
-        {spotlightUsers.map(user => (
-          <Link
-            key={user.id}
-            to={`/profile/${user.id}`}
-            aria-label={`Open ${user.displayName}'s profile`}
-            className="flex flex-col items-center gap-2 shrink-0 group focus:outline-none focus:ring-2 focus:ring-blue-accent/50 rounded-xl px-1 py-1"
-          >
-            <div className={`p-0.5 rounded-full transition-transform group-hover:scale-105 ${user.tier === 'legend' ? 'bg-gradient-to-br from-amber-400 to-orange-500' : user.tier === 'influencer' ? 'bg-gradient-to-br from-blue-accent to-cyan-400' : 'bg-dark-500'}`}>
-              <img src={user.avatar} alt="" className="w-14 h-14 rounded-full object-cover border-2 border-dark-900" />
-            </div>
-            <p className="text-gray-700 text-xs font-medium truncate w-16 text-center group-hover:text-gray-900">@{user.username.slice(0, 8)}</p>
-            <span className="text-blue-accent text-xs">{user.credits} cr</span>
-          </Link>
-        ))}
+        {spotlightUsers.map(user => {
+          const active = isUserActive(user)
+          return (
+            <Link
+              key={user.id}
+              to={`/profile/${user.id}`}
+              aria-label={`Open ${user.displayName}'s profile${active ? ' (active now)' : ''}`}
+              className="flex flex-col items-center gap-2 shrink-0 group focus:outline-none focus:ring-2 focus:ring-blue-accent/50 rounded-xl px-1 py-1"
+            >
+              <div
+                className={`relative p-[2px] rounded-full transition-transform group-hover:scale-105 ${
+                  active ? 'story-ring story-ring-active' : 'story-ring-muted'
+                }`}
+              >
+                <div className="p-0.5 rounded-full bg-white">
+                  <img
+                    src={user.avatar}
+                    alt=""
+                    className="w-14 h-14 rounded-full object-cover"
+                  />
+                </div>
+                {active && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wide text-white bg-emerald-500 ring-2 ring-white shadow-sm"
+                  >
+                    Live
+                  </span>
+                )}
+              </div>
+              <p className="text-gray-700 text-xs font-medium truncate w-16 text-center group-hover:text-gray-900">@{user.username.slice(0, 8)}</p>
+              <span className="text-blue-accent text-xs">{user.credits} cr</span>
+            </Link>
+          )
+        })}
       </div>
     </div>
   )
